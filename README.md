@@ -1,98 +1,96 @@
-# Museum E-Ticket and Visitor Management System
+# Hệ thống quản lý khách tham quan, vé điện tử và sự kiện bảo tàng
 
-Museum e-ticketing, QR entry control, event registration, group management and visitor satisfaction survey system.
+Phần mềm web quản lý khách tham quan, vé điện tử và sự kiện của bảo tàng: đặt vé, phát hành vé QR, kiểm soát lượt vào, đăng ký tham dự sự kiện, quản lý đoàn khách và khảo sát mức độ hài lòng.
 
-> **Status:** planning / early development. Nothing below is implemented yet unless marked otherwise.
+> **Trạng thái:** frontend đã hoàn thành và đang chạy bằng dữ liệu mẫu (lưu trong `localStorage` của trình duyệt). Backend REST và cơ sở dữ liệu MySQL chưa được xây dựng.
 
-## Overview
+## Chức năng
 
-A web platform for museums and heritage sites to sell tickets online, control entry with QR codes, run events, handle visiting groups, and measure visitor satisfaction. It includes an operator back office for day-to-day management and reporting.
-
-## Features
-
-| Module | Description |
+| Phân hệ | Mô tả |
 |---|---|
-| **Ticket booking** | Site catalogue, ticket types and prices, date and time-slot selection, capacity checks, online payment, cancel / reschedule / refund |
-| **QR e-tickets** | Unique ticket codes, signed QR to prevent forgery, PDF tickets, ticket states (unused, used, expired, cancelled) |
-| **Entry control** | Gate management, QR scanning from a phone camera, validity checks, duplicate-scan protection, scan log, real-time visitor count |
-| **Event registration** | Events and sessions, registration, seat limits and waiting list, QR event tickets, attendance check-in |
-| **Group management** | Group registration, member lists (Excel import), group pricing, group or per-member QR, entry tracking per group |
-| **Satisfaction survey** | Configurable questionnaires, survey link sent after a visit, CSAT / NPS scoring |
-| **Operator back office** | Roles and permissions, catalogue management, live dashboard, revenue / visitor / satisfaction reports, Excel / PDF export |
-| **Localisation** | Vietnamese and English interface |
+| **Đặt vé** | Khách xem danh sách bảo tàng, chọn loại vé, ngày tham quan, số lượng và đặt vé trực tuyến. Cán bộ có thể bán vé tại quầy và quản lý loại vé, giá vé. |
+| **Vé điện tử QR** | Mỗi vé có một mã duy nhất kèm mã QR. Trạng thái vé: chưa dùng, đã dùng, hết hạn, đã hủy. Khách có thể tra cứu vé theo mã. |
+| **Kiểm soát lượt vào** | Cán bộ quét mã QR bằng camera hoặc nhập mã vé. Hệ thống kiểm tra vé hợp lệ, chặn vé đã dùng và ghi lại mỗi lượt vào trong nhật ký vào cổng. |
+| **Đăng ký sự kiện** | Cán bộ tạo sự kiện với ngày diễn ra và số chỗ tối đa. Khách đăng ký tham dự, cán bộ xem danh sách đăng ký của từng sự kiện. |
+| **Quản lý đoàn khách** | Khách gửi yêu cầu tham quan theo đoàn (trưởng đoàn, số người, ngày đến). Cán bộ tiếp nhận, duyệt hoặc từ chối lịch của đoàn. |
+| **Khảo sát mức độ hài lòng** | Khách chấm điểm và góp ý sau chuyến tham quan. Cán bộ xem kết quả khảo sát. |
+| **Thống kê** | Bảng điều khiển và biểu đồ về số vé bán ra, doanh thu, lượt vào và mức độ hài lòng, có xuất file CSV (quản trị viên). |
 
-## User roles
+## Vai trò người dùng
 
-- **Visitor** – books tickets, registers for events, answers surveys
-- **Group leader** – registers and pays for a group
-- **Gate staff** – scans tickets at the entrance
-- **Event manager** – creates events and checks attendance
-- **Operator / admin** – manages the catalogue, users, refunds and reports
+- **Khách tham quan**: xem bảo tàng, đặt vé, đăng ký sự kiện, đăng ký đoàn, làm khảo sát, tra cứu vé. Không cần đăng nhập.
+- **Cán bộ vận hành**: đăng nhập để bán vé, soát vé tại cổng, quản lý sự kiện, đoàn khách và khảo sát.
+- **Quản trị viên**: có toàn bộ quyền của cán bộ, thêm thống kê và cài đặt thông tin bảo tàng.
 
-## Tech stack (planned)
+## Công nghệ sử dụng
 
-| Layer | Technology |
+| Thành phần | Công nghệ |
 |---|---|
-| Backend | Python, Django, Django REST Framework |
-| Frontend | TypeScript, React |
-| Scanner app | Web app (PWA) using the phone camera |
-| Database | MySQL 8 (InnoDB, `utf8mb4`) |
-| Payments | To be decided (VNPay / MoMo / PayOS) |
-| QR and signing | `qrcode`, HMAC / JWT |
-| Reports | pandas, openpyxl, Chart.js or Recharts |
-| i18n | Django i18n, react-i18next |
-| Deployment | Docker, Nginx, HTTPS |
+| Frontend | HTML5, CSS3, JavaScript thuần (không dùng framework, không cần build) |
+| Mã QR | [qrcodejs](https://github.com/davidshimjs/qrcodejs) để tạo mã, [html5-qrcode](https://github.com/mebjas/html5-qrcode) để quét bằng camera (nạp qua CDN) |
+| Biểu đồ | [Chart.js](https://www.chartjs.org/) (nạp qua CDN) |
+| Cơ sở dữ liệu | MySQL 8 (InnoDB, `utf8mb4`) |
+| Giao tiếp | REST API dạng JSON, xác thực bằng `Authorization: Bearer <token>` |
 
-## Data model (overview)
+## Cấu trúc thư mục frontend
 
-Main tables: `users`, `sites`, `ticket_types`, `closed_days`, `orders`, `order_items`, `tickets`, `payments`, `gates`, `scan_logs`, `events`, `event_registrations`, `delegations`, `delegation_members`, `surveys`, `survey_questions`, `survey_responses`, `survey_answers`.
-
-## Getting started
-
-Prerequisites: Python 3.10+, Node.js 20+, MySQL 8, Git.
-
-```bash
-# backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env        # fill in database, secret key, payment and mail settings
-python manage.py migrate
-python manage.py runserver
-
-# frontend
-cd frontend
-npm install
-npm start
+```
+frontend/
+├── index.html                 Trang chủ khách tham quan (danh sách bảo tàng: tìm kiếm, lọc, sắp xếp, phân trang, xem chi tiết)
+├── README.md                  Ghi chú frontend và danh sách API backend cần có
+├── pages/
+│   ├── booking.html           Dịch vụ cho khách: đặt vé QR, sự kiện, đăng ký đoàn, khảo sát, tra cứu vé
+│   ├── login.html             Đăng nhập cán bộ
+│   ├── dashboard.html         Bảng điều khiển
+│   ├── tickets.html           Vé điện tử: bán vé tại quầy, phát hành QR, loại vé và giá
+│   ├── checkin.html           Kiểm soát lượt vào: quét QR hoặc nhập mã, nhật ký vào cổng
+│   ├── events.html            Sự kiện và danh sách đăng ký
+│   ├── visitors.html          Đoàn khách: tiếp nhận, duyệt lịch
+│   ├── surveys.html           Kết quả khảo sát mức độ hài lòng
+│   ├── statistics.html        Thống kê, biểu đồ, xuất CSV (quản trị viên)
+│   └── settings.html          Cài đặt thông tin bảo tàng (quản trị viên)
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+├── css/
+│   ├── base/                  reset.css, variables.css, typography.css
+│   ├── components/            button, card, chip, modal, navbar, sidebar, public-navbar,
+│   │                          footer, museum-card, pagination
+│   ├── layouts/               main-layout.css (cán bộ), auth-layout.css (đăng nhập), public-layout.css (khách)
+│   └── pages/                 mỗi trang một file CSS (home.css cho index.html)
+└── js/
+    ├── config/                api.config.js (địa chỉ API, endpoint, USE_MOCK), app.config.js (menu, route, trạng thái)
+    ├── services/              api, auth, museum, ticket, event, visitor, survey, statistics
+    │   └── mock/              museum.mock.js (dữ liệu mẫu)
+    ├── components/            navbar, sidebar, public-navbar, footer, modal, notification,
+    │                          museum-card, pagination
+    ├── utils/                 format.js, validation.js, helpers.js
+    └── pages/                 mỗi trang một file JS (home.js cho index.html)
 ```
 
-Create the database first:
+Các file JS dùng biến toàn cục (ví dụ `window.TicketService`) thay vì ES module, nên mở trực tiếp file HTML vẫn chạy được. Thứ tự nạp script trên mọi trang: `config → utils → services → components → pages`.
+
+## Cơ sở dữ liệu MySQL (tổng quan)
+
+Các bảng chính: `users`, `museums`, `ticket_types`, `tickets`, `checkins`, `events`, `event_registrations`, `visitor_groups`, `surveys`, `settings`.
+
+Bảng đoàn khách đặt tên `visitor_groups` vì `GROUPS` là từ khóa dành riêng trong MySQL 8. Tên trường JSON ở frontend trùng với tên cột dự kiến trong MySQL (ví dụ `tickets.code, customer_name, ticket_type_id, quantity, visit_date, total, status`).
+
+Tạo cơ sở dữ liệu:
 
 ```sql
 CREATE DATABASE museum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-> The commands above describe the intended setup; `requirements.txt` and `.env.example` do not exist yet.
+## Chạy frontend
 
-## Configuration
+1. Mở `frontend/index.html` bằng trình duyệt, hoặc tốt hơn là chạy thư mục bằng **Live Server** của VS Code (camera quét QR cần chạy trên `localhost` hoặc HTTPS).
+2. Trang cho khách: `index.html` và `pages/booking.html`.
+3. Trang cho cán bộ: `pages/login.html`. Tài khoản thử: `admin / admin123` (quản trị viên), `staff / staff123` (soát vé).
 
-Secrets must never be committed. Keep them in `.env`:
+Mặc định `USE_MOCK: true` trong `js/config/api.config.js`, mọi dữ liệu được lưu trong `localStorage`. Khi backend sẵn sàng, đổi thành `false` và sửa `BASE_URL` thành địa chỉ API. Danh sách endpoint backend cần cung cấp nằm trong `frontend/README.md`.
 
-- `SECRET_KEY`
-- `DATABASE_URL` (or separate `DB_*` variables)
-- payment provider keys
-- SMTP settings for e-mail
+## Giấy phép
 
-## Roadmap
-
-- [ ] Phase 0: project skeleton, `.gitignore`, `.env`, MySQL connection
-- [ ] Phase 1: core data model and REST API (sites, ticket types, orders, tickets)
-- [ ] Phase 2: booking, payment and QR e-tickets
-- [ ] Phase 3: entry control and scan log
-- [ ] Phase 4: events, groups and surveys
-- [ ] Phase 5: operator dashboard, reports, i18n
-- [ ] Phase 6: tests, Docker, deployment
-
-## License
-
-Private academic project. All rights reserved.
+Đồ án học tập, sử dụng nội bộ. Bảo lưu mọi quyền.
