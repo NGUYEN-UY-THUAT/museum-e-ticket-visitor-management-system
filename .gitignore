@@ -1,0 +1,42 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Django
+db.sqlite3
+*.log
+media/
+staticfiles/
+
+# Node / React
+node_modules/
+frontend/build/
+frontend/dist/
+npm-debug.log*
+yarn-error.log*
+
+# Generated tickets and QR codes
+generated_tickets/
+generated_qr/
+
+# Documents (reports are not pushed)
+*.docx
+*.doc
+.~lock.*
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
