@@ -1,0 +1,29 @@
+/* ==========================================================================
+   public-layout.css — Khung trang cho khách tham quan (header + main + footer)
+   ========================================================================== */
+.theme-heritage {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-feature-settings: "tnum";
+}
+
+.theme-heritage .container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
+}
+
+.site-main {
+  width: 100%;
+  padding-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+  background: var(--color-bg);
+}
+
+.page-section { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+.stack > * + * { margin-top: 2rem; }
+
+
+[hidden] { display: none !important; }

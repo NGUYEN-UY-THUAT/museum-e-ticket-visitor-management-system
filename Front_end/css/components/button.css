@@ -1,0 +1,26 @@
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);padding:9px 16px;border-radius:var(--radius-sm);font-weight:500;border:1px solid transparent;transition:background .15s}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn--primary{background:var(--color-primary);color:#fff}
+.btn--primary:hover{background:var(--color-primary-dark)}
+.btn--outline{border-color:var(--color-border);background:var(--color-surface)}
+.btn--outline:hover{background:var(--color-bg)}
+.btn--danger{background:var(--color-danger);color:#fff}
+.btn--success{background:var(--color-success);color:#fff}
+.btn--sm{padding:5px 10px;font-size:.85rem}
+.btn--block{width:100%}
+
+/* ---------- Biến thể cho trang khách tham quan (.theme-heritage) ---------- */
+.theme-heritage .btn{border-radius:var(--radius-xl);font-size:14px;line-height:20px;font-weight:600;letter-spacing:.02em;padding:.5rem .875rem;white-space:nowrap}
+.theme-heritage .btn--primary{box-shadow:0 2px 8px -1px rgba(31,58,95,.16)}
+.theme-heritage .btn--sm{padding:.5rem .75rem;font-size:12px;line-height:16px;letter-spacing:.04em}
+.btn--lg{padding:.75rem 1.25rem}
+.btn .icon--accent{color:var(--color-gold-light,#ffdea5)}
+/* Nút vàng di sản */
+.btn--accent{background:var(--color-gold-light);color:var(--color-on-gold-light);box-shadow:var(--shadow-md)}
+.btn--accent:hover{background:var(--color-gold-dim)}
+/* Nút nền nhạt */
+.btn--soft{background:var(--color-surface-low);color:var(--color-primary)}
+.btn--soft:hover{background:var(--color-surface-container)}
+/* Nút công cụ nhỏ */
+.theme-heritage .btn--tool{padding:.375rem .75rem;border-radius:.5rem;background:var(--color-surface-container);color:var(--color-muted);font-size:11px;line-height:14px;font-weight:500;letter-spacing:.05em}
+.btn--tool:hover{color:var(--color-primary)}

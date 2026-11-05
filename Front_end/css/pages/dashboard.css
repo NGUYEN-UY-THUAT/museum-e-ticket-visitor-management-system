@@ -1,0 +1,2 @@
+.mini-event{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--color-border)}
+.mini-event:last-child{border-bottom:none}

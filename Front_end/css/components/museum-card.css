@@ -1,0 +1,70 @@
+/* ==========================================================================
+   museum-card.css — Thẻ bảo tàng (trang chủ khách tham quan)
+   ========================================================================== */
+/* Thẻ bảo tàng */
+.museum-card {
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: var(--radius-xl); background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 300ms ease, transform 300ms ease;
+}
+.museum-card:hover { box-shadow: var(--shadow-xl); }
+
+.museum-card__media { position: relative; height: 14rem; overflow: hidden; background: var(--color-surface-high); }
+.museum-card__image {
+  width: 100%; height: 100%; background-size: cover; background-position: center;
+  transition: transform 500ms ease;
+}
+.museum-card:hover .museum-card__image { transform: scale(1.05); }
+/* Ảnh dự phòng khi bảo tàng chưa có ảnh */
+.museum-card__image--placeholder {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-gold));
+  color: rgba(255, 222, 165, 0.6);
+}
+.museum-card__overlay {
+  position: absolute; inset: 0; opacity: 0.8; pointer-events: none;
+  background: linear-gradient(to top, rgba(3, 36, 72, 0.8), transparent 50%);
+}
+.museum-card__badges {
+  position: absolute; top: 0.75rem; left: 0.75rem; right: 0.75rem;
+  display: flex; align-items: center; justify-content: space-between; pointer-events: none;
+}
+.museum-card__meta {
+  position: absolute; bottom: 0.75rem; left: 0.875rem; right: 0.875rem;
+  display: flex; align-items: center; justify-content: space-between; color: var(--color-bg);
+}
+.museum-card__rating {
+  display: flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: .25rem;
+  background: rgba(31, 58, 95, 0.8); backdrop-filter: blur(8px);
+  font-size: 12px; line-height: 16px; letter-spacing: 0.04em;
+}
+.museum-card__rating .icon { color: var(--color-gold-light); }
+.museum-card__rating strong { font-weight: 700; }
+.museum-card__rating small { font-size: inherit; opacity: 0.8; font-weight: 400; }
+.museum-card__city {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.museum-card__body { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; padding: 1.25rem; }
+.museum-card__title { font-size: 20px; line-height: 28px; font-weight: 600; color: var(--color-primary); transition: color var(--transition); }
+.museum-card:hover .museum-card__title { color: var(--color-gold); }
+.museum-card__desc { margin-top: 0.5rem; font-size: 14px; line-height: 20px; color: var(--color-muted); }
+
+.museum-card__info {
+  display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.5rem;
+  border-top: 1px solid rgba(235, 232, 227, 0.6);
+  font-size: 14px; line-height: 20px; color: var(--color-muted);
+}
+.museum-card__info-row { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+.museum-card__info-row .icon { color: var(--color-gold); }
+
+.museum-card__footer {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem;
+  padding-top: 0.75rem; border-top: 1px solid rgba(235, 232, 227, 0.6);
+}
+.museum-card__price-label { font-size: 11px; line-height: 14px; font-weight: 500; color: var(--color-outline); }
+.museum-card__price { white-space: nowrap; font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-primary); }
+.museum-card__actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+.museum-card__actions .btn { padding-left: .625rem; padding-right: .625rem; }

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   pagination.css — Phân trang
+   ========================================================================== */
+.pagination {
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-top: 1.5rem; border-top: 1px solid rgba(235, 232, 227, 0.7);
+}
+.pagination__summary { order: 2; font-size: 14px; line-height: 20px; color: var(--color-muted); }
+.pagination__summary strong { font-weight: 600; color: var(--color-primary); }
+.pagination__nav { order: 1; display: flex; align-items: center; gap: 0.375rem; }
+.pagination__btn {
+  width: 40px; height: 40px; border-radius: var(--radius-xl);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-surface-low); color: var(--color-muted);
+  font-size: 14px; font-weight: 600;
+  transition: background var(--transition), color var(--transition);
+}
+.pagination__btn:hover:not(:disabled) { background: var(--color-surface-container); color: var(--color-primary); }
+.pagination__btn:disabled { opacity: 0.4; }
+.pagination__btn.is-active { background: var(--color-primary); color: #fff; box-shadow: var(--shadow-sm); }
+.pagination__ellipsis { padding: 0 0.5rem; color: var(--color-outline); font-weight: 600; }
+
+@media (min-width: 640px) {
+  .pagination { flex-direction: row; }
+  .pagination__summary { order: 1; }
+  .pagination__nav { order: 2; }
+}

@@ -1,0 +1,8 @@
+.scanner{width:100%;min-height:260px;background:#111;border-radius:var(--radius);overflow:hidden}
+.manual-form{display:flex;gap:8px;margin-top:16px}
+.checkin-result{margin-top:12px;border-radius:var(--radius);padding:24px;text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.checkin-result.is-idle{background:var(--color-bg);color:var(--color-muted)}
+.checkin-result.is-ok{background:#e6f4ea;color:var(--color-success)}
+.checkin-result.is-fail{background:#fdecea;color:var(--color-danger)}
+.checkin-result__icon{font-size:2.6rem;font-weight:700}
+.checkin-result__msg{font-size:1.2rem;font-weight:600}

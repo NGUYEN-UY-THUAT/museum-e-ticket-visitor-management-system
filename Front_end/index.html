@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang chủ | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Tra cứu thông tin, lịch hoạt động và đặt vé tham quan bảo tàng trực tuyến với vé QR điện tử." />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base (dùng chung với trang quản trị) -->
+  <link rel="stylesheet" href="css/base/reset.css" />
+  <link rel="stylesheet" href="css/base/variables.css" />
+  <link rel="stylesheet" href="css/base/typography.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="css/layouts/public-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="css/components/button.css" />
+  <link rel="stylesheet" href="css/components/modal.css" />
+  <link rel="stylesheet" href="css/components/chip.css" />
+  <link rel="stylesheet" href="css/components/public-navbar.css" />
+  <link rel="stylesheet" href="css/components/museum-card.css" />
+  <link rel="stylesheet" href="css/components/pagination.css" />
+  <link rel="stylesheet" href="css/components/footer.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="css/pages/home.css" />
+</head>
+
+<!-- theme-heritage: bật bộ màu trang khách tham quan; data-page: menu đang chọn trên thanh điều hướng -->
+<body class="theme-heritage" data-page="home">
+
+  <!-- Thanh điều hướng: được vẽ bởi js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+  <main class="site-main">
+    <!-- ===================== HERO + TÌM KIẾM ===================== -->
+    <section class="home-hero">
+      <div class="home-hero__glow home-hero__glow--gold"></div>
+      <div class="home-hero__glow home-hero__glow--navy"></div>
+
+      <div class="container home-hero__content">
+        <div class="home-hero__top">
+          <div class="home-hero__intro">
+            <span class="eyebrow">
+              <span class="icon icon--16">explore</span>
+              Hệ Thống Bản Đồ Di Sản Số
+            </span>
+            <h1 class="home-hero__title text-headline-lg">Khám phá Hệ thống Bảo tàng Di sản Việt Nam</h1>
+            <p class="home-hero__lead text-body-lg">
+              Tra cứu thông tin, lịch hoạt động và đặt vé tham quan trực tuyến tại hơn 120 không gian lưu giữ
+              ký ức lịch sử, nghệ thuật điêu khắc và bản sắc văn hóa ngàn năm.
+            </p>
+          </div>
+
+          <div class="home-hero__stats">
+            <div class="hero-stat">
+              <div class="hero-stat__icon"><span class="icon icon--22">account_balance</span></div>
+              <div>
+                <p class="hero-stat__value" id="statPartnerCount">124</p>
+                <p class="hero-stat__label">Bảo tàng đối tác</p>
+              </div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat__icon hero-stat__icon--gold"><span class="icon icon--22">qr_code_2</span></div>
+              <div>
+                <p class="hero-stat__value">100%</p>
+                <p class="hero-stat__label">Vé QR tức thì</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hộp tìm kiếm & bộ lọc -->
+        <form class="filter-box" id="filterForm" autocomplete="off" onsubmit="return false;">
+          <div class="filter-box__row">
+            <div class="search-field">
+              <span class="icon icon--22 search-field__icon">search</span>
+              <input class="search-field__input" id="searchInput" type="search"
+                     placeholder="Tìm theo tên bảo tàng, hiện vật, địa chỉ..." aria-label="Tìm kiếm bảo tàng" />
+              <button class="search-field__clear" id="clearSearchBtn" type="button" aria-label="Xóa từ khóa" hidden>
+                <span class="icon icon--18">close</span>
+              </button>
+            </div>
+
+            <div class="filter-box__controls">
+              <div class="select-field">
+                <span class="icon select-field__icon select-field__icon--left">sort</span>
+                <select class="select-field__input" id="sortSelect" aria-label="Sắp xếp">
+                  <option value="popular">Phổ biến nhất</option>
+                  <option value="rating">Đánh giá cao nhất</option>
+                  <option value="price-asc">Giá tăng dần</option>
+                  <option value="distance">Khoảng cách gần nhất</option>
+                </select>
+                <span class="icon select-field__icon select-field__icon--right">unfold_more</span>
+              </div>
+
+              <label class="toggle-chip">
+                <input id="openNowToggle" type="checkbox" />
+                <span class="pulse-dot"></span>
+                <span>Đang mở cửa</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-groups">
+            <div class="filter-group">
+              <span class="filter-group__label"><span class="icon icon--16">location_on</span> Khu vực:</span>
+              <!-- Chip được vẽ từ APP_CONFIG.CITIES (js/pages/home.js) -->
+              <div class="filter-group__chips" id="cityFilterGroup"></div>
+            </div>
+            <div class="filter-group">
+              <span class="filter-group__label"><span class="icon icon--16">category</span> Thể loại:</span>
+              <!-- Chip được vẽ từ APP_CONFIG.MUSEUM_TYPES (js/pages/home.js) -->
+              <div class="filter-group__chips" id="typeFilterGroup"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== DANH SÁCH BẢO TÀNG ===================== -->
+    <section class="container page-section stack" id="museum-list">
+      <div class="results-header">
+        <div class="results-header__title">
+          <span class="results-header__dot"></span>
+          <h2 class="text-headline-sm text-primary" id="resultCounter">Đang tải danh sách bảo tàng...</h2>
+          <span class="tag" id="resultScope">Toàn quốc</span>
+        </div>
+        <div class="results-header__tools">
+          <button class="btn btn--tool" id="toggleMapBtn" type="button">
+            <span class="icon icon--18">map</span>
+            <span>Xem bản đồ số</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Trạng thái rỗng -->
+      <div class="emptyState" id="emptyState" hidden>
+        <div class="empty-state__icon"><span class="icon icon--44">search_off</span></div>
+        <h3 class="empty-state__title text-headline-sm">Không tìm thấy bảo tàng phù hợp</h3>
+        <p class="empty-state__text">
+          Rất tiếc, không có địa điểm nào khớp với cụm từ hoặc bộ lọc bạn đã chọn.
+          Vui lòng thử lại với các tiêu chí tìm kiếm khác.
+        </p>
+        <button class="btn btn--primary btn--lg" id="resetFilterBtn" type="button">
+          <span class="icon icon--18">refresh</span>
+          Xóa tất cả bộ lọc
+        </button>
+      </div>
+
+      <!-- Lưới thẻ bảo tàng: được vẽ bởi js/components/museum-card.js -->
+      <div class="museum-grid" id="museumGrid" aria-live="polite"></div>
+
+      <!-- Banner dịch vụ đoàn khách -->
+      <div class="group-banner">
+        <div class="group-banner__circle"></div>
+        <div class="group-banner__content">
+          <span class="group-banner__eyebrow">
+            <span class="icon icon--16">groups</span>
+            Dịch vụ Đoàn &amp; Thuyết minh viên
+          </span>
+          <h3 class="group-banner__title text-headline-md">
+            Bạn đang tổ chức chuyến tham quan cho Trường học hoặc Đoàn thể?
+          </h3>
+          <p class="group-banner__text text-body-md">
+            Đăng ký gói vé đoàn ưu đãi chiết khấu lên đến 25%, hỗ trợ hướng dẫn viên tiếng Việt/Anh/Pháp
+            chuyên nghiệp và lối vào ưu tiên riêng biệt.
+          </p>
+        </div>
+        <div class="group-banner__action">
+          <a class="btn btn--accent btn--lg" href="pages/booking.html#group">Đăng ký đoàn khách</a>
+        </div>
+      </div>
+
+      <!-- Phân trang: được vẽ bởi js/components/pagination.js -->
+      <div class="pagination" id="pagination" hidden></div>
+    </section>
+  </main>
+
+  <!-- Chân trang: được vẽ bởi js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="js/config/api.config.js"></script>
+  <script src="js/config/app.config.js"></script>
+  <script src="js/utils/format.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  <script src="js/services/api.service.js"></script>
+  <script src="js/services/auth.service.js"></script>
+  <script src="js/services/mock/museum.mock.js"></script>
+  <script src="js/services/museum.service.js"></script>
+  <script src="js/components/notification.js"></script>
+  <script src="js/components/modal.js"></script>
+  <script src="js/components/public-navbar.js"></script>
+  <script src="js/components/footer.js"></script>
+  <script src="js/components/museum-card.js"></script>
+  <script src="js/components/pagination.js"></script>
+  <script src="js/pages/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặt vé &amp; dịch vụ | Bảo Tàng Di Sản</title>
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/variables.css">
+  <link rel="stylesheet" href="../css/base/typography.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap">
+  <link rel="stylesheet" href="../css/layouts/public-layout.css">
+  <link rel="stylesheet" href="../css/components/button.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/card.css">
+  <link rel="stylesheet" href="../css/components/public-navbar.css">
+  <link rel="stylesheet" href="../css/components/footer.css">
+  <link rel="stylesheet" href="../css/pages/booking.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body class="theme-heritage" data-page="booking">
+  <header id="publicNavbar"></header>
+  <main class="site-main">
+
+  <section class="hero">
+    <div class="container">
+      <h1>Khám phá di sản, đặt vé chỉ trong một phút</h1>
+      <p>Mua vé điện tử, nhận mã QR để vào cổng, đăng ký sự kiện và đặt lịch cho đoàn tham quan.</p>
+      <a class="btn btn--accent btn--lg" href="#booking">Đặt vé ngay</a>
+      <p class="text-small" id="openInfo" style="margin-top:16px"></p>
+    </div>
+  </section>
+
+  <section class="section" id="booking">
+    <div class="container">
+      <h2>Bảng giá & đặt vé</h2>
+      <div class="price-grid" id="priceGrid"></div>
+      <div class="card" style="max-width:640px">
+        <form id="bookingForm" novalidate>
+          <div class="form-group"><label>Họ và tên</label><input class="form-control" name="customer_name"></div>
+          <div class="form-row"><div class="form-group"><label>Số điện thoại</label><input class="form-control" name="phone"></div><div class="form-group"><label>Email</label><input class="form-control" name="email"></div></div>
+          <div class="form-row"><div class="form-group"><label>Loại vé</label><select class="form-control" name="ticket_type_id" id="typeSelect"></select></div><div class="form-group"><label>Số lượng</label><input class="form-control" type="number" min="1" max="20" name="quantity" value="1"></div></div>
+          <div class="form-group"><label>Ngày tham quan</label><input class="form-control" type="date" name="visit_date" id="visitDate"></div>
+          <p style="margin-bottom:16px">Tổng tiền: <b id="bookingTotal">0 ₫</b></p>
+          <button class="btn btn--primary" type="submit">Thanh toán & nhận vé QR</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="events">
+    <div class="container"><h2>Sự kiện sắp diễn ra</h2><div class="public-events" id="publicEvents"></div></div>
+  </section>
+
+  <section class="section" id="group">
+    <div class="container">
+      <h2>Đăng ký tham quan theo đoàn</h2>
+      <div class="card" style="max-width:640px">
+        <form id="groupForm" novalidate>
+          <div class="form-group"><label>Tên đoàn / đơn vị</label><input class="form-control" name="group_name"></div>
+          <div class="form-row"><div class="form-group"><label>Trưởng đoàn</label><input class="form-control" name="leader_name"></div><div class="form-group"><label>Số điện thoại</label><input class="form-control" name="phone"></div></div>
+          <div class="form-row"><div class="form-group"><label>Email</label><input class="form-control" name="email"></div><div class="form-group"><label>Số người (≥10)</label><input class="form-control" type="number" name="size"></div></div>
+          <div class="form-row"><div class="form-group"><label>Ngày dự kiến</label><input class="form-control" type="date" name="visit_date"></div><div class="form-group"><label>Cần thuyết minh viên</label><select class="form-control" name="guide_required"><option value="1">Có</option><option value="0">Không</option></select></div></div>
+          <div class="form-group"><label>Ghi chú</label><textarea class="form-control" rows="2" name="note"></textarea></div>
+          <button class="btn btn--primary" type="submit">Gửi đăng ký</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="survey">
+    <div class="container">
+      <h2>Khảo sát mức độ hài lòng</h2>
+      <div class="card" style="max-width:640px">
+        <form id="surveyForm" novalidate>
+          <div class="form-row"><div class="form-group"><label>Họ tên (không bắt buộc)</label><input class="form-control" name="full_name"></div><div class="form-group"><label>Mã vé (nếu có)</label><input class="form-control" name="ticket_code"></div></div>
+          <div id="ratingFields"></div>
+          <div class="form-group"><label>Góp ý</label><textarea class="form-control" rows="3" name="comment"></textarea></div>
+          <button class="btn btn--primary" type="submit">Gửi đánh giá</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lookup">
+    <div class="container">
+      <h2>Tra cứu vé</h2>
+      <form id="lookupForm" class="toolbar" style="max-width:480px"><input class="form-control" name="code" placeholder="Nhập mã vé" style="flex:1"><button class="btn btn--primary">Tra cứu</button></form>
+    </div>
+  </section>
+
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/services/visitor.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script>PublicNavbar.render(); SiteFooter.render();</script>
+  <script src="../js/pages/booking.js"></script>
+</body>
+</html>

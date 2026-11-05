@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cài đặt | Bảo tàng Số</title>
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/variables.css">
+  <link rel="stylesheet" href="../css/base/typography.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/button.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/card.css">
+  <link rel="stylesheet" href="../css/layouts/main-layout.css">
+  <link rel="stylesheet" href="../css/pages/settings.css">
+</head>
+<body>
+  <div class="layout">
+    <aside id="sidebar"></aside>
+    <div class="layout__main">
+      <header id="navbar"></header>
+      <main class="layout__content">
+        <div class="page-header"><h1>Cài đặt</h1></div>
+        <div class="grid-2">
+          <section class="card"><h3 style="margin-bottom:16px">Thông tin bảo tàng</h3>
+            <form id="settingsForm">
+              <div class="form-group"><label>Tên bảo tàng</label><input class="form-control" name="museum_name"></div>
+              <div class="form-group"><label>Địa chỉ</label><input class="form-control" name="address"></div>
+              <div class="form-row"><div class="form-group"><label>Hotline</label><input class="form-control" name="hotline"></div><div class="form-group"><label>Sức chứa/ngày</label><input class="form-control" type="number" name="daily_capacity"></div></div>
+              <div class="form-row"><div class="form-group"><label>Giờ mở cửa</label><input class="form-control" type="time" name="open_time"></div><div class="form-group"><label>Giờ đóng cửa</label><input class="form-control" type="time" name="close_time"></div></div>
+              <div class="form-group"><label>Ngày nghỉ</label><input class="form-control" name="closed_day"></div>
+              <button class="btn btn--primary">Lưu thay đổi</button>
+            </form></section>
+          <section class="card"><h3 style="margin-bottom:16px">Kết nối & dữ liệu</h3>
+            <p>Chế độ dữ liệu: <b id="modeText"></b></p>
+            <p class="text-muted text-small" style="margin:8px 0 16px">Đổi <code>USE_MOCK</code> trong <code>js/config/api.config.js</code> thành <code>false</code> để gọi API backend (MySQL) tại <code id="baseUrl"></code>.</p>
+            <button class="btn btn--danger" id="resetBtn">Khôi phục dữ liệu mẫu</button>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/services/visitor.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/services/statistics.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/navbar.js"></script>
+  <script src="../js/pages/settings.js"></script>
+</body>
+</html>

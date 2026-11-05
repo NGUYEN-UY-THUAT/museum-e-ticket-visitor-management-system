@@ -1,0 +1,56 @@
+/* ==========================================================================
+   chip.css — Chip bộ lọc, badge trạng thái, tag
+   ========================================================================== */
+/* Chip lọc khu vực (dạng viên thuốc) */
+.chip {
+  padding: 0.375rem 0.875rem; border-radius: var(--radius-full);
+  font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em;
+  background: var(--color-surface-low); color: var(--color-muted);
+  transition: background var(--transition), color var(--transition);
+}
+.chip:hover { background: var(--color-surface-container); }
+.chip.is-active { background: var(--color-primary); color: #fff; box-shadow: var(--shadow-sm); }
+
+/* Chip lọc thể loại (bo góc vuông hơn) */
+.chip--square { padding: 0.25rem 0.75rem; border-radius: .5rem; }
+.chip--square.is-active {
+  background: var(--color-surface-high); color: var(--color-primary);
+  box-shadow: none;
+}
+
+/* Badge nổi trên ảnh */
+.media-badge {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.25rem 0.625rem; border-radius: var(--radius-full);
+  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.05em;
+  box-shadow: var(--shadow-sm);
+}
+.media-badge--heritage { background: var(--color-gold-light); color: var(--color-on-gold-light); }
+.media-badge--status {
+  background: rgba(252, 249, 244, 0.95); backdrop-filter: blur(8px);
+  color: var(--color-open-text); font-weight: 700;
+}
+.media-badge--closed { color: var(--color-error); }
+.media-badge__dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-open-dot); }
+.media-badge--closed .media-badge__dot { background: var(--color-error); }
+
+/* Nhãn nhỏ trên nền sáng/tối */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.25rem 0.75rem; border-radius: var(--radius-full);
+  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(254, 212, 135, 0.4); color: var(--color-on-gold-container);
+}
+.eyebrow .icon { color: var(--color-gold); }
+
+.tag {
+  padding: 0.125rem 0.5rem; border-radius: .375rem;
+  font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em;
+  background: var(--color-surface-container); color: var(--color-muted);
+}
+
+.pulse-dot {
+  width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-open-dot);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse { 50% { opacity: 0.5; } }

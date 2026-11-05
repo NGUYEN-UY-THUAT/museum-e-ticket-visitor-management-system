@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiểm soát lượt vào | Bảo tàng Số</title>
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/variables.css">
+  <link rel="stylesheet" href="../css/base/typography.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/button.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/card.css">
+  <link rel="stylesheet" href="../css/layouts/main-layout.css">
+  <link rel="stylesheet" href="../css/pages/checkin.css">
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <div class="layout">
+    <aside id="sidebar"></aside>
+    <div class="layout__main">
+      <header id="navbar"></header>
+      <main class="layout__content">
+        <div class="page-header"><div><h1>Kiểm soát lượt vào</h1><p class="text-muted">Quét mã QR trên vé hoặc nhập mã vé</p></div>
+          <select class="form-control" id="gateSelect" style="width:auto"><option>Cổng A</option><option>Cổng B</option><option>Cổng đoàn</option></select></div>
+        <div class="grid-2">
+          <section class="card">
+            <div id="reader" class="scanner"></div>
+            <div class="toolbar" style="margin-top:12px"><button class="btn btn--primary" id="startScan">Bật camera</button><button class="btn btn--outline" id="stopScan" disabled>Tắt camera</button></div>
+            <form id="manualForm" class="manual-form"><input class="form-control" name="code" placeholder="Nhập mã vé, ví dụ TK7A1X9QZ2"><button class="btn btn--primary">Kiểm tra</button></form>
+          </section>
+          <section class="card"><h3>Kết quả</h3><div id="result" class="checkin-result is-idle">Chưa quét vé nào</div>
+            <div class="stat-grid" style="margin-top:16px"><div class="stat-card"><div class="stat-card__label">Lượt vào hôm nay</div><div class="stat-card__value" id="todayCount">0</div></div><div class="stat-card"><div class="stat-card__label">Từ chối</div><div class="stat-card__value" id="rejectCount">0</div></div></div>
+          </section>
+        </div>
+        <section class="card"><div class="card__header"><h3>Nhật ký lượt vào</h3></div>
+          <div class="table-wrap"><table class="table"><thead><tr><th>Thời gian</th><th>Mã vé</th><th>Cổng</th><th>Nhân viên</th><th>Kết quả</th></tr></thead><tbody id="logBody"></tbody></table></div></section>
+      </main>
+    </div>
+  </div>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/services/visitor.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/services/statistics.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/navbar.js"></script>
+  <script src="../js/pages/checkin.js"></script>
+</body>
+</html>

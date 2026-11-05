@@ -1,0 +1,49 @@
+/* ==========================================================================
+   footer.css — Chân trang
+   ========================================================================== */
+.site-footer { background: var(--color-primary); color: var(--color-surface-high); }
+.site-footer__inner { padding-top: 3rem; padding-bottom: 3rem; }
+.site-footer__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2.5rem; }
+.site-footer__col > * + * { margin-top: 0.75rem; }
+.site-footer__col--brand > * + * { margin-top: 1rem; }
+
+.site-footer__brand { display: flex; align-items: center; gap: 0.625rem; }
+.site-footer__logo, .site-footer__badge {
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-xl); background: rgba(255, 255, 255, 0.1); color: var(--color-gold-light);
+}
+.site-footer__logo { width: 36px; height: 36px; }
+.site-footer__badge { width: 40px; height: 40px; }
+.site-footer__brand-name { font-size: 18px; font-weight: 600; color: var(--color-bg); }
+.site-footer__title { font-size: 18px; line-height: 26px; font-weight: 500; color: var(--color-gold-light); }
+.site-footer__text { font-size: 14px; line-height: 1.625; }
+
+.site-footer__contacts { display: flex; flex-direction: column; gap: 0.625rem; font-size: 14px; line-height: 20px; padding-top: 0.25rem; }
+.site-footer__contact { display: flex; align-items: flex-start; gap: 0.625rem; }
+.site-footer__contact .icon { color: var(--color-gold-light); margin-top: 1px; }
+
+.site-footer__links { display: flex; flex-direction: column; gap: 0.625rem; font-size: 14px; line-height: 20px; }
+.site-footer__links a, .site-footer__legal a { transition: color var(--transition); }
+.site-footer__links a:hover, .site-footer__legal a:hover { color: var(--color-bg); }
+
+.site-footer__badges { display: flex; gap: 0.75rem; padding-top: 0.5rem; }
+.site-footer__email {
+  margin-top: 1rem !important; padding-top: 0.75rem;
+  border-top: 1px solid rgba(235, 232, 227, 0.2);
+  font-size: 11px; letter-spacing: 0.05em; color: var(--color-surface-highest);
+}
+
+.site-footer__bottom {
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-top: 2rem; border-top: 1px solid rgba(235, 232, 227, 0.15);
+  font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; text-align: center;
+}
+.site-footer__legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+
+@media (min-width: 768px) {
+  .site-footer__grid { grid-template-columns: repeat(2, 1fr); }
+  .site-footer__bottom { flex-direction: row; text-align: left; }
+}
+@media (min-width: 1024px) {
+  .site-footer__grid { grid-template-columns: repeat(4, 1fr); }
+}

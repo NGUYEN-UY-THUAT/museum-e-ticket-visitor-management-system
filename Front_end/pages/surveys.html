@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khảo sát hài lòng | Bảo tàng Số</title>
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/variables.css">
+  <link rel="stylesheet" href="../css/base/typography.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/button.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/card.css">
+  <link rel="stylesheet" href="../css/layouts/main-layout.css">
+  <link rel="stylesheet" href="../css/pages/surveys.css">
+</head>
+<body>
+  <div class="layout">
+    <aside id="sidebar"></aside>
+    <div class="layout__main">
+      <header id="navbar"></header>
+      <main class="layout__content">
+        <div class="page-header"><div><h1>Khảo sát mức độ hài lòng</h1><p class="text-muted">Ý kiến khách tham quan sau chuyến thăm</p></div><a class="btn btn--outline" href="booking.html#survey" target="_blank">Mở form khảo sát</a></div>
+        <div class="stat-grid" id="summaryGrid"></div>
+        <section class="card"><div class="card__header"><h3>Phản hồi</h3><select class="form-control" id="ratingFilter" style="width:auto"><option value="">Tất cả mức điểm</option><option value="5">5 sao</option><option value="4">4 sao</option><option value="3">3 sao</option><option value="2">2 sao</option><option value="1">1 sao</option></select></div>
+          <div id="surveyList"></div></section>
+      </main>
+    </div>
+  </div>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/services/visitor.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/services/statistics.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/navbar.js"></script>
+  <script src="../js/pages/surveys.js"></script>
+</body>
+</html>

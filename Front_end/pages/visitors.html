@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đoàn khách | Bảo tàng Số</title>
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/variables.css">
+  <link rel="stylesheet" href="../css/base/typography.css">
+  <link rel="stylesheet" href="../css/components/navbar.css">
+  <link rel="stylesheet" href="../css/components/sidebar.css">
+  <link rel="stylesheet" href="../css/components/button.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/card.css">
+  <link rel="stylesheet" href="../css/layouts/main-layout.css">
+  <link rel="stylesheet" href="../css/pages/visitors.css">
+</head>
+<body>
+  <div class="layout">
+    <aside id="sidebar"></aside>
+    <div class="layout__main">
+      <header id="navbar"></header>
+      <main class="layout__content">
+        <div class="page-header"><div><h1>Đoàn khách</h1><p class="text-muted">Tiếp nhận, duyệt lịch và theo dõi đoàn tham quan</p></div><button class="btn btn--primary" id="newGroupBtn">+ Thêm đoàn</button></div>
+        <section class="card">
+          <div class="card__header filters"><input class="form-control" id="searchInput" placeholder="Tìm tên đoàn, trưởng đoàn..."><select class="form-control" id="statusFilter"><option value="">Tất cả trạng thái</option></select></div>
+          <div class="table-wrap"><table class="table"><thead><tr><th>Tên đoàn</th><th>Trưởng đoàn</th><th>Liên hệ</th><th>Số người</th><th>Ngày</th><th>Thuyết minh</th><th>Trạng thái</th><th></th></tr></thead><tbody id="groupBody"></tbody></table></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/services/visitor.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/services/statistics.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/navbar.js"></script>
+  <script src="../js/pages/visitors.js"></script>
+</body>
+</html>

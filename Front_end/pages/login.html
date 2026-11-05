@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập | Bảo tàng Số</title>
+  <link rel="stylesheet" href="../css/base/reset.css">
+  <link rel="stylesheet" href="../css/base/variables.css">
+  <link rel="stylesheet" href="../css/base/typography.css">
+  <link rel="stylesheet" href="../css/components/button.css">
+  <link rel="stylesheet" href="../css/components/modal.css">
+  <link rel="stylesheet" href="../css/components/card.css">
+  <link rel="stylesheet" href="../css/layouts/auth-layout.css">
+  <link rel="stylesheet" href="../css/pages/login.css">
+</head>
+<body>
+  <div class="auth-layout">
+    <div class="auth-card">
+      <div class="login-brand">🏛️</div>
+      <h1 class="text-center">Đăng nhập hệ thống</h1>
+      <p class="text-center text-muted" style="margin-bottom:24px">Dành cho cán bộ vận hành bảo tàng</p>
+      <form id="loginForm" novalidate>
+        <div class="form-group"><label for="username">Tên đăng nhập</label><input class="form-control" id="username" name="username" autocomplete="username"></div>
+        <div class="form-group"><label for="password">Mật khẩu</label><input class="form-control" type="password" id="password" name="password" autocomplete="current-password"></div>
+        <button class="btn btn--primary btn--block" type="submit" id="loginBtn">Đăng nhập</button>
+      </form>
+      <p class="text-small text-muted text-center login-hint">Tài khoản thử: <b>admin / admin123</b> hoặc <b>staff / staff123</b></p>
+      <p class="text-center" style="margin-top:12px"><a class="text-small" href="../index.html">← Về trang khách tham quan</a></p>
+    </div>
+  </div>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/services/visitor.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/services/statistics.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/navbar.js"></script>
+  <script src="../js/pages/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+.filters{justify-content:flex-start}
+.filters .form-control{max-width:240px}
+.eticket{text-align:center;border:2px dashed var(--color-border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.eticket__qr{margin-bottom:8px}
+.eticket__code{font-family:monospace;font-size:1.3rem;font-weight:700;letter-spacing:.1em;color:var(--color-primary)}
+@media print{body *{visibility:hidden}.eticket,.eticket *{visibility:visible}.eticket{position:fixed;top:20px;left:20px;right:20px}}

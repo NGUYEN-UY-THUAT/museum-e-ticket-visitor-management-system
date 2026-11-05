@@ -1,0 +1,6 @@
+.event-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.event-card{display:flex;flex-direction:column;gap:8px}
+.event-card__top{display:flex;justify-content:space-between;align-items:center}
+.progress{height:6px;background:var(--color-bg);border-radius:99px;overflow:hidden}
+.progress>div{height:100%;background:var(--color-accent)}
+#eventTabs .is-active{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
