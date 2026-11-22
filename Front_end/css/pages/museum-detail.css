@@ -1,0 +1,29 @@
+/* ==========================================================================
+   museum-detail.css — Chi tiết bảo tàng (pages/museum-detail.html)
+   Bố cục dùng lớp tiện ích trong css/base/utilities.css; file này chỉ chứa phần riêng của trang.
+   Ảnh đang trỏ tới link ảnh mẫu của Stitch: nên tải về assets/images/ rồi đổi url().
+   ========================================================================== */
+
+/* Grand interior view of Vietnam National Museum of History hall, French Indochina architecture designed by Erne */
+.museum-detail-photo-1 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZgbQosfscr5n4yHqqYS2YDVKfWIaM_S5vpTCO0dti4NinTzQgWGVidpvSBK_PEltMhzsxZG8hqmPJ9FXNgeqZJtbg826P4DefBhAAVNiDLrMqssbD7YONuGwt324sEHDjHZYYaZKdSKzHZThfV1WmsKMk21DWVqsBY8jNpjnnnY-mKjWtIEaTocuVJmQn0DFSl3T_3wl4hnlF7k9iQYa3_WN4A2GxdrOy0vbjQDLHXJmaYFPbK83i"); }
+
+/* Close up photography of antique Dong Son bronze drum preserved in glass vitrine at Vietnam museum, intricate e */
+.museum-detail-photo-2 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAanjwUJYWBi2Zz7uke8szxRv5UC7twDwp17luCBUnOpGK6WL876yVJy3MrpaGSQ4W2gDj-ThsUdIcfpoD4oEiA9_hQ4djkIAJnagyEusTgg6mW0nmMogNyAphprh4zpAzNL75ERMpRe2kT4UxSHRuuAnFhmxSYMdnNyHwJ51QHaoxxDHw1F-lLGIqvoI9RlzbAzUtLJxVMgPG6wjyvwUGxWEKKbCgZBKKCU-FJE2ltgyAvYfY2VUam"); }
+
+/* Imperial gold seal of the Nguyen Dynasty emperor with carved coiled dragon handle, gleaming ancient royal gold */
+.museum-detail-photo-3 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsaDDePSxuktPBvyo35i_qXXPGage7RP3-Q5IfURNwEx1Ov8yfbtYwFaKJ1qO4gNXCUK0d0M4WlFI3ApL6R-PmvvUknjDlsTlihfpkwe0hx-IcF5_u3-jnG__LqGMdIChRijGStksLpT7bPWPb8pzHiGrjahxFR9-dKR2HiCoZZzJBhgmoMxlaUHYVM7lRmFr-hwiQXBqa36erdO0k1tXZoV8eLTah6PFK5Gy_Q05XR03-j3gVyEDr"); }
+
+/* Ancient wooden polychrome lacquered Bodhisattva Avalokiteshvara Thousand Hands Thousand Eyes statue from Le Dy */
+.museum-detail-photo-4 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8Cn5QIWXqHppnpcZMGTsHMaBvKcQ66wz8d3isAA0x9nm4rbX1Di4qPEYdYAi-kj7N8CjtvwcaZvRTnW61-q5c_Q0LxaIrKA0a33PE68civLkBKfjGQwALD-ac0NQh3qAKpG31-WgZhZsaWK0vfCCo9LaKLz3dx3IBK6c1F0BXuVmUBVH02aGp7JKgknSCEmzsQDZlI2iuNuUrDTGr3034NY9VooT_jtSClk1viOv2ZJSF-GCaVnt4"); }
+
+/* Visitors immersed in interactive digital historical exhibit with projection mapping on museum walls displaying */
+.museum-detail-photo-5 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDy9t4oEiPT0ikjW5y7pl-IMyNgM0h8ONEWrS6Fa5LpqPaMjnQqRoi12NmKkLYtJDOaFC4TWlCwFoA_kN1Fo-jL9BfwbpUrK291dUjMnnSFMwT-SrGYdyoC3hdkQ6DuV5nLZZHdUorPrp4KVRR2L6eRryR2wkQ9LB-VKbdLURdKDSyeYM5CRUTxWtzNruuL3R4TmgJKQd7RMF5vhzm2rF9Vlb9dWCMejxXbInktfWGLPF_eXKyPH3dN"); }
+
+/* Exhibition gallery banner showing ancient royal jade ceramics and silk manuscripts illuminated under warm spot */
+.museum-detail-photo-6 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWUKspa_Kh_q1NAIMKtHjhjaZoAkZh5QaW2MYwDgREbN6wRAdGsHIlh9GXQQrTl50wksjGULvuHonuT3wq7cZ-y_PqcYo33NjzPW04fLgKQVaIKcRs2cuhqkzOF0Cev8cpZG3u5nPjaE0TDjtfQoiVoZuVmOo9ONMteO9kZTmKnXO_i8Lp2lCG2a4bvhhRK6r8jf5rKGvkZRPp2R7Tv8CR_VVfyJ80L7MhmXwpg55aHB_X6v4dD5GY"); }
+
+/* Artisans and visitors hand-stamping traditional Dong Son bronze motifs on handmade traditional Do paper in an  */
+.museum-detail-photo-7 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhxg-4gwiovejxyplXWxfFl4JRIzGM8lxjCx-l3KMM04EwvTVb5Yg-x0qesEzyinQAbO1hgecyxNxOu7VPwVxEjuWwQRPumS34TWIqoBc0mP65jLvkWhydgn4-V8eP092eoDmwnpMSxiQ3vDGyZGWAFYSGA5ZiXUFmAIu1mWJCTKwLPYVO6UQyzxLuTnIyGMvFENfVnC2GddfFibWx_X302IAnKQkXv732R9dnpxY28ZAXVcMqx-N4"); }
+
+/*  */
+.museum-detail-photo-8 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDd5zFu6oX1EO285MsoXlWPx5Fa-2zbpwKwf6Wm6lDUJ25VIakzb-B2k-XrQHXWzmsVc7Hmr8XzH0OKUVBg5vnLGFf7Eil4nq_O1ScduZMqYKQxd9ruD_3LRIUE58t9z89IkbNMCMHzuk0iU9Fgte4Y5a-qKF8g0dQasPENSpiQ9Ba2vdnbfPoG_Le19snqub8aknknYaPkjiUbXc-syvgInGzJy01gdJnHkBzp15irrcBNlbxzbRz6"); }

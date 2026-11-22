@@ -1,0 +1,8 @@
+/* ==========================================================================
+   event-list.css — Sự kiện & Triển lãm (pages/event-list.html)
+   Bố cục dùng lớp tiện ích trong css/base/utilities.css; file này chỉ chứa phần riêng của trang.
+   Ảnh đang trỏ tới link ảnh mẫu của Stitch: nên tải về assets/images/ rồi đổi url().
+   ========================================================================== */
+
+/* An ethereal fine-art architectural vista of Vietnamese heritage museum corridors, soft warm morning mist illum */
+.event-list-photo-1 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1AOjHRQcm4fPDFQosAWpU2xi-qVguFDQ_i-x9SFdXa8Hg_P1qUwl0oWluyxrmclzExcY17TEFe4Vhw0pHO4eUdD3IlmZmho7G_I-UTLPz-toAHMX68yuMF5zgOMAk7rZOLh2cliYrOC8-mfpsELRLLpr3Mr8Mf2U0k2e-hB7793J9BFG1Hvzben4DRIPgntZL_uu3tLVWSGCzIAoFtrgYSWk45biiw7Q_0BdIU0TIg2ZBokMG1m_U"); }

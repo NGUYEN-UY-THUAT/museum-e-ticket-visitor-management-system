@@ -1,0 +1,11 @@
+/* ==========================================================================
+   ticket-detail.css — Chi tiết vé (pages/ticket-detail.html)
+   Bố cục dùng lớp tiện ích trong css/base/utilities.css; file này chỉ chứa phần riêng của trang.
+   Ảnh đang trỏ tới link ảnh mẫu của Stitch: nên tải về assets/images/ rồi đổi url().
+   ========================================================================== */
+
+/* Bản đồ chỉ dẫn đường đi và vị trí Cổng chính A1 Bảo tàng Lịch sử Quốc gia tại góc phố Tràng Tiền và Trần Quang */
+.ticket-detail-photo-1 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYaAYfDM_i1RnrtOAuNl8eaYHqZpsOi2jj6iwb0_aU_I-69VrhKxlSraIU8doHfVI3S2H4L0EUWTrY9tmfvro5PhntYGhtvB5x336-ZBwKKeGq3_1PrpDKe8Mg2xjHsYF1rhPIzNQw0brxhYN49_M0yg6MYWM0YGmQwxyOtqV4783H_5O51GLWmxR6A3NITcAZT6VSmtP-sgwlMtjQNDyft2Imtg8J8g-lALoPev7VFN19pVEWwFtG"); }
+
+/* Ảnh cận cảnh chiếc bình gốm hoa lam cổ thời Lê sơ của Việt Nam với hoa văn men lam tinh xảo, trưng bày dưới án */
+.ticket-detail-photo-2 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsGR53G2LOubnFMzcWxO0wCXnnsXvj-eBmfZYjs6zT1tchF-OG0NGc4Xiw33iggFRbu2sE_VPiQq3X_9PfZ85hNPj4s6QXmD6cDP_PMjo4xGMvf3KMi01oyufB_dHJzr2mAuDE7FI_325Zo6Kv0I2JF0kymmH2xaJQ4SHul9TOwa0r5zUEa2ZdHUp94NzGwdqBUpyCqSgHcPPgUOgWUVQHhByIolpyWbPXwtj5YrM4Bj1SIw5ukBRr"); }

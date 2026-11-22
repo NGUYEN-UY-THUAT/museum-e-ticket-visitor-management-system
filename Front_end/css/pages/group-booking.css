@@ -1,0 +1,8 @@
+/* ==========================================================================
+   group-booking.css — Đặt vé đoàn (pages/group-booking.html)
+   Bố cục dùng lớp tiện ích trong css/base/utilities.css; file này chỉ chứa phần riêng của trang.
+   Ảnh đang trỏ tới link ảnh mẫu của Stitch: nên tải về assets/images/ rồi đổi url().
+   ========================================================================== */
+
+/* A lively group of Vietnamese high school students and enthusiastic teachers listening intently to a museum cur */
+.group-booking-photo-1 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8IHgLd5Uj_fm5GmrRkpUat4snJwVLRqjLhuNV7Ze-5fHHeOqnbIxQS-z4bBDx0WPJwet5Qfr8riFD5D1gCPuhsYW7p58EC4-CVirOeH0VXgb_9LcQZQO0W9CG6GXhalwi4J3GYDXIGFV-yJGGX5wjyTPbq69vG_YVtUqA2S0L4c0CJ4Lm_Y1PDOfeT3u6OsHeEIBIGqZ6rkd-o8dsMKm6K_q4h3u1gd_sq-J58dTsfyE8MHa0Qf8c"); }

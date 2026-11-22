@@ -1,0 +1,54 @@
+/* ==========================================================================
+   design-tokens.css — Bộ màu "Heritage & Horizon" (navy di sản + vàng đồng) cho trang khách tham quan.
+   Giá trị là bộ 3 kênh R G B để lớp tiện ích dùng được độ trong suốt, ví dụ bg-primary/95.
+   Đổi màu toàn site: chỉ cần sửa ở đây (không cần biên dịch lại utilities.css).
+   ========================================================================== */
+:root {
+  --hh-background: 252 249 244;               /* #fcf9f4 */
+  --hh-error: 186 26 26;                      /* #ba1a1a */
+  --hh-error-container: 255 218 214;          /* #ffdad6 */
+  --hh-inverse-on-surface: 243 240 235;       /* #f3f0eb */
+  --hh-inverse-primary: 174 200 244;          /* #aec8f4 */
+  --hh-inverse-surface: 49 48 45;             /* #31302d */
+  --hh-on-background: 28 28 25;               /* #1c1c19 */
+  --hh-on-error: 255 255 255;                 /* #ffffff */
+  --hh-on-error-container: 147 0 10;          /* #93000a */
+  --hh-on-primary: 255 255 255;               /* #ffffff */
+  --hh-on-primary-container: 139 164 207;     /* #8ba4cf */
+  --hh-on-primary-fixed: 0 28 59;             /* #001c3b */
+  --hh-on-primary-fixed-variant: 45 71 109;   /* #2d476d */
+  --hh-on-secondary: 255 255 255;             /* #ffffff */
+  --hh-on-secondary-container: 121 90 25;     /* #795a19 */
+  --hh-on-secondary-fixed: 39 25 0;           /* #271900 */
+  --hh-on-secondary-fixed-variant: 93 66 0;   /* #5d4200 */
+  --hh-on-surface: 28 28 25;                  /* #1c1c19 */
+  --hh-on-surface-variant: 67 71 78;          /* #43474e */
+  --hh-on-tertiary: 255 255 255;              /* #ffffff */
+  --hh-on-tertiary-container: 101 181 99;     /* #65b563 */
+  --hh-on-tertiary-fixed: 0 34 4;             /* #002204 */
+  --hh-on-tertiary-fixed-variant: 0 83 18;    /* #005312 */
+  --hh-outline: 116 119 127;                  /* #74777f */
+  --hh-outline-variant: 196 198 207;          /* #c4c6cf */
+  --hh-primary: 3 36 72;                      /* #032448 */
+  --hh-primary-container: 31 58 95;           /* #1f3a5f */
+  --hh-primary-fixed: 213 227 255;            /* #d5e3ff */
+  --hh-primary-fixed-dim: 174 200 244;        /* #aec8f4 */
+  --hh-secondary: 120 89 24;                  /* #785918 */
+  --hh-secondary-container: 254 212 135;      /* #fed487 */
+  --hh-secondary-fixed: 255 222 165;          /* #ffdea5 */
+  --hh-secondary-fixed-dim: 233 193 117;      /* #e9c175 */
+  --hh-surface: 252 249 244;                  /* #fcf9f4 */
+  --hh-surface-bright: 252 249 244;           /* #fcf9f4 */
+  --hh-surface-container: 240 237 233;        /* #f0ede9 */
+  --hh-surface-container-high: 235 232 227;   /* #ebe8e3 */
+  --hh-surface-container-highest: 229 226 221;/* #e5e2dd */
+  --hh-surface-container-low: 246 243 238;    /* #f6f3ee */
+  --hh-surface-container-lowest: 255 255 255; /* #ffffff */
+  --hh-surface-dim: 220 218 213;              /* #dcdad5 */
+  --hh-surface-tint: 70 95 134;               /* #465f86 */
+  --hh-surface-variant: 229 226 221;          /* #e5e2dd */
+  --hh-tertiary: 0 43 6;                      /* #002b06 */
+  --hh-tertiary-container: 0 68 13;           /* #00440d */
+  --hh-tertiary-fixed: 163 246 156;           /* #a3f69c */
+  --hh-tertiary-fixed-dim: 136 217 130;       /* #88d982 */
+}

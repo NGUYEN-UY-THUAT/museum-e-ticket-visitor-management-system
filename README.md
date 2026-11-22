@@ -35,11 +35,25 @@ Phần mềm web quản lý khách tham quan, vé điện tử và sự kiện c
 ## Cấu trúc thư mục frontend
 
 ```
-frontend/
-├── index.html                 Trang chủ khách tham quan (danh sách bảo tàng: tìm kiếm, lọc, sắp xếp, phân trang, xem chi tiết)
+Front_end/
+├── index.html                 Trang chủ khách tham quan
 ├── README.md                  Ghi chú frontend và danh sách API backend cần có
 ├── pages/
-│   ├── booking.html           Dịch vụ cho khách: đặt vé QR, sự kiện, đăng ký đoàn, khảo sát, tra cứu vé
+│   │  ── Khách tham quan ──
+│   ├── museums.html           Danh sách bảo tàng: tìm kiếm, lọc, sắp xếp, phân trang
+│   ├── museum-detail.html     Chi tiết bảo tàng: giới thiệu, giá vé, sự kiện, đánh giá, chỉ đường
+│   ├── ticket-selection.html  Đặt vé bước 1: ngày, khung giờ, loại vé, số lượng
+│   ├── checkout.html          Đặt vé bước 2: thông tin người đặt, hóa đơn VAT, thanh toán
+│   ├── payment-result.html    Đặt vé bước 3: thanh toán thành công / thất bại
+│   ├── my-tickets.html        Vé của tôi: sắp tới, đã dùng, đã hủy; xem mã QR
+│   ├── ticket-detail.html     Chi tiết một vé kèm mã QR soát vé
+│   ├── event-list.html        Danh sách sự kiện, triển lãm (dạng lưới / lịch)
+│   ├── event-detail.html      Chi tiết sự kiện và đăng ký tham dự
+│   ├── group-booking.html     Đặt vé đoàn, theo dõi hồ sơ đoàn
+│   ├── survey.html            Khảo sát mức độ hài lòng
+│   ├── profile.html           Hồ sơ cá nhân, lịch sử đơn vé
+│   ├── booking.html           Trang dịch vụ gộp cũ (còn logic mock tạo vé QR)
+│   │  ── Cán bộ / quản trị ──
 │   ├── login.html             Đăng nhập cán bộ
 │   ├── dashboard.html         Bảng điều khiển
 │   ├── tickets.html           Vé điện tử: bán vé tại quầy, phát hành QR, loại vé và giá
@@ -54,19 +68,23 @@ frontend/
 │   ├── icons/
 │   └── fonts/
 ├── css/
-│   ├── base/                  reset.css, variables.css, typography.css
+│   ├── base/                  reset.css, variables.css, typography.css,
+│   │                          design-tokens.css (bộ màu trang khách), utilities.css (lớp tiện ích biên dịch sẵn)
 │   ├── components/            button, card, chip, modal, navbar, sidebar, public-navbar,
 │   │                          footer, museum-card, pagination
-│   ├── layouts/               main-layout.css (cán bộ), auth-layout.css (đăng nhập), public-layout.css (khách)
-│   └── pages/                 mỗi trang một file CSS (home.css cho index.html)
+│   ├── layouts/               main-layout.css (cán bộ), auth-layout.css (đăng nhập),
+│   │                          public-layout.css + visitor-layout.css (khách)
+│   └── pages/                 mỗi trang một file CSS cùng tên (home.css cho index.html)
 └── js/
-    ├── config/                api.config.js (địa chỉ API, endpoint, USE_MOCK), app.config.js (menu, route, trạng thái)
+    ├── config/                api.config.js (địa chỉ API, endpoint, USE_MOCK), app.config.js (menu, ROUTES, trạng thái)
     ├── services/              api, auth, museum, ticket, event, visitor, survey, statistics
     │   └── mock/              museum.mock.js (dữ liệu mẫu)
     ├── components/            navbar, sidebar, public-navbar, footer, modal, notification,
     │                          museum-card, pagination
     ├── utils/                 format.js, validation.js, helpers.js
-    └── pages/                 mỗi trang một file JS (home.js cho index.html)
+    └── pages/                 mỗi trang một file JS cùng tên (home.js cho index.html)
+
+tools/tailwind/                Cấu hình sinh lại Front_end/css/base/utilities.css khi thêm lớp tiện ích mới
 ```
 
 Các file JS dùng biến toàn cục (ví dụ `window.TicketService`) thay vì ES module, nên mở trực tiếp file HTML vẫn chạy được. Thứ tự nạp script trên mọi trang: `config → utils → services → components → pages`.
@@ -85,11 +103,11 @@ CREATE DATABASE museum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ## Chạy frontend
 
-1. Mở `frontend/index.html` bằng trình duyệt, hoặc tốt hơn là chạy thư mục bằng **Live Server** của VS Code (camera quét QR cần chạy trên `localhost` hoặc HTTPS).
-2. Trang cho khách: `index.html` và `pages/booking.html`.
+1. Mở `Front_end/index.html` bằng trình duyệt, hoặc tốt hơn là chạy thư mục bằng **Live Server** của VS Code (camera quét QR cần chạy trên `localhost` hoặc HTTPS).
+2. Trang cho khách: bắt đầu từ `index.html` (đặt vé, sự kiện, đoàn khách, vé của tôi... đều đi được từ thanh menu).
 3. Trang cho cán bộ: `pages/login.html`. Tài khoản thử: `admin / admin123` (quản trị viên), `staff / staff123` (soát vé).
 
-Mặc định `USE_MOCK: true` trong `js/config/api.config.js`, mọi dữ liệu được lưu trong `localStorage`. Khi backend sẵn sàng, đổi thành `false` và sửa `BASE_URL` thành địa chỉ API. Danh sách endpoint backend cần cung cấp nằm trong `frontend/README.md`.
+Mặc định `USE_MOCK: true` trong `js/config/api.config.js`, mọi dữ liệu được lưu trong `localStorage`. Khi backend sẵn sàng, đổi thành `false` và sửa `BASE_URL` thành địa chỉ API. Danh sách endpoint backend cần cung cấp nằm trong `Front_end/README.md`.
 
 ## Giấy phép
 

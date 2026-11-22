@@ -2,19 +2,26 @@
    Dùng: <header id="publicNavbar"></header> + PublicNavbar.render(); menu đang chọn lấy từ <body data-page>.
    (Khác js/components/navbar.js là thanh trên của trang quản trị.) */
 window.PublicNavbar = (function () {
-  const esc = (s) => Format.escape(s);
+  const esc = s => Format.escape(s);
   const url = (k, p) => Helpers.routeUrl(k, p);
 
   function links(active) {
-    return APP_CONFIG.PUBLIC_NAV.map((i) => `<a class="topbar__link${i.key === active ? " is-active" : ""}" href="${url(i.route)}"${i.key === active ? ' aria-current="page"' : ""}>${esc(i.label)}</a>`).join("");
+    return APP_CONFIG.PUBLIC_NAV.map(i =>
+      `<a class="topbar__link${i.key === active ? " is-active" : ""}" href="${url(i.route)}"${i.key === active ? ' aria-current="page"' : ""}>${esc(i.label)}</a>`
+    ).join("");
   }
 
   /** Menu tài khoản: khách chưa đăng nhập thấy lối tắt; cán bộ đã đăng nhập thấy nút vào trang quản trị */
   function userMenu() {
     const staff = AuthService.isLoggedIn() ? AuthService.user() : null;
     const item = (icon, label, href, extra = "") => `<a class="user-menu__item${extra}" href="${href}"><span class="icon icon--18">${icon}</span><span>${label}</span></a>`;
-    const items = staff ? item("dashboard", "Trang quản trị", url("DASHBOARD")) + item("qr_code_scanner", "Soát vé / Check-in", Helpers.rootPath() + "pages/checkin.html") : item("confirmation_number", "Tra cứu vé của tôi", url("MY_TICKETS")) + item("groups", "Đăng ký đoàn khách", url("GROUP_BOOKING")) + item("rate_review", "Khảo sát ý kiến", url("SURVEY"));
-    const footer = staff ? `<button class="user-menu__item user-menu__item--danger" id="publicLogoutBtn" type="button" style="width:100%"><span class="icon icon--18">logout</span><span>Đăng xuất</span></button>` : item("badge", "Cán bộ đăng nhập", url("LOGIN"));
+    const items = staff
+      ? item("dashboard", "Trang quản trị", url("DASHBOARD")) + item("qr_code_scanner", "Soát vé / Check-in", url("CHECKIN"))
+      : item("confirmation_number", "Vé của tôi", url("MY_TICKETS")) + item("receipt_long", "Lịch sử đơn hàng", url("PROFILE", { tab: "orders" })) +
+        item("manage_accounts", "Hồ sơ cá nhân", url("PROFILE")) + item("rate_review", "Khảo sát ý kiến", url("SURVEY"));
+    const footer = staff
+      ? `<button class="user-menu__item user-menu__item--danger" id="publicLogoutBtn" type="button" style="width:100%"><span class="icon icon--18">logout</span><span>Đăng xuất</span></button>`
+      : item("badge", "Cán bộ đăng nhập", url("LOGIN"));
 
     return `
       <div class="user-menu" id="userMenu">
@@ -39,22 +46,12 @@ window.PublicNavbar = (function () {
     const bar = root.querySelector(".topbar");
     const menu = root.querySelector("#userMenu");
     const btn = root.querySelector("#userMenuBtn");
-    const setOpen = (open) => {
-      menu.classList.toggle("is-open", open);
-      btn.setAttribute("aria-expanded", String(open));
-    };
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setOpen(!menu.classList.contains("is-open"));
-    });
-    document.addEventListener("click", (e) => {
-      if (!menu.contains(e.target)) setOpen(false);
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setOpen(false);
-    });
+    const setOpen = open => { menu.classList.toggle("is-open", open); btn.setAttribute("aria-expanded", String(open)); };
+    btn.addEventListener("click", e => { e.stopPropagation(); setOpen(!menu.classList.contains("is-open")); });
+    document.addEventListener("click", e => { if (!menu.contains(e.target)) setOpen(false); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
     root.querySelector("#topbarBurger").addEventListener("click", () => bar.classList.toggle("is-mobile-open"));
-    root.querySelectorAll(".topbar__mobile a").forEach((a) => a.addEventListener("click", () => bar.classList.remove("is-mobile-open")));
+    root.querySelectorAll(".topbar__mobile a").forEach(a => a.addEventListener("click", () => bar.classList.remove("is-mobile-open")));
     const logout = root.querySelector("#publicLogoutBtn");
     if (logout) logout.addEventListener("click", () => AuthService.logout());
   }
@@ -87,6 +84,6 @@ window.PublicNavbar = (function () {
           </div>
         </nav>`;
       bind(el);
-    },
+    }
   };
 })();

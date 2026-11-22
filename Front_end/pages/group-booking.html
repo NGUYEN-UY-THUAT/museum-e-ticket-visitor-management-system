@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đặt vé đoàn | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Đăng ký tham quan cho đoàn thể, trường học; theo dõi hồ sơ đoàn" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="../css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="../css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo) -->
+  <link rel="stylesheet" href="../css/components/button.css" />
+  <link rel="stylesheet" href="../css/components/public-navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/group-booking.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen" data-page="group">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- Top Banner Section: Visual Heritage & Educational Horizon -->
+<section class="relative w-full overflow-hidden bg-primary text-on-primary">
+<div class="absolute inset-0 opacity-25 mix-blend-luminosity pointer-events-none">
+<div aria-label="A lively group of Vietnamese high school students and enthusiastic teachers listening intently to a museum curator in front of an ancient golden royal artifact in a prestigious museum gallery. Warm museum lighting, high-contrast architectural symmetry, editorial documentary photography, deep navy and heritage gold ambiance." class="w-full h-full bg-cover bg-center group-booking-photo-1" role="img"></div>
+</div>
+<div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary-fixed/10 blur-3xl pointer-events-none"></div>
+<div class="relative max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
+<div class="max-w-3xl space-y-6">
+<div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-primary-container/80 text-secondary-fixed shadow-sm backdrop-blur-md">
+<span class="material-symbols-outlined text-[18px]">school</span>
+<span class="font-label-md text-label-md tracking-wider uppercase">Cổng Dịch Vụ &Dstrok;o&agrave;n Thể & Gi&aacute;o Dục Di Sản</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg lg:font-display lg:text-display text-surface-bright tracking-tight">
+          Chương tr&igrave;nh Tham quan D&agrave;nh cho &Dstrok;o&agrave;n thể & Trường học
+        </h1>
+<p class="font-body-lg text-body-lg text-surface-container-high leading-relaxed max-w-2xl">
+          Giải ph&aacute;p tiếp &dstrok;&oacute;n ưu ti&ecirc;n v&agrave; lộ tr&igrave;nh học tập trải nghiệm &dstrok;ộc bản tại hệ thống bảo t&agrave;ng quốc gia. &Dstrok;ồng h&agrave;nh c&ugrave;ng nh&agrave; trường, c&ocirc;ng ty lữ h&agrave;nh v&agrave; cơ quan trong sứ mệnh kết nối tri thức ng&agrave;n n&abreve;m.
+        </p>
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<a class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-md" href="#booking-form">
+<span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+<span>Khởi tạo hồ sơ &dstrok;o&agrave;n</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-surface-container-lowest/10 text-surface-bright font-label-lg text-label-lg hover:bg-surface-container-lowest/20 backdrop-blur-md transition-all" href="#status-tracker">
+<span class="material-symbols-outlined text-[20px]">manage_search</span>
+<span>Tra cứu tiến &dstrok;ộ hồ sơ</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Quick Stats Bar -->
+<div class="relative w-full bg-primary-container/90 backdrop-blur-md border-t border-secondary/15">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-surface-bright">
+<div class="flex items-center gap-3">
+<span class="font-display text-display text-secondary-fixed">2h</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider">Thời gian phản hồi</span>
+<span class="font-body-sm text-body-sm text-surface-container-high">Thẩm &dstrok;ịnh cấp tốc</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-display text-display text-secondary-fixed">25%</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider">Mức chiết khấu</span>
+<span class="font-body-sm text-body-sm text-surface-container-high">Tối &dstrok;a cho &dstrok;o&agrave;n lớn</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-display text-display text-secondary-fixed">100%</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider">H&oacute;a &dstrok;ơn hợp lệ</span>
+<span class="font-body-sm text-body-sm text-surface-container-high">VAT &dstrok;iện tử tự &dstrok;ộng</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-display text-display text-secondary-fixed">01</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider">HDV chuy&ecirc;n tuyến</span>
+<span class="font-body-sm text-body-sm text-surface-container-high">&Dstrok;ược t&agrave;i trợ miễn ph&iacute;</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3 Policy Highlights Section -->
+<section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 w-full">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">Ch&iacute;nh S&aacute;ch &Dstrok;ặc Quyền</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-1">&Dstrok;&atilde;i ngộ to&agrave;n diện cho &dstrok;o&agrave;n thể</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">
+        Quy chế ưu &dstrok;&atilde;i cấp nh&agrave; nước &aacute;p dụng xuy&ecirc;n suốt hệ thống bảo t&agrave;ng c&ocirc;ng lập, &dstrok;ảm bảo quyền lợi tối ưu về chi ph&iacute; v&agrave; trải nghiệm học thuật.
+      </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="relative bg-surface-container-lowest rounded-2xl p-8 shadow-sm flex flex-col justify-between group hover:shadow-lg transition-all duration-300">
+<div class="space-y-4">
+<div class="w-14 h-14 rounded-2xl bg-secondary-fixed/40 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[32px]">percent</span>
+</div>
+<span class="inline-block px-3 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm">&Dstrok;o&agrave;n từ 20 kh&aacute;ch trở l&ecirc;n</span>
+<h3 class="font-title-md text-title-md text-primary font-bold">Chiết khấu bậc thang 15% - 25%</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Giảm trực tiếp gi&aacute; v&eacute; ni&ecirc;m yết theo quy m&ocirc; số lượng: từ 20-50 kh&aacute;ch giảm 15%, từ 51-100 kh&aacute;ch giảm 20%, tr&ecirc;n 100 kh&aacute;ch hưởng mức kịch trần 25% k&egrave;m qu&agrave; tặng lưu niệm số h&oacute;a.
+          </p>
+</div>
+<div class="mt-6 pt-4 flex items-center gap-2 text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>&Aacute;p dụng tự &dstrok;ộng tr&ecirc;n hợp &dstrok;ồng</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="relative bg-surface-container-lowest rounded-2xl p-8 shadow-sm flex flex-col justify-between group hover:shadow-lg transition-all duration-300">
+<div class="space-y-4">
+<div class="w-14 h-14 rounded-2xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]">record_voice_over</span>
+</div>
+<span class="inline-block px-3 py-1 rounded-full bg-primary-fixed/60 text-primary font-label-sm text-label-sm">&Dstrok;ộc quyền dịch vụ</span>
+<h3 class="font-title-md text-title-md text-primary font-bold">Miễn ph&iacute; 01 Thuyết minh vi&ecirc;n</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            &Dstrok;ược bố tr&iacute; hướng dẫn vi&ecirc;n bi&ecirc;n chế của Bảo t&agrave;ng thuyết minh chuy&ecirc;n biệt suốt tuyến, nội dung hiệu chỉnh linh hoạt theo lứa tuổi học sinh hoặc chủ &dstrok;ề nghi&ecirc;n cứu của &dstrok;o&agrave;n.
+          </p>
+</div>
+<div class="mt-6 pt-4 flex items-center gap-2 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">mic_external_on</span>
+<span>Hỗ trợ tiếng Việt, Anh, Ph&aacute;p</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="relative bg-surface-container-lowest rounded-2xl p-8 shadow-sm flex flex-col justify-between group hover:shadow-lg transition-all duration-300">
+<div class="space-y-4">
+<div class="w-14 h-14 rounded-2xl bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[32px]">receipt_long</span>
+</div>
+<span class="inline-block px-3 py-1 rounded-full bg-tertiary-fixed/60 text-tertiary font-label-sm text-label-sm">T&agrave;i ch&iacute;nh minh bạch</span>
+<h3 class="font-title-md text-title-md text-primary font-bold">H&oacute;a &dstrok;ơn VAT & Hợp &dstrok;ồng linh hoạt</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Cung cấp &dstrok;ầy &dstrok;ủ hợp &dstrok;ồng cung ứng dịch vụ tham quan, b&aacute;o gi&aacute; c&oacute; dấu &dstrok;ỏ của Cục Di sản, xuất h&oacute;a &dstrok;ơn &dstrok;iện tử gi&aacute; trị gia t&abreve;ng (VAT) hợp lệ ngay sau khi ho&agrave;n tất phi&ecirc;n l&agrave;m việc.
+          </p>
+</div>
+<div class="mt-6 pt-4 flex items-center gap-2 text-on-tertiary-fixed-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">credit_score</span>
+<span>Chấp nhận bảo l&atilde;nh c&ocirc;ng nợ lữ h&agrave;nh</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Group Booking Form Section -->
+<section class="w-full bg-surface-container-low py-16" id="booking-form">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="bg-surface-container-lowest rounded-3xl p-8 lg:p-14 shadow-xl">
+<div class="max-w-3xl mb-12">
+<div class="flex items-center gap-2.5 text-secondary font-label-sm text-label-sm uppercase tracking-wider mb-2">
+<span class="material-symbols-outlined text-[18px]">edit_calendar</span>
+<span>Hồ Sơ &Dstrok;&abreve;ng K&yacute; Trực Tuyến</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Biểu Mẫu &Dstrok;ặt V&eacute; &Dstrok;o&agrave;n & Tổ Chức</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+            Vui l&ograve;ng &dstrok;iền th&ocirc;ng tin chi tiết dưới &dstrok;&acirc;y. Chuy&ecirc;n vi&ecirc;n quản l&yacute; &dstrok;o&agrave;n của Cổng Di sản sẽ li&ecirc;n hệ x&aacute;c nhận v&agrave; gửi bản dự thảo hợp &dstrok;ồng trong v&ograve;ng 02 giờ l&agrave;m việc.
+          </p>
+</div>
+<form class="space-y-12" onsubmit="event.preventDefault(); document.getElementById('success-modal').classList.remove('hidden');">
+<!-- Step 1: Organization & Representative Info -->
+<div class="space-y-6">
+<div class="flex items-center gap-3 pb-3">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-md text-title-md font-bold">1</span>
+<h3 class="font-title-md text-title-md text-primary font-bold">Th&ocirc;ng tin Cơ quan, Trường học & &Dstrok;ại diện &dstrok;o&agrave;n</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">T&ecirc;n trường học / Doanh nghiệp / Tổ chức lữ h&agrave;nh <span class="text-error">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="V&iacute; dụ: Trường THPT Chuy&ecirc;n H&agrave; Nội - Amsterdam" required type="text">
+</div>
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">M&atilde; số thuế (nếu cần xuất VAT)</label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0100109106" type="text">
+</div>
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Họ v&agrave; t&ecirc;n người &dstrok;ại diện &dstrok;o&agrave;n <span class="text-error">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Thầy / C&ocirc; / &Ocirc;ng / B&agrave;..." required type="text">
+</div>
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Chức vụ trong tổ chức <span class="text-error">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Trưởng &dstrok;o&agrave;n / Gi&aacute;o vi&ecirc;n chủ nhiệm / &Dstrok;iều h&agrave;nh tour" required type="text">
+</div>
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Số &dstrok;iện thoại li&ecirc;n hệ (c&oacute; Zalo) <span class="text-error">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0912 345 678" required type="tel">
+</div>
+<div class="lg:col-span-3 space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">&Dstrok;ịa chỉ Email tiếp nhận c&ocirc;ng v&abreve;n & V&eacute; &dstrok;iện tử <span class="text-error">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="bgh@amsterdam.edu.vn hoặc contact@tourcompany.vn" required type="email">
+</div>
+</div>
+</div>
+<!-- Step 2: Schedule & Museum Selection -->
+<div class="space-y-6 pt-6">
+<div class="flex items-center gap-3 pb-3">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-md text-title-md font-bold">2</span>
+<h3 class="font-title-md text-title-md text-primary font-bold">Kế hoạch tham quan & Quy m&ocirc; &dstrok;o&agrave;n</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Bảo t&agrave;ng tiếp &dstrok;&oacute;n mong muốn <span class="text-error">*</span></label>
+<select class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" required>
+<option value="vnnhm">Bảo t&agrave;ng Lịch sử Quốc gia (01 Tr&agrave;ng Tiền & 25 T&ocirc;ng &Dstrok;ản, H&agrave; Nội)</option>
+<option value="vnfam">Bảo t&agrave;ng Mỹ thuật Việt Nam (66 Nguyễn Th&aacute;i Học, H&agrave; Nội)</option>
+<option value="vne">Bảo t&agrave;ng D&acirc;n tộc học Việt Nam (Nguyễn V&abreve;n Huy&ecirc;n, Cầu Giấy)</option>
+<option value="hcm-history">Bảo t&agrave;ng Lịch sử TP. Hồ Ch&iacute; Minh (Số 2 Nguyễn Bỉnh Khi&ecirc;m, Q.1)</option>
+<option value="war-remnants">Bảo t&agrave;ng Chứng t&iacute;ch Chiến tranh (28 V&otilde; V&abreve;n Tần, Q.3, TP.HCM)</option>
+<option value="cham">Bảo t&agrave;ng &Dstrok;i&ecirc;u khắc Ch&abreve;m &Dstrok;&agrave; Nẵng (Số 02 &dstrok;ường 2/9, &Dstrok;&agrave; Nẵng)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Ng&agrave;y dự kiến tham quan <span class="text-error">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" required type="date" value="2025-04-18">
+</div>
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Khung giờ tiếp &dstrok;&oacute;n ưu ti&ecirc;n <span class="text-error">*</span></label>
+<select class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" required>
+<option>Buổi s&aacute;ng: 08:30 - 10:00 (Khuyến nghị cho trường học)</option>
+<option>Buổi s&aacute;ng: 10:00 - 11:30</option>
+<option>Buổi chiều: 13:30 - 15:00</option>
+<option>Buổi chiều: 15:00 - 16:30</option>
+<option>Phi&ecirc;n chuy&ecirc;n &dstrok;ề &dstrok;&ecirc;m: 18:30 - 20:30 (Tour &Dstrok;&ecirc;m Di Sản)</option>
+</select>
+</div>
+<div class="lg:col-span-2 space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Tổng số lượng th&agrave;nh vi&ecirc;n dự kiến <span class="text-error">*</span></label>
+<div class="relative">
+<input class="w-full pl-4 pr-32 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" id="total-visitor-input" min="20" oninput="updateDiscountHint(this.value)" required type="number" value="45">
+<div class="absolute right-3 top-1/2 -translate-y-1/2">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold" id="discount-badge">
+                      Chiết khấu 20%
+                    </span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-secondary font-medium" id="discount-note">
+                  &Dstrok;o&agrave;n 45 kh&aacute;ch: Hưởng mức chiết khấu 20% tr&ecirc;n tổng gi&aacute; v&eacute; chuẩn v&agrave; miễn ph&iacute; 01 HDV.
+                </p>
+</div>
+</div>
+<!-- Group Composition Breakdown -->
+<div class="p-6 rounded-2xl bg-surface-container-low space-y-4">
+<span class="block font-title-md text-title-md text-primary font-semibold">Ph&acirc;n nh&oacute;m &dstrok;ối tượng tham gia cụ thể</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant font-medium">Học sinh / Sinh vi&ecirc;n (người)</label>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary">school</span>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none" min="0" type="number" value="40">
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant font-medium">Gi&aacute;o vi&ecirc;n / Người lớn gi&aacute;m s&aacute;t</label>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">person</span>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none" min="1" type="number" value="5">
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface-variant font-medium">Kh&aacute;ch quốc tế (Cần tiếng Anh/Ph&aacute;p)</label>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary-container">translate</span>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none" min="0" type="number" value="0">
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Step 3: Add-on services & File upload -->
+<div class="space-y-6 pt-6">
+<div class="flex items-center gap-3 pb-3">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-md text-title-md font-bold">3</span>
+<h3 class="font-title-md text-title-md text-primary font-bold">Dịch vụ bổ sung & Danh s&aacute;ch &dstrok;o&agrave;n</h3>
+</div>
+<div class="space-y-3">
+<label class="block font-label-md text-label-md text-primary font-semibold">T&ugrave;y chọn dịch vụ n&acirc;ng cao (T&iacute;ch chọn nhu cầu)</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="flex items-start gap-3.5 p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked class="mt-1 w-5 h-5 rounded accent-primary" type="checkbox">
+<div>
+<span class="block font-title-md text-title-md text-primary font-semibold">&Dstrok;ặt ph&ograve;ng hội thảo / Giảng &dstrok;ường di sản</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Phục vụ buổi sinh hoạt chuy&ecirc;n &dstrok;ề, chiếu phim tư liệu c&oacute; m&aacute;y chiếu chất lượng cao.</span>
+</div>
+</label>
+<label class="flex items-start gap-3.5 p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked class="mt-1 w-5 h-5 rounded accent-primary" type="checkbox">
+<div>
+<span class="block font-title-md text-title-md text-primary font-semibold">Workshop trải nghiệm thủ c&ocirc;ng truyền thống</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Thực h&agrave;nh in tranh &Dstrok;&ocirc;ng Hồ, dập hoa v&abreve;n gốm thời L&yacute; - Trần (k&egrave;m th&agrave;nh phẩm mang về).</span>
+</div>
+</label>
+<label class="flex items-start gap-3.5 p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input class="mt-1 w-5 h-5 rounded accent-primary" type="checkbox">
+<div>
+<span class="block font-title-md text-title-md text-primary font-semibold">Thu&ecirc; thiết bị tai nghe thuyết minh kh&ocirc;ng d&acirc;y</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">&Dstrok;ảm bảo &acirc;m thanh r&otilde; n&eacute;t trong kh&ocirc;ng gian lớn m&agrave; kh&ocirc;ng g&acirc;y ồn &dstrok;ến c&aacute;c &dstrok;o&agrave;n xung quanh.</span>
+</div>
+</label>
+<label class="flex items-start gap-3.5 p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input class="mt-1 w-5 h-5 rounded accent-primary" type="checkbox">
+<div>
+<span class="block font-title-md text-title-md text-primary font-semibold">Tiệc tr&agrave; nhẹ / Nước uống giải kh&aacute;t khu&ocirc;n vi&ecirc;n</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Bố tr&iacute; khu vực sảnh giải lao ri&ecirc;ng, tr&agrave; sen di sản v&agrave; b&aacute;nh truyền thống.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Drag & Drop File Upload -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Tải l&ecirc;n danh s&aacute;ch &dstrok;o&agrave;n vi&ecirc;n (Khuyến kh&iacute;ch &dstrok;ể xuất v&eacute; nhanh)</label>
+<div class="p-8 rounded-2xl bg-surface-container-low text-center hover:bg-surface-container transition-all cursor-pointer flex flex-col items-center justify-center" id="drop-zone">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed/50 flex items-center justify-center text-secondary mb-3">
+<span class="material-symbols-outlined text-[28px]">cloud_upload</span>
+</div>
+<p class="font-title-md text-title-md text-primary font-semibold">K&eacute;o thả file danh s&aacute;ch hoặc nhấn &dstrok;ể chọn tập tin</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">&Dstrok;ịnh dạng hỗ trợ: <strong class="text-primary font-semibold">.xlsx, .xls, .docx</strong> (Dưới 10MB)</p>
+<div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-lowest text-primary font-label-md text-label-md shadow-sm hover:bg-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">file_download</span>
+<span>Tải file Excel mẫu danh s&aacute;ch &dstrok;o&agrave;n (.xlsx)</span>
+</div>
+</div>
+</div>
+<!-- Notes -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-primary font-semibold">Ghi ch&uacute; hoặc y&ecirc;u cầu &dstrok;ặc biệt d&agrave;nh cho Ban Quản L&yacute;</label>
+<textarea class="w-full px-4 py-3 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="V&iacute; dụ: &Dstrok;o&agrave;n c&oacute; 02 học sinh khiếm thị cần hỗ trợ lối &dstrok;i ri&ecirc;ng, mong muốn tiếp &dstrok;&oacute;n v&agrave; gửi xe bus 45 chỗ tại cổng số 2..." rows="3"></textarea>
+</div>
+</div>
+<!-- Submit CTA Card -->
+<div class="p-6 rounded-2xl bg-primary text-on-primary flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+<div class="space-y-1">
+<h4 class="font-title-md text-title-md text-surface-bright font-bold">Cam kết phản hồi trong 02 giờ l&agrave;m việc</h4>
+<p class="font-body-sm text-body-sm text-surface-container-high">Bảo mật th&ocirc;ng tin ph&aacute;p nh&acirc;n v&agrave; miễn ph&iacute; 100% chi ph&iacute; lập hồ sơ thẩm &dstrok;ịnh ban &dstrok;ầu.</p>
+</div>
+<button class="w-full md:w-auto px-8 py-4 rounded-xl bg-secondary-fixed text-on-secondary-fixed font-title-md text-title-md font-bold hover:bg-secondary-fixed-dim transition-all shadow-md flex items-center justify-center gap-3 shrink-0" type="submit">
+<span class="material-symbols-outlined text-[22px]">send</span>
+<span>Gửi Y&ecirc;u Cầu &Dstrok;ặt V&eacute; &Dstrok;o&agrave;n</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Request Status Tracker Section -->
+<section class="w-full py-16 max-w-7xl mx-auto px-6 lg:px-12" id="status-tracker">
+<div class="space-y-3 mb-10">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">Theo D&otilde;i Thời Gian Thực</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Quy tr&igrave;nh 4 Bước & Tra cứu Hồ sơ</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+        Hệ thống tự &dstrok;ộng &dstrok;ồng bộ trạng th&aacute;i xử l&yacute; giữa Ban &dstrok;iều h&agrave;nh Di sản, Ph&ograve;ng Gi&aacute;o dục v&agrave; &Dstrok;ơn vị lữ h&agrave;nh.
+      </p>
+</div>
+<!-- 4 Step Interactive Flow Visualizer -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+<!-- Step 1 -->
+<div class="p-5 rounded-2xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-8 h-8 rounded-full bg-primary-fixed text-primary font-label-lg text-label-lg font-bold flex items-center justify-center">1</span>
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+</div>
+<h4 class="font-title-md text-title-md text-primary font-bold">Gửi y&ecirc;u cầu</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">&Dstrok;&abreve;ng k&yacute; trực tuyến hoặc nộp danh s&aacute;ch th&agrave;nh vi&ecirc;n &dstrok;o&agrave;n.</p>
+</div>
+<span class="mt-4 text-primary font-label-sm text-label-sm">Ho&agrave;n th&agrave;nh tức th&igrave;</span>
+</div>
+<!-- Step 2 -->
+<div class="p-5 rounded-2xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-8 h-8 rounded-full bg-primary-fixed text-primary font-label-lg text-label-lg font-bold flex items-center justify-center">2</span>
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+</div>
+<h4 class="font-title-md text-title-md text-primary font-bold">Tiếp nhận & Thẩm &dstrok;ịnh</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Ban quản l&yacute; kiểm tra khung giờ v&agrave; ph&acirc;n bổ HDV bảo t&agrave;ng.</p>
+</div>
+<span class="mt-4 text-primary font-label-sm text-label-sm">Tối &dstrok;a 2 giờ l&agrave;m việc</span>
+</div>
+<!-- Step 3 (Active) -->
+<div class="p-5 rounded-2xl bg-surface-container-highest shadow-md flex flex-col justify-between ring-2 ring-secondary">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center">3</span>
+<span class="material-symbols-outlined text-secondary text-[20px] animate-spin">sync</span>
+</div>
+<h4 class="font-title-md text-title-md text-primary font-bold">Duyệt & B&aacute;o gi&aacute; ưu &dstrok;&atilde;i</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Gửi hợp &dstrok;ồng dự thảo, h&oacute;a &dstrok;ơn VAT mẫu v&agrave; m&atilde; QR &dstrok;o&agrave;n.</p>
+</div>
+<span class="mt-4 text-secondary font-label-sm text-label-sm font-bold">Giai &dstrok;oạn hiện tại</span>
+</div>
+<!-- Step 4 -->
+<div class="p-5 rounded-2xl bg-surface-container-low opacity-70 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-8 h-8 rounded-full bg-surface-dim text-on-surface-variant font-label-lg text-label-lg font-bold flex items-center justify-center">4</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">pending</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface-variant font-bold">Ho&agrave;n tất & Xuất v&eacute;</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Thanh to&aacute;n linh hoạt, nhận thẻ QR &dstrok;&oacute;n tiếp tại cửa VIP.</p>
+</div>
+<span class="mt-4 text-on-surface-variant font-label-sm text-label-sm">Tại cổng so&aacute;t v&eacute;</span>
+</div>
+</div>
+<!-- Sample Active Request Ticket Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 lg:p-8 shadow-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6">
+<div class="flex items-start sm:items-center gap-4">
+<div class="w-16 h-16 rounded-2xl bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[36px]">account_balance</span>
+</div>
+<div class="space-y-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">M&atilde; hồ sơ: #GRP-EDU-8819</span>
+<span class="px-3 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+                &Dstrok;&atilde; duyệt b&aacute;o gi&aacute; - Chờ thanh to&aacute;n
+              </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">
+              Trường THPT Chuy&ecirc;n H&agrave; Nội - Amsterdam &bull; Khối Lớp 10 Chuy&ecirc;n Sử & &Dstrok;ịa
+            </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              &Dstrok;iểm &dstrok;ến: <strong class="text-primary">Bảo t&agrave;ng Lịch sử Quốc gia</strong> (Tr&agrave;ng Tiền, H&agrave; Nội)
+            </p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="px-5 py-2.5 rounded-xl bg-surface-container-high text-primary hover:bg-surface-container-highest transition-colors font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Tải dự thảo Hợp &dstrok;ồng & B&aacute;o gi&aacute; (.PDF)</span>
+</button>
+<button class="px-5 py-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-colors font-label-md text-label-md flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">credit_card</span>
+<span>X&aacute;c nhận & Thanh to&aacute;n 50%</span>
+</button>
+</div>
+</div>
+<!-- Quick Inspection Grid of the Sample Record -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 bg-surface-container-low rounded-2xl p-4">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Ng&agrave;y & Khung giờ</span>
+<span class="block font-body-sm text-body-sm text-primary font-semibold mt-0.5">18/04/2025 &bull; 08:30 - 10:30</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Quy m&ocirc; &dstrok;o&agrave;n</span>
+<span class="block font-body-sm text-body-sm text-primary font-semibold mt-0.5">85 Học sinh + 5 Gi&aacute;o vi&ecirc;n</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Chiết khấu ph&ecirc; duyệt</span>
+<span class="block font-body-sm text-body-sm text-secondary font-semibold mt-0.5">Giảm 20% + Miễn ph&iacute; 02 HDV</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Người phụ tr&aacute;ch Bảo t&agrave;ng</span>
+<span class="block font-body-sm text-body-sm text-primary font-semibold mt-0.5">V&utilde; Ho&agrave;ng Long (Ban GD Di sản)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Submission Success Modal (Hidden by default) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm hidden" id="success-modal">
+<div class="bg-surface-container-lowest rounded-3xl max-w-lg w-full p-8 shadow-2xl text-center space-y-6">
+<div class="w-20 h-20 rounded-full bg-secondary-fixed/50 text-secondary mx-auto flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-[44px]">task_alt</span>
+</div>
+<div class="space-y-2">
+<h3 class="font-headline-sm text-headline-sm text-primary font-bold">Hồ Sơ &Dstrok;ặt &Dstrok;o&agrave;n &Dstrok;&atilde; &Dstrok;ược Ghi Nhận</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          M&atilde; số &dstrok;o&agrave;n của bạn: <strong class="text-primary font-bold">#GRP-EDU-9942</strong>. Bản t&oacute;m tắt v&agrave; dự to&aacute;n chiết khấu sơ bộ &dstrok;&atilde; &dstrok;ược gửi tới email của người &dstrok;ại diện.
+        </p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low text-left space-y-1 font-body-sm text-body-sm text-on-surface">
+<div class="flex items-center gap-2 text-primary font-semibold">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+<span>Chuy&ecirc;n vi&ecirc;n hỗ trợ trực tiếp:</span>
+</div>
+<p class="pl-6 text-on-surface-variant">Hotline ưu ti&ecirc;n tiếp &dstrok;&oacute;n &dstrok;o&agrave;n: <strong>1900 8899 (Nh&aacute;nh 2)</strong></p>
+</div>
+<button class="w-full py-3.5 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all" onclick="document.getElementById('success-modal').classList.add('hidden')">
+        &Dstrok;&oacute;ng & Tiếp tục theo d&otilde;i
+      </button>
+</div>
+</div>
+</div>
+</main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/group-booking.js"></script>
+</body>
+</html>
