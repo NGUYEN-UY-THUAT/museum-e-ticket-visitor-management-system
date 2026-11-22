@@ -5,8 +5,6 @@
    - Còn lại (chạy thử): mở hộp chọn tài khoản Google mẫu. */
 window.GoogleLogin = (function () {
   const GSI_SRC = "https://accounts.google.com/gsi/client";
-  const esc = (s) => Format.escape(s);
-  const DEMO = [{ full_name: "Nguyễn Văn An", email: "an@gmail.com" }];
 
   function loadGsi() {
     if (window.google?.accounts?.id) return Promise.resolve();
@@ -38,18 +36,11 @@ window.GoogleLogin = (function () {
 
   /** Chạy thử: hộp chọn tài khoản giả lập */
   function mockLogin(onDone) {
-    const accounts = DEMO.map(
-      (a, i) => `<button type="button" class="glogin__acc" data-i="${i}">
-        <span class="glogin__avatar">${esc(a.full_name.trim().split(" ").pop()[0])}</span>
-        <span><strong>${esc(a.full_name)}</strong><small>${esc(a.email)}</small></span></button>`
-    ).join("");
     const root = Modal.open({
       title: "Chọn tài khoản Google",
       body: `<div class="glogin">
-        <p class="hh-alert hh-alert--info"><span class="material-symbols-outlined">info</span><span>Chế độ chạy thử: chưa kết nối Google thật, chọn tài khoản mẫu hoặc nhập Gmail bất kỳ.</span></p>
-        <div class="glogin__list">${accounts}</div>
+        <p class="hh-alert hh-alert--info"><span class="material-symbols-outlined">info</span><span>Chưa kết nối Google thật: nhập họ tên và Gmail để giả lập đăng nhập.</span></p>
         <form class="glogin__other" id="gloginForm" novalidate>
-          <p class="hh-label">Dùng tài khoản khác</p>
           <input class="hh-input" name="full_name" placeholder="Họ và tên" />
           <input class="hh-input" name="email" type="email" placeholder="ten@gmail.com" />
           <span class="hh-error" id="gloginErr"></span>
@@ -65,7 +56,6 @@ window.GoogleLogin = (function () {
         root.querySelector("#gloginErr").textContent = err.message;
       }
     };
-    root.querySelectorAll(".glogin__acc").forEach((b) => b.addEventListener("click", () => finish(DEMO[b.dataset.i])));
     root.querySelector("#gloginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       finish({ full_name: e.target.full_name.value, email: e.target.email.value });

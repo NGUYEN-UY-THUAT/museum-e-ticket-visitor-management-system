@@ -1,49 +1,91 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Khảo sát hài lòng | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/surveys.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Kết quả khảo sát | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/surveys.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><div><h1>Khảo sát mức độ hài lòng</h1><p class="text-muted">Ý kiến khách tham quan sau chuyến thăm</p></div><a class="btn btn--outline" href="booking.html#survey" target="_blank">Mở form khảo sát</a></div>
-        <div class="stat-grid" id="summaryGrid"></div>
-        <section class="card"><div class="card__header"><h3>Phản hồi</h3><select class="form-control" id="ratingFilter" style="width:auto"><option value="">Tất cả mức điểm</option><option value="5">5 sao</option><option value="4">4 sao</option><option value="3">3 sao</option><option value="2">2 sao</option><option value="1">1 sao</option></select></div>
-          <div id="surveyList"></div></section>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <section class="adm-head">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">rate_review</span> Khảo sát</span>
+            <h1 class="adm-title">Kết quả khảo sát ý kiến</h1>
+            <p class="adm-desc">Đánh giá khách gửi sau chuyến tham quan. Theo dõi điểm trung bình từng tiêu chí và đọc góp ý để cải thiện dịch vụ.</p>
+          </div>
+          <div class="adm-actions">
+            <button class="hh-btn hh-btn--ghost" id="exportBtn" type="button"><span class="material-symbols-outlined">file_download</span> Xuất CSV</button>
+            <a class="hh-btn hh-btn--primary" id="builderLink" href="survey-builder.html"><span class="material-symbols-outlined">edit_note</span> Soạn câu hỏi</a>
+          </div>
+        </section>
+
+        <section class="adm-stats" id="stats"></section>
+
+        <div class="sv-layout">
+          <section class="adm-panel">
+            <h2 class="adm-panel__title">Điểm theo tiêu chí</h2>
+            <div class="sv-criteria" id="criteria"></div>
+            <div class="adm-panel__section">
+              <p class="adm-panel__label">Phân bố đánh giá chung</p>
+              <div class="sv-dist" id="dist"></div>
+            </div>
+          </section>
+
+          <section class="adm-card">
+            <div class="adm-card__head">
+              <h2 class="adm-card__title">Góp ý của khách</h2>
+              <div class="flex flex-wrap gap-2">
+                <select class="hh-input sv-filter" id="rating" aria-label="Lọc theo điểm"><option value="">Tất cả mức điểm</option><option value="low">1–2 sao (cần xử lý)</option><option value="3">3 sao</option><option value="high">4–5 sao</option></select>
+                <label class="adm-switch sv-switch"><span class="adm-switch__text">Chỉ có góp ý</span><input type="checkbox" id="onlyComment" /></label>
+              </div>
+            </div>
+            <ul class="sv-list" id="list"></ul>
+            <div class="adm-pager" id="pager"></div>
+          </section>
+        </div>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
-  <script src="../js/services/ticket.service.js"></script>
-  <script src="../js/services/event.service.js"></script>
-  <script src="../js/services/visitor.service.js"></script>
   <script src="../js/services/survey.service.js"></script>
-  <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/surveys.js"></script>
 </body>
 </html>

@@ -1,55 +1,98 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bảng điều khiển | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/dashboard.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Bảng điều khiển | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/dashboard.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><div><h1>Xin chào, <span id="userName"></span></h1><p class="text-muted" id="todayText"></p></div>
-          <div class="toolbar"><a class="btn btn--primary" href="checkin.html">📷 Soát vé</a><a class="btn btn--outline" href="tickets.html?new=1">+ Bán vé tại quầy</a></div></div>
-        <div class="stat-grid" id="statGrid"></div>
-        <div class="grid-2">
-          <section class="card"><div class="card__header"><h3>Lượt vào gần đây</h3><a class="text-small" href="checkin.html">Xem tất cả</a></div>
-            <div class="table-wrap"><table class="table"><thead><tr><th>Thời gian</th><th>Mã vé</th><th>Cổng</th><th>Kết quả</th></tr></thead><tbody id="recentCheckins"></tbody></table></div></section>
-          <section class="card"><div class="card__header"><h3>Sự kiện sắp tới</h3><a class="text-small" href="events.html">Quản lý</a></div><div id="upcomingEvents"></div></section>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <!-- Lời chào -->
+        <section class="adm-head adm-head--hero">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">wb_sunny</span> <span id="todayText"></span></span>
+            <h1 class="adm-title">Xin chào, <span id="userName"></span></h1>
+            <p class="adm-desc">Tình hình đón khách hôm nay và các việc đang chờ bạn xử lý.</p>
+          </div>
+          <div class="adm-actions">
+            <a class="hh-btn hh-btn--ghost" href="tickets.html?new=1"><span class="material-symbols-outlined">point_of_sale</span> Bán vé tại quầy</a>
+            <a class="hh-btn hh-btn--gold" href="checkin.html"><span class="material-symbols-outlined">qr_code_scanner</span> Soát vé</a>
+          </div>
+        </section>
+
+        <section class="adm-stats" id="stats"></section>
+
+        <div class="db-grid">
+          <!-- Việc cần xử lý -->
+          <section class="adm-panel">
+            <h2 class="adm-panel__title">Việc cần xử lý</h2>
+            <p class="adm-panel__sub">Bấm để chuyển tới trang xử lý</p>
+            <ul class="db-todo mt-4" id="todo"></ul>
+          </section>
+
+          <!-- Lượt vào gần đây -->
+          <section class="adm-card">
+            <div class="adm-card__head"><h2 class="adm-card__title">Lượt vào cổng gần đây</h2><a class="hh-link text-[14px]" href="checkin.html">Xem tất cả</a></div>
+            <div class="adm-table-wrap">
+              <table class="adm-table db-table">
+                <thead><tr><th>Thời gian</th><th>Mã vé</th><th>Cổng</th><th>Cán bộ</th><th>Kết quả</th></tr></thead>
+                <tbody id="checkins"></tbody>
+              </table>
+            </div>
+          </section>
         </div>
-        <section class="card"><div class="card__header"><h3>Đoàn khách chờ duyệt</h3><a class="text-small" href="visitors.html">Quản lý</a></div>
-          <div class="table-wrap"><table class="table"><thead><tr><th>Đoàn</th><th>Số người</th><th>Ngày</th><th>Trưởng đoàn</th></tr></thead><tbody id="pendingGroups"></tbody></table></div></section>
+
+        <!-- Sự kiện sắp tới -->
+        <section>
+          <div class="flex items-center justify-between gap-3 mb-3"><h2 class="adm-card__title">Sự kiện sắp tới</h2><a class="hh-link text-[14px]" href="events.html">Quản lý sự kiện</a></div>
+          <div class="db-events" id="events"></div>
+        </section>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/services/ticket.service.js"></script>
   <script src="../js/services/event.service.js"></script>
   <script src="../js/services/visitor.service.js"></script>
   <script src="../js/services/survey.service.js"></script>
-  <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/dashboard.js"></script>
 </body>
 </html>

@@ -27,5 +27,9 @@ window.API_CONFIG = {
     CUSTOMER_GOOGLE: "/customers/google", // POST {id_token} (Google Identity Services) -> {token,customer}
     TICKET_REQUESTS: "/ticket-requests", // Yêu cầu đổi giờ / hủy vé / hoàn tiền
     CONTACT_MESSAGES: "/contact-messages", // Tin nhắn từ trang Liên hệ
+    // Khu vực quản trị
+    USERS: "/users", // Tài khoản cán bộ (GET/POST/PUT; PUT /users/:id/reset-password)
+    TIME_SLOTS: "/time-slots", // GET ?museum_id=&from=&to= -> sức chứa từng khung giờ; PUT/POST lưu điều chỉnh
+    SURVEY_CONFIG: "/survey-config", // GET/PUT nội dung câu hỏi khảo sát
   },
 };

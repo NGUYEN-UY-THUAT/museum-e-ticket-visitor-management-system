@@ -1,2 +1,6 @@
-.toolbar .form-control{width:auto}
-canvas{max-height:280px;margin-top:12px}
+/* statistics.css — Thống kê. Bố cục chung ở css/layouts/admin-layout.css */
+.st-date { flex: 0 1 11rem; }
+.st-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+@media (min-width: 1100px) { .st-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); } }
+.st-chart { position: relative; height: 280px; margin-top: 1rem; }
+.st-table { min-width: 480px; }

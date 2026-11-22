@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Điểm danh sự kiện | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/event-checkin.css" />
+</head>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <!-- Tiêu đề -->
+        <section class="adm-head adm-head--hero">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">qr_code_scanner</span> Kiểm soát tại chỗ</span>
+            <h1 class="adm-title">Điểm danh sự kiện</h1>
+            <p class="adm-desc">Quét mã QR đăng ký hoặc nhập mã để xác nhận khách tham dự workshop, triển lãm chuyên đề, tọa đàm.</p>
+          </div>
+          <div class="adm-actions">
+            <button class="hh-btn hh-btn--gold" id="exportBtn" type="button"><span class="material-symbols-outlined">file_download</span> Xuất danh sách điểm danh</button>
+          </div>
+        </section>
+
+        <!-- Chọn sự kiện -->
+        <section class="adm-panel ec-top">
+          <div class="hh-field ec-top__select"><label class="hh-label" for="eventSelect">Sự kiện</label><select class="hh-input" id="eventSelect"></select>
+            <span class="hh-hint" id="eventInfo"></span></div>
+          <div class="ec-count ec-count--ok"><span class="material-symbols-outlined">how_to_reg</span><div><p>Đã điểm danh</p><b id="cntIn">0</b></div></div>
+          <div class="ec-count ec-count--wait"><span class="material-symbols-outlined">schedule</span><div><p>Chưa đến</p><b id="cntWait">0</b></div></div>
+        </section>
+
+        <div class="ec-layout">
+          <!-- Quét / nhập mã -->
+          <section class="adm-panel">
+            <div class="flex items-center justify-between gap-2"><h2 class="adm-panel__title">Quét mã đăng ký</h2><span class="hh-badge hh-badge--muted" id="camState">Camera tắt</span></div>
+            <div class="ec-reader" id="reader"><div class="ec-reader__idle"><span class="material-symbols-outlined">qr_code_2</span><p>Bật camera rồi đưa mã QR trong email đăng ký vào khung hình</p></div></div>
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <button class="hh-btn hh-btn--primary" id="camOn" type="button"><span class="material-symbols-outlined">videocam</span> Bật camera</button>
+              <button class="hh-btn hh-btn--soft" id="camOff" type="button" disabled><span class="material-symbols-outlined">videocam_off</span> Tắt camera</button>
+            </div>
+            <form class="adm-panel__section" id="manualForm" novalidate>
+              <label class="hh-label" for="code">Không quét được? Nhập mã đăng ký</label>
+              <div class="flex gap-2 mt-2"><input class="hh-input uppercase ec-code" id="code" name="code" placeholder="vd: EV..." autocomplete="off" /><button class="hh-btn hh-btn--primary" type="submit"><span class="material-symbols-outlined">check</span> Xác nhận</button></div>
+            </form>
+            <div id="result" class="mt-4"></div>
+          </section>
+
+          <!-- Danh sách người đăng ký -->
+          <section class="adm-card">
+            <div class="adm-card__head">
+              <h2 class="adm-card__title">Danh sách người tham dự</h2>
+              <div class="hh-input-wrap ec-search"><span class="material-symbols-outlined">search</span><input class="hh-input" id="keyword" type="search" placeholder="Tìm tên, SĐT, mã" /></div>
+            </div>
+            <div class="px-5 pt-4"><div class="hh-tabs" id="tabs">
+              <button class="hh-tab is-active" type="button" data-tab="all">Tất cả <span data-count="all"></span></button>
+              <button class="hh-tab" type="button" data-tab="in">Đã điểm danh <span data-count="in"></span></button>
+              <button class="hh-tab" type="button" data-tab="wait">Chưa đến <span data-count="wait"></span></button>
+            </div></div>
+            <div class="adm-table-wrap mt-3">
+              <table class="adm-table">
+                <thead><tr><th>Khách tham dự</th><th class="num">Số người</th><th>Điện thoại</th><th>Giờ đến</th><th>Trạng thái</th><th class="num">Thao tác</th></tr></thead>
+                <tbody id="rows"></tbody>
+              </table>
+            </div>
+            <div class="adm-pager" id="pager"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/event.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
+  <script src="../js/pages/event-checkin.js"></script>
+</body>
+</html>

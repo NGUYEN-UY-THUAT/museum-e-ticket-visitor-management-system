@@ -21,7 +21,6 @@ window.SiteFooter = (function () {
         ["Chính sách đổi trả & Hoàn tiền vé", "POLICY_REFUND"],
         ["Quy định tham quan bảo tàng", "POLICY_RULES"],
         ["Liên hệ & Câu hỏi thường gặp", "CONTACT"],
-        ["Cổng đăng nhập cán bộ", "LOGIN"],
       ],
     },
   ];

@@ -1,2 +1,17 @@
-.mini-event{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--color-border)}
-.mini-event:last-child{border-bottom:none}
+/* dashboard.css — Bảng điều khiển. Bố cục chung ở css/layouts/admin-layout.css */
+.db-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 1100px) { .db-grid { grid-template-columns: 340px minmax(0, 1fr); } }
+.db-todo { display: flex; flex-direction: column; gap: 0.5rem; }
+.db-todo__item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 0.9rem; border-radius: 0.6rem; background: rgb(var(--hh-surface-container-low)); font-size: 14px; color: rgb(var(--hh-on-surface-variant)); transition: background-color .15s; }
+.db-todo__item:hover { background: rgb(var(--hh-surface-container)); }
+.db-todo__item b { font-size: 18px; color: rgb(var(--hh-on-surface-variant)); }
+.db-todo__item.has-work { background: rgb(var(--hh-secondary-fixed) / 0.3); color: rgb(var(--hh-on-surface)); }
+.db-todo__item.has-work b { color: rgb(var(--hh-secondary)); }
+.db-todo__item .material-symbols-outlined:first-child { color: rgb(var(--hh-secondary)); }
+.db-table { min-width: 560px; }
+.db-events { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.db-event h3 { margin-top: 0.75rem; font-size: 16px; line-height: 22px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.db-event .hh-hint { display: flex; align-items: center; gap: 0.25rem; margin-top: 0.25rem; }
+.db-event .hh-hint .material-symbols-outlined { font-size: 16px; }
+.db-progress { margin-top: 0.75rem; height: 6px; border-radius: 9999px; background: rgb(var(--hh-surface-container-high)); overflow: hidden; }
+.db-progress i { display: block; height: 100%; background: rgb(var(--hh-secondary)); border-radius: inherit; }

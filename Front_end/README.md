@@ -4,8 +4,11 @@ HTML + CSS + JavaScript thuần (không React, không cần build). Backend dùn
 
 ## Chạy thử
 - Mở `index.html` bằng trình duyệt, hoặc dùng Live Server của VS Code (khuyên dùng, để camera quét QR hoạt động).
-- Trang khách tham quan bắt đầu từ `index.html`; trang cán bộ bắt đầu từ `pages/login.html`.
-- Tài khoản khách chạy thử: `an@gmail.com / 123456`. Vé chạy thử: `TK5E6F7GH8` (đổi / hủy được), `TK7A1X9QZ2` (vé hôm nay). Nút "Tiếp tục với Google" chạy giả lập khi `USE_MOCK` bật hoặc `APP_CONFIG.GOOGLE_CLIENT_ID` để trống; điền Client ID và tắt mock để dùng Google thật. Tài khoản thử: `admin / admin123` (quản trị), `staff / staff123` (soát vé).
+- Trang khách tham quan bắt đầu từ `index.html`. Khách và cán bộ dùng chung trang `pages/account-login.html`:
+  tài khoản khách (email / SĐT) vào "Vé của tôi", tài khoản cán bộ (tên đăng nhập) vào trang quản trị `pages/dashboard.html`.
+  Giao diện khách không có đường dẫn nào sang trang quản trị.
+- Tài khoản và mã vé chạy thử không ghi trong giao diện hay README; xem ghi chú riêng của nhóm.
+- Nút "Tiếp tục với Google" chạy giả lập khi `USE_MOCK` bật hoặc `APP_CONFIG.GOOGLE_CLIENT_ID` để trống; điền Client ID và tắt mock để dùng Google thật.
 
 Mặc định `USE_MOCK: true` trong `js/config/api.config.js`: dữ liệu mẫu lưu ở localStorage của trình duyệt.
 Khi backend MySQL sẵn sàng, đổi thành `false` và sửa `BASE_URL`.
@@ -29,7 +32,7 @@ frontend/
 │   ├── group-booking.html        Đặt vé đoàn, theo dõi hồ sơ đoàn
 │   ├── survey.html               Khảo sát mức độ hài lòng
 │   ├── profile.html              Hồ sơ cá nhân, lịch sử đơn vé
-│   ├── account-login.html        Đăng nhập tài khoản khách (email hoặc SĐT)
+│   ├── account-login.html        Đăng nhập chung: khách (email / SĐT) và cán bộ (tên đăng nhập)
 │   ├── account-register.html     Đăng ký tài khoản khách
 │   ├── forgot-password.html      Quên mật khẩu: email → mã OTP → mật khẩu mới
 │   ├── ticket-lookup.html        Tra cứu vé không cần đăng nhập (mã vé / email / SĐT), hiện mã QR
@@ -37,32 +40,39 @@ frontend/
 │   ├── policies.html             Hướng dẫn dùng QR, quy định tham quan, chính sách hoàn vé, điều khoản, bảo mật
 │   ├── contact.html              Liên hệ, gửi yêu cầu hỗ trợ, câu hỏi thường gặp
 │   ├── booking.html              (Trang dịch vụ gộp cũ, còn logic mock tạo vé QR; sẽ bỏ khi đã nối logic vào các trang trên)
-│   │  ── Cán bộ / quản trị ──
-│   ├── login.html                Đăng nhập cán bộ
-│   ├── dashboard.html            Bảng điều khiển
-│   ├── tickets.html              Bán vé tại quầy, phát hành QR, loại vé & giá
-│   ├── checkin.html              Kiểm soát lượt vào: quét QR / nhập mã, nhật ký vào cổng
-│   ├── events.html               Quản lý sự kiện & danh sách đăng ký
-│   ├── visitors.html             Đoàn khách: tiếp nhận, duyệt lịch
-│   ├── surveys.html              Kết quả khảo sát
-│   ├── statistics.html           Thống kê, biểu đồ, xuất CSV (admin)
-│   └── settings.html             Cài đặt bảo tàng (admin)
+│   │  ── Cán bộ / quản trị (vai trò staff + admin; mục "admin" chỉ quản trị viên mở được) ──
+│   ├── dashboard.html            Bảng điều khiển: khách hôm nay, việc cần xử lý, lượt vào gần đây, sự kiện sắp tới
+│   ├── statistics.html           Thống kê theo khoảng ngày, biểu đồ, xuất CSV (admin)
+│   ├── orders.html               Đơn hàng & hoàn tiền: duyệt / từ chối yêu cầu đổi giờ, hủy vé; xác nhận thanh toán
+│   ├── tickets.html              Vé điện tử: tra cứu, xem QR, bán vé tại quầy
+│   ├── ticket-types.html         Loại vé & giá (admin)
+│   ├── checkin.html              Soát vé tại cổng: quét QR / nhập mã, chọn cổng, nhật ký lượt vào
+│   ├── visitors.html             Đoàn khách: duyệt đăng ký, ghi nhận đoàn đến
+│   ├── museum-management.html    Quản lý bảo tàng: thông tin, giờ mở cửa, đóng / mở bán (admin)
+│   ├── time-slots.html           Khung giờ & sức chứa theo ngày, tạm khóa khung giờ
+│   ├── events.html               Sự kiện & triển lãm: tạo, sửa, theo dõi số đăng ký
+│   ├── event-checkin.html        Điểm danh khách tham dự sự kiện (QR / nhập mã)
+│   ├── surveys.html              Kết quả khảo sát: điểm từng tiêu chí, góp ý
+│   ├── survey-builder.html       Soạn nội dung bộ câu hỏi khảo sát (admin)
+│   ├── staff.html                Cán bộ & phân quyền: thêm, khóa, đặt lại mật khẩu (admin)
+│   └── settings.html             Cài đặt hệ thống: liên hệ, giờ đón khách, sức chứa mặc định (admin)
 ├── assets/ (images, icons, fonts)
 ├── css/
 │   ├── base/        reset, variables, typography (dùng chung)
 │   │                design-tokens.css  bộ màu Heritage & Horizon (biến --hh-*)
 │   │                utilities.css      lớp tiện ích đã biên dịch sẵn cho trang khách (không dùng CDN)
-│   ├── components/  navbar, sidebar, button, modal (+ thông báo), card, public-navbar, footer, chip, museum-card, pagination,
-│   │                heritage-ui.css (thẻ, ô nhập, nút, nhãn, tab, FAQ dùng cho các trang khách mới)
-│   ├── layouts/     main-layout (quản trị), auth-layout, public-layout, visitor-layout (trang khách),
+│   ├── components/  button, modal (+ thông báo), card, public-navbar, footer, chip, museum-card, pagination,
+│   │                heritage-ui.css (thẻ, ô nhập, nút, nhãn, tab, FAQ dùng chung cho trang khách và quản trị)
+│   ├── layouts/     admin-layout (khung trang quản trị: sidebar, bảng, thẻ số liệu), public-layout, visitor-layout (trang khách),
 │   │                visitor-auth-layout (khung 2 cột của trang đăng nhập / đăng ký khách)
 │   └── pages/       1 file CSS cho mỗi trang, cùng tên với trang (index.html dùng home.css)
 └── js/
     ├── config/      api.config.js (endpoint), app.config.js (ROUTES đường dẫn các trang, menu, trạng thái)
     ├── services/    api, auth (cán bộ), customer (tài khoản khách), ticket (+ tra cứu, yêu cầu đổi/hủy), event, visitor,
-    │                survey, statistics, museum, support (liên hệ)
-    ├── components/  public-navbar + footer (trang khách), navbar + sidebar (quản trị), modal, notification, museum-card, pagination
-    ├── utils/       format, validation, helpers
+    │                survey, statistics, museum, support (liên hệ), order (đơn & hoàn tiền), staff (cán bộ), timeslot (khung giờ)
+    ├── components/  public-navbar + footer (trang khách), admin-shell (sidebar + thanh trên của trang quản trị), modal, notification,
+    │                museum-card, pagination, google-login
+    ├── utils/       format, validation, helpers, admin-ui (thẻ số liệu, phân trang, xuất CSV cho trang quản trị)
     └── pages/       1 file JS cho mỗi trang, cùng tên với trang (index.html dùng home.js)
 ```
 
@@ -87,14 +97,18 @@ Thứ tự nạp script: config → utils → services → components → pages.
 | GET/POST/PUT/DELETE | /api/groups[/:id] | Đoàn khách |
 | GET/POST | /api/surveys | Khảo sát |
 | GET | /api/statistics?from=&to= | Số liệu tổng hợp |
-| GET/PUT | /api/settings | Thông tin bảo tàng |
+| GET/PUT | /api/settings | Cài đặt hệ thống |
+| GET/POST/PUT | /api/users[/:id] | Cán bộ (vai trò `admin` / `staff`, trạng thái `active` / `locked`) |
+| GET/POST/PUT | /api/museums[/:id] | Quản trị bảo tàng (`status: open|closed`, `slot_capacity`) |
+| GET/POST/PUT | /api/time-slots[/:id] | Điều chỉnh sức chứa / khóa theo `museum_id, date, slot` |
+| GET/PUT | /api/survey-config | Nội dung bộ câu hỏi khảo sát |
 | POST | /api/customers/register | Đăng ký khách `{full_name,email,phone,password}` → `{token,customer}` |
 | POST | /api/customers/login | Đăng nhập khách `{account,password}` (account = email hoặc SĐT) → `{token,customer}` |
 | POST | /api/customers/forgot-password | Gửi mã OTP 6 số qua email `{email}` |
 | POST | /api/customers/reset-password | Đặt lại mật khẩu `{email,otp,password}` |
 | POST | /api/customers/google | Đăng nhập Google `{id_token}` → `{token,customer}` (backend kiểm tra id_token, chưa có email thì tạo tài khoản) |
 | GET | /api/tickets?email= / ?phone= / ?code= | Tra cứu vé không cần đăng nhập |
-| GET/POST | /api/ticket-requests | Yêu cầu đổi giờ / hủy vé (`type: change|cancel`, `status: pending|approved|rejected`) |
+| GET/POST/PUT | /api/ticket-requests[/:id] | Yêu cầu đổi giờ / hủy vé (`type: change|cancel`, `status: pending|approved|rejected`, `processed_by`) |
 | POST | /api/contact-messages | Tin nhắn hỗ trợ từ trang Liên hệ |
 
 Header xác thực: `Authorization: Bearer <token>`. Phản hồi có thể là dữ liệu trực tiếp hoặc `{ data: ... }`; lỗi trả `{ message }`.

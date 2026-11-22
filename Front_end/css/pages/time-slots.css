@@ -1,0 +1,36 @@
+/* time-slots.css — Lịch khung giờ & sức chứa. Bố cục chung ở css/layouts/admin-layout.css */
+.slot-range { min-width: 12.5rem; text-align: center; font-weight: 600; font-size: 14px; color: rgb(var(--hh-primary)); }
+.slot-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin-left: auto; font-size: 12.5px; color: rgb(var(--hh-on-surface-variant)); }
+.slot-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.slot-legend i { width: 0.65rem; height: 0.65rem; border-radius: 9999px; display: inline-block; }
+.slot-legend .material-symbols-outlined { font-size: 15px; }
+.lv-ok { --lv: var(--hh-tertiary-container); }
+.lv-busy { --lv: var(--hh-secondary); }
+.lv-full { --lv: var(--hh-error); }
+.slot-legend i.lv-ok, .slot-legend i.lv-busy, .slot-legend i.lv-full { background: rgb(var(--lv)); }
+
+.slot-grid { display: grid; grid-template-columns: 5.25rem repeat(7, minmax(4.4rem, 1fr)); gap: 0.45rem; padding: 1rem; min-width: 620px; }
+.slot-day { text-align: center; padding: 0.5rem 0.25rem; border-radius: 0.6rem; background: rgb(var(--hh-surface-container-low)); font-size: 12px; color: rgb(var(--hh-on-surface-variant)); }
+.slot-day b { display: block; font-size: 17px; line-height: 22px; color: rgb(var(--hh-primary)); }
+.slot-day.is-today { background: rgb(var(--hh-secondary-fixed)); color: rgb(var(--hh-on-secondary-fixed)); }
+.slot-label { display: flex; align-items: center; font-size: 13px; font-weight: 600; color: rgb(var(--hh-primary)); }
+.slot-cell { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; min-height: 4.6rem; padding: 0.6rem 0.65rem; text-align: left; border-radius: 0.6rem;
+  background: rgb(var(--hh-surface-container-lowest)); border: 1px solid rgb(var(--hh-outline-variant) / 0.55); transition: border-color .12s, box-shadow .12s; }
+.slot-cell:hover { border-color: rgb(var(--hh-primary) / 0.5); }
+.slot-cell.is-selected { border-color: rgb(var(--hh-primary)); box-shadow: 0 0 0 2px rgb(var(--hh-primary) / 0.25); }
+.slot-cell.is-past { opacity: 0.55; }
+.slot-cell.is-locked { background: repeating-linear-gradient(135deg, rgb(var(--hh-surface-container-low)), rgb(var(--hh-surface-container-low)) 6px, rgb(var(--hh-surface-container)) 6px, rgb(var(--hh-surface-container)) 12px); }
+.slot-cell.is-closed { align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: rgb(var(--hh-outline)); background: rgb(var(--hh-surface-container-low)); border-style: dashed; }
+.slot-cell__num { font-size: 16px; font-weight: 700; color: rgb(var(--hh-on-surface)); }
+.slot-cell__num small { font-size: 12px; font-weight: 500; color: rgb(var(--hh-on-surface-variant)); }
+.slot-cell.lv-full .slot-cell__num { color: rgb(var(--hh-error)); }
+.slot-cell__lock { position: absolute; top: 0.45rem; right: 0.45rem; font-size: 16px; color: rgb(var(--hh-on-surface-variant)); }
+.slot-bar { display: block; height: 5px; border-radius: 9999px; background: rgb(var(--hh-surface-container-high)); overflow: hidden; }
+.slot-bar i { display: block; height: 100%; border-radius: inherit; background: rgb(var(--lv, var(--hh-primary))); }
+.slot-bar--lg { height: 8px; margin-top: 0.75rem; }
+.slot-summary { display: flex; align-items: center; gap: 0.4rem; padding: 0.9rem 1.25rem; border-top: 1px solid rgb(var(--hh-outline-variant) / 0.35); font-size: 13px; color: rgb(var(--hh-on-surface-variant)); }
+.slot-summary .material-symbols-outlined { font-size: 18px; }
+.slot-booked { padding: 1rem; border-radius: 0.75rem; background: rgb(var(--hh-secondary-fixed) / 0.25); }
+.slot-booked p:first-child { font-size: 15px; color: rgb(var(--hh-on-surface-variant)); }
+.slot-booked b { font-size: 30px; line-height: 36px; color: rgb(var(--hh-primary)); }
+#detail .hh-input[type=number] { max-width: 7rem; }

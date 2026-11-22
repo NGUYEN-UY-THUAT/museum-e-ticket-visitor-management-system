@@ -1,43 +1,80 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thống kê | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/statistics.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Thống kê | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/statistics.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><div><h1>Thống kê & báo cáo</h1></div>
-          <div class="toolbar"><input class="form-control" type="date" id="fromDate"><input class="form-control" type="date" id="toDate"><button class="btn btn--primary" id="applyBtn">Xem</button><button class="btn btn--outline" id="exportBtn">Xuất CSV</button></div></div>
-        <div class="stat-grid" id="statGrid"></div>
-        <div class="grid-2">
-          <section class="card"><h3>Lượt khách theo ngày</h3><canvas id="dayChart" height="220"></canvas></section>
-          <section class="card"><h3>Doanh thu theo loại vé</h3><canvas id="typeChart" height="220"></canvas></section>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <section class="adm-head">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">monitoring</span> Báo cáo</span>
+            <h1 class="adm-title">Thống kê doanh thu & lượt khách</h1>
+            <p class="adm-desc">Tổng hợp theo ngày tham quan của vé đã thanh toán. Xuất CSV để mở bằng Excel.</p>
+          </div>
+          <div class="adm-actions"><button class="hh-btn hh-btn--ghost" id="exportBtn" type="button"><span class="material-symbols-outlined">file_download</span> Xuất báo cáo (CSV)</button></div>
+        </section>
+
+        <section class="adm-filters">
+          <div class="hh-field st-date"><label class="hh-label" for="fromDate">Từ ngày</label><input class="hh-input" id="fromDate" type="date" /></div>
+          <div class="hh-field st-date"><label class="hh-label" for="toDate">Đến ngày</label><input class="hh-input" id="toDate" type="date" /></div>
+          <div class="flex gap-2 items-end self-end">
+            <button class="hh-btn hh-btn--soft hh-btn--sm" type="button" data-range="7">7 ngày</button>
+            <button class="hh-btn hh-btn--soft hh-btn--sm" type="button" data-range="30">30 ngày</button>
+            <button class="hh-btn hh-btn--primary hh-btn--sm" id="applyBtn" type="button"><span class="material-symbols-outlined">filter_alt</span> Xem</button>
+          </div>
+        </section>
+
+        <section class="adm-stats" id="stats"></section>
+
+        <div class="st-grid">
+          <section class="adm-panel"><h2 class="adm-panel__title">Lượt khách theo ngày</h2><div class="st-chart"><canvas id="dayChart"></canvas></div></section>
+          <section class="adm-panel"><h2 class="adm-panel__title">Doanh thu theo loại vé</h2><div class="st-chart st-chart--pie"><canvas id="typeChart"></canvas></div></section>
         </div>
-        <section class="card"><h3>Chi tiết theo loại vé</h3><div class="table-wrap"><table class="table"><thead><tr><th>Loại vé</th><th>Lượt khách</th><th>Doanh thu</th></tr></thead><tbody id="typeBody"></tbody></table></div></section>
+
+        <section class="adm-card">
+          <div class="adm-card__head"><h2 class="adm-card__title">Chi tiết theo loại vé</h2></div>
+          <div class="adm-table-wrap"><table class="adm-table st-table"><thead><tr><th>Loại vé</th><th class="num">Lượt khách</th><th class="num">Doanh thu</th><th class="num">Tỷ trọng</th></tr></thead><tbody id="typeRows"></tbody></table></div>
+        </section>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/services/ticket.service.js"></script>
@@ -47,8 +84,7 @@
   <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/statistics.js"></script>
 </body>
 </html>

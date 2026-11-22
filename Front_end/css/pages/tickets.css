@@ -1,6 +1,11 @@
-.filters{justify-content:flex-start}
-.filters .form-control{max-width:240px}
-.eticket{text-align:center;border:2px dashed var(--color-border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;align-items:center;gap:4px}
-.eticket__qr{margin-bottom:8px}
-.eticket__code{font-family:monospace;font-size:1.3rem;font-weight:700;letter-spacing:.1em;color:var(--color-primary)}
-@media print{body *{visibility:hidden}.eticket,.eticket *{visibility:visible}.eticket{position:fixed;top:20px;left:20px;right:20px}}
+/* tickets.css — Vé điện tử. Bố cục chung ở css/layouts/admin-layout.css */
+.tk-date { flex: 0 1 11rem; }
+.tk-actions { display: inline-flex; gap: 0.35rem; justify-content: flex-end; }
+.tk-actions .hh-btn { padding: 0.4rem 0.65rem; }
+.tk-ticket { text-align: center; }
+.tk-ticket .hh-qr { margin: 0 auto; }
+.tk-ticket__code { margin-top: 0.5rem; font: 700 18px/24px ui-monospace, monospace; letter-spacing: 0.08em; color: rgb(var(--hh-primary)); }
+.tk-ticket .adm-dl { text-align: left; }
+.tk-total { padding: 0.75rem 1rem; border-radius: 0.6rem; background: rgb(var(--hh-secondary-fixed) / 0.25); font-size: 15px; }
+.tk-total b { font-size: 20px; color: rgb(var(--hh-primary)); }
+@media print { .adm-sidebar, .adm-topbar, .adm-content > *:not(.modal) { display: none !important; } .modal { position: static; background: none; } .modal__footer, .modal__close { display: none; } }

@@ -1,1 +1,9 @@
-code{background:var(--color-bg);padding:1px 6px;border-radius:4px;font-size:.85em}
+/* settings.css — Cài đặt hệ thống. Bố cục chung ở css/layouts/admin-layout.css */
+.st-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 1100px) { .st-layout { grid-template-columns: minmax(0, 1fr) 360px; } }
+.st-slots { margin-top: 1.25rem; }
+.st-slot { padding: 0.35rem 0.75rem; border-radius: 99px; font-size: 13px; font-weight: 600; background: rgb(var(--hh-surface-container-low)); border: 1px solid rgb(var(--hh-outline-variant) / 0.6); color: rgb(var(--hh-primary)); }
+.st-policy { margin-top: 1rem; display: flex; flex-direction: column; }
+.st-policy li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.65rem 0; border-bottom: 1px dashed rgb(var(--hh-outline-variant) / 0.6); font-size: 13.5px; }
+.st-policy li:last-child { border-bottom: 0; }
+.st-policy b { color: rgb(var(--hh-primary)); white-space: nowrap; }

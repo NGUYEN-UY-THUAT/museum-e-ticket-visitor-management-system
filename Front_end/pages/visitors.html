@@ -1,50 +1,96 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đoàn khách | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/visitors.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Đoàn khách | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/visitors.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><div><h1>Đoàn khách</h1><p class="text-muted">Tiếp nhận, duyệt lịch và theo dõi đoàn tham quan</p></div><button class="btn btn--primary" id="newGroupBtn">+ Thêm đoàn</button></div>
-        <section class="card">
-          <div class="card__header filters"><input class="form-control" id="searchInput" placeholder="Tìm tên đoàn, trưởng đoàn..."><select class="form-control" id="statusFilter"><option value="">Tất cả trạng thái</option></select></div>
-          <div class="table-wrap"><table class="table"><thead><tr><th>Tên đoàn</th><th>Trưởng đoàn</th><th>Liên hệ</th><th>Số người</th><th>Ngày</th><th>Thuyết minh</th><th>Trạng thái</th><th></th></tr></thead><tbody id="groupBody"></tbody></table></div>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <section class="adm-head">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">groups</span> Bán vé & khách</span>
+            <h1 class="adm-title">Đoàn khách tham quan</h1>
+            <p class="adm-desc">Duyệt đăng ký đoàn từ 10 người (trường học, công ty, đoàn du lịch), sắp xếp thuyết minh viên và ghi nhận khi đoàn đến.</p>
+          </div>
+          <div class="adm-actions">
+            <button class="hh-btn hh-btn--ghost" id="exportBtn" type="button"><span class="material-symbols-outlined">file_download</span> Xuất CSV</button>
+            <button class="hh-btn hh-btn--primary" id="addBtn" type="button"><span class="material-symbols-outlined">group_add</span> Thêm đoàn</button>
+          </div>
         </section>
+
+        <section class="adm-stats" id="stats"></section>
+
+        <div class="adm-split">
+          <section class="flex flex-col gap-4 min-w-0">
+            <div class="hh-tabs" id="tabs" role="tablist">
+              <button class="hh-tab is-active" type="button" data-tab="">Tất cả <span data-count=""></span></button>
+              <button class="hh-tab" type="button" data-tab="pending">Chờ duyệt <span data-count="pending"></span></button>
+              <button class="hh-tab" type="button" data-tab="approved">Đã duyệt <span data-count="approved"></span></button>
+              <button class="hh-tab" type="button" data-tab="visited">Đã tham quan <span data-count="visited"></span></button>
+              <button class="hh-tab" type="button" data-tab="rejected">Từ chối <span data-count="rejected"></span></button>
+            </div>
+            <div class="adm-filters">
+              <div class="hh-input-wrap"><span class="material-symbols-outlined">search</span><input class="hh-input" id="keyword" type="search" placeholder="Tìm tên đoàn, trưởng đoàn, số điện thoại" /></div>
+            </div>
+            <div class="adm-card">
+              <div class="adm-table-wrap">
+                <table class="adm-table">
+                  <thead><tr><th>Đoàn / đơn vị</th><th>Trưởng đoàn</th><th class="num">Số người</th><th>Ngày tham quan</th><th>Trạng thái</th></tr></thead>
+                  <tbody id="rows"></tbody>
+                </table>
+              </div>
+              <div class="adm-pager" id="pager"></div>
+            </div>
+          </section>
+
+          <aside class="adm-panel adm-panel--sticky" id="detail">
+            <div class="adm-empty-panel"><span class="material-symbols-outlined">groups</span>Chọn một đoàn trong danh sách để xem chi tiết và duyệt đăng ký.</div>
+          </aside>
+        </div>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
-  <script src="../js/services/ticket.service.js"></script>
-  <script src="../js/services/event.service.js"></script>
   <script src="../js/services/visitor.service.js"></script>
-  <script src="../js/services/survey.service.js"></script>
-  <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/visitors.js"></script>
 </body>
 </html>

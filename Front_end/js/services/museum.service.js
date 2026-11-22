@@ -4,6 +4,18 @@
                        backend trả { items, total, page, pageSize, totalPages }. */
 window.MuseumService = (function () {
   const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+  const E = () => API_CONFIG.ENDPOINTS.MUSEUMS;
+
+  /** Mock: danh sách bảo tàng lưu trong MockDB (để trang quản trị sửa được và trang khách thấy ngay).
+      Lần đầu chép từ MUSEUM_MOCK_DATA (js/services/mock/museum.mock.js). */
+  function source() {
+    const db = MockDB.load();
+    if (!db.museums?.length && window.MUSEUM_MOCK_DATA) {
+      db.museums = MUSEUM_MOCK_DATA.map((m) => ({ status: "open", slot_capacity: APP_CONFIG.SLOT_CAPACITY, ...m }));
+      MockDB.save(db);
+    }
+    return db.museums?.length ? db.museums : window.MUSEUM_MOCK_DATA || [];
+  }
 
   function filter(list, { keyword, city = "all", type = "all", openNow = false }) {
     const q = Helpers.normalizeText(keyword);
@@ -50,16 +62,35 @@ window.MuseumService = (function () {
       }
 
       await delay(200);
-      const all = sort(filter(MUSEUM_MOCK_DATA, query), query);
+      const all = sort(filter(source(), query), query);
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
       return { items: all.slice((page - 1) * pageSize, page * pageSize), total: all.length, page, pageSize, totalPages };
     },
 
     async get(id) {
       if (!API_CONFIG.USE_MOCK) return ApiService.get(API_CONFIG.ENDPOINTS.MUSEUMS + "/" + id);
-      const m = MUSEUM_MOCK_DATA.find((x) => String(x.id) === String(id));
+      const m = source().find((x) => String(x.id) === String(id));
       if (!m) throw new Error("Không tìm thấy bảo tàng");
       return m;
+    },
+
+    /* ---------- Khu vực quản trị ---------- */
+    /** Toàn bộ bảo tàng (không phân trang) */
+    async adminList() {
+      if (!API_CONFIG.USE_MOCK) return ApiService.get(E(), { all: 1 });
+      await delay(120);
+      return [...source()].sort((a, b) => a.id - b.id);
+    },
+    /** Thêm hoặc sửa bảo tàng */
+    async save(m) {
+      if (!API_CONFIG.USE_MOCK) return m.id ? ApiService.put(`${E()}/${m.id}`, m) : ApiService.post(E(), m);
+      source();
+      return m.id ? ApiService.put(`${E()}/${m.id}`, m) : ApiService.post(E(), { rating: 0, review_count: 0, status: "open", ...m });
+    },
+    /** Mở cửa / tạm đóng cửa (tạm đóng thì khách không đặt vé được) */
+    setStatus(id, status) {
+      if (API_CONFIG.USE_MOCK) source();
+      return ApiService.put(`${E()}/${id}`, { status });
     },
 
     async stats() {

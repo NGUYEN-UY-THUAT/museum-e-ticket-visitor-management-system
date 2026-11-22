@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Soạn khảo sát | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/survey-builder.css" />
+</head>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <!-- Tiêu đề -->
+        <section class="adm-head adm-head--hero">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">rule</span> Khảo sát trải nghiệm khách</span>
+            <h1 class="adm-title">Soạn nội dung khảo sát</h1>
+            <p class="adm-desc">Chỉnh lời dẫn và câu hỏi khách nhận được sau chuyến tham quan. Mỗi câu chấm điểm ứng với một tiêu chí trong báo cáo kết quả.</p>
+          </div>
+          <div class="adm-actions">
+            <a class="hh-btn hh-btn--ghost" href="surveys.html"><span class="material-symbols-outlined">bar_chart</span> Xem kết quả</a>
+            <button class="hh-btn hh-btn--gold" id="saveBtn" type="button"><span class="material-symbols-outlined">save</span> Lưu & áp dụng</button>
+          </div>
+        </section>
+
+        <div class="sb-layout">
+          <!-- Cột trái: thông tin chung + danh sách câu hỏi -->
+          <div class="flex flex-col gap-5 min-w-0">
+            <section class="adm-panel">
+              <div class="flex items-center justify-between gap-2"><p class="adm-panel__label" style="margin:0">Thông tin chung</p><span class="hh-badge hh-badge--success">Đang áp dụng</span></div>
+              <div class="hh-field mt-3"><label class="hh-label" for="title">Tiêu đề khảo sát <span class="req">*</span></label><input class="hh-input" id="title" maxlength="120" /><span class="hh-error"></span></div>
+              <div class="hh-field mt-3"><label class="hh-label" for="intro">Lời dẫn</label><textarea class="hh-input" id="intro" maxlength="300"></textarea></div>
+              <p class="hh-hint mt-3" id="responseInfo"></p>
+            </section>
+
+            <section class="adm-panel">
+              <p class="adm-panel__label">Gửi khảo sát qua email</p>
+              <label class="adm-switch"><span class="adm-switch__text">Tự gửi email mời khảo sát<small>Gửi đến email đặt vé sau khi khách được soát vé vào cổng.</small></span><input type="checkbox" id="sendEmail" /></label>
+              <div class="grid grid-cols-2 gap-3 mt-4" id="emailOpts">
+                <div class="hh-field"><label class="hh-label" for="sendAfter">Gửi sau</label><select class="hh-input" id="sendAfter"><option value="1">1 giờ</option><option value="2">2 giờ</option><option value="6">6 giờ</option><option value="24">1 ngày</option></select></div>
+                <div class="hh-field"><label class="hh-label" for="validHours">Link hết hạn sau</label><select class="hh-input" id="validHours"><option value="24">1 ngày</option><option value="48">2 ngày</option><option value="72">3 ngày</option><option value="168">7 ngày</option></select></div>
+              </div>
+            </section>
+
+            <section class="adm-panel">
+              <div class="flex items-center justify-between gap-2 mb-3"><p class="adm-panel__label" style="margin:0">Danh sách câu hỏi</p><span class="hh-badge hh-badge--info" id="qCount"></span></div>
+              <ol class="sb-list" id="qList"></ol>
+              <p class="hh-hint mt-3">Dùng mũi tên để đổi thứ tự. Câu bị ẩn sẽ không hiện cho khách.</p>
+            </section>
+          </div>
+
+          <!-- Cột giữa: sửa câu hỏi -->
+          <section class="adm-panel" id="editor"></section>
+
+          <!-- Cột phải: xem trước -->
+          <section class="sb-preview-wrap">
+            <p class="adm-panel__label">Xem trước giao diện khách</p>
+            <div class="sb-preview" id="preview"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/survey.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
+  <script src="../js/pages/survey-builder.js"></script>
+</body>
+</html>

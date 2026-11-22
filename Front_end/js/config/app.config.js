@@ -88,7 +88,7 @@ Object.assign(window.APP_CONFIG, {
     CONTACT: "pages/contact.html",             // Liên hệ & câu hỏi thường gặp
     NOT_FOUND: "404.html",
     SERVICES: "pages/booking.html",            // Trang dịch vụ gộp cũ (đặt vé QR, tra cứu...) – còn dùng logic mock
-    LOGIN: "pages/login.html",
+    LOGIN: "pages/account-login.html",          // Đăng nhập chung: khách -> Vé của tôi, cán bộ -> trang quản trị
     DASHBOARD: "pages/dashboard.html",
     CHECKIN: "pages/checkin.html"
   },
@@ -123,3 +123,84 @@ Object.assign(window.APP_CONFIG, {
     { code: "war", label: "Chiến tích" }
   ]
 });
+
+/* ==========================================================================
+   Cấu hình khu vực quản trị (cán bộ). Chỉ tài khoản cán bộ đang hoạt động mới vào được.
+   Vai trò khớp biểu đồ lớp: Role = admin | staff (users.role trong MySQL).
+   ========================================================================== */
+Object.assign(window.APP_CONFIG, {
+  ROLE_LABELS: { admin: "Quản trị viên", staff: "Cán bộ vận hành" },
+  STAFF_STATUS: {
+    active: { label: "Đang hoạt động", badge: "success" },
+    locked: { label: "Đã khóa", badge: "danger" },
+  },
+  /** Bảng quyền theo vai trò (chỉ để hiển thị; backend kiểm tra lại theo role) */
+  ROLE_PERMISSIONS: [
+    { group: "Vận hành hằng ngày", items: [
+      { label: "Soát vé tại cổng, điểm danh sự kiện", staff: true, admin: true },
+      { label: "Xem đơn hàng, xác nhận thanh toán", staff: true, admin: true },
+      { label: "Duyệt yêu cầu đổi giờ / hoàn tiền", staff: true, admin: true },
+      { label: "Duyệt đoàn khách, quản lý sự kiện", staff: true, admin: true },
+      { label: "Điều chỉnh sức chứa khung giờ", staff: true, admin: true },
+    ] },
+    { group: "Quản trị hệ thống", items: [
+      { label: "Thêm, sửa, tạm đóng bảo tàng", staff: false, admin: true },
+      { label: "Soạn nội dung khảo sát", staff: false, admin: true },
+      { label: "Xem thống kê doanh thu", staff: false, admin: true },
+      { label: "Quản lý tài khoản cán bộ", staff: false, admin: true },
+      { label: "Cài đặt hệ thống", staff: false, admin: true },
+    ] },
+  ],
+  MUSEUM_STATUS: {
+    open: { label: "Đang mở cửa", badge: "success" },
+    closed: { label: "Tạm đóng cửa", badge: "warning" },
+  },
+  /** Sức chứa mặc định của mỗi khung giờ (khách) khi bảo tàng chưa đặt riêng */
+  SLOT_CAPACITY: 60,
+  ADMIN_HOME: "dashboard.html",
+  /** Cổng soát vé (ghi vào checkins.gate) */
+  GATES: ["Cổng chính", "Cổng phụ", "Cổng đoàn khách"],
+  CHECKIN_RESULT: {
+    ok: { label: "Hợp lệ", badge: "success" },
+    used: { label: "Vé đã dùng", badge: "danger" },
+    cancelled: { label: "Vé đã hủy", badge: "danger" },
+    unpaid: { label: "Chưa thanh toán", badge: "warning" },
+    wrong_date: { label: "Sai ngày", badge: "warning" },
+    not_found: { label: "Không tồn tại", badge: "danger" },
+  },
+
+  /** Menu trái khu vực quản trị (href tính trong thư mục pages/; adminOnly: chỉ quản trị viên) */
+  ADMIN_MENU: [
+    { section: "Tổng quan" },
+    { key: "dashboard", label: "Bảng điều khiển", icon: "space_dashboard", href: "dashboard.html" },
+    { key: "statistics", label: "Thống kê", icon: "monitoring", href: "statistics.html", adminOnly: true },
+    { section: "Bán vé & khách" },
+    { key: "orders", label: "Đơn hàng & Hoàn tiền", icon: "shopping_bag", href: "orders.html" },
+    { key: "tickets", label: "Vé điện tử", icon: "confirmation_number", href: "tickets.html" },
+    { key: "ticket-types", label: "Loại vé & Giá", icon: "sell", href: "ticket-types.html", adminOnly: true },
+    { key: "checkin", label: "Soát vé tại cổng", icon: "qr_code_scanner", href: "checkin.html" },
+    { key: "visitors", label: "Đoàn khách", icon: "groups", href: "visitors.html" },
+    { section: "Bảo tàng & sự kiện" },
+    { key: "museums", label: "Bảo tàng", icon: "museum", href: "museum-management.html", adminOnly: true },
+    { key: "timeslots", label: "Khung giờ & Sức chứa", icon: "schedule", href: "time-slots.html" },
+    { key: "events", label: "Sự kiện", icon: "event", href: "events.html" },
+    { key: "event-checkin", label: "Điểm danh sự kiện", icon: "how_to_reg", href: "event-checkin.html" },
+    { section: "Khảo sát" },
+    { key: "surveys", label: "Kết quả khảo sát", icon: "reviews", href: "surveys.html" },
+    { key: "survey-builder", label: "Soạn khảo sát", icon: "edit_note", href: "survey-builder.html", adminOnly: true },
+    { section: "Hệ thống" },
+    { key: "staff", label: "Cán bộ & Phân quyền", icon: "shield_person", href: "staff.html", adminOnly: true },
+    { key: "settings", label: "Cài đặt", icon: "settings", href: "settings.html", adminOnly: true },
+  ],
+});
+Object.assign(window.APP_CONFIG.ROUTES, {
+  ADMIN_ORDERS: "pages/orders.html",
+  ADMIN_MUSEUMS: "pages/museum-management.html",
+  ADMIN_TIME_SLOTS: "pages/time-slots.html",
+  ADMIN_STAFF: "pages/staff.html",
+  ADMIN_SURVEY_BUILDER: "pages/survey-builder.html",
+  ADMIN_EVENT_CHECKIN: "pages/event-checkin.html",
+  ADMIN_TICKET_TYPES: "pages/ticket-types.html",
+});
+// Giữ tên MENU cho mã cũ: cùng danh sách với ADMIN_MENU
+window.APP_CONFIG.MENU = window.APP_CONFIG.ADMIN_MENU;
