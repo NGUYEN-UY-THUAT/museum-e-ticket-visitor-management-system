@@ -9,19 +9,19 @@ window.APP_CONFIG = {
     pending: { label: "Chờ thanh toán", badge: "warning" },
     used: { label: "Đã vào cổng", badge: "info" },
     cancelled: { label: "Đã hủy", badge: "danger" },
-    expired: { label: "Hết hạn", badge: "muted" },
+    expired: { label: "Hết hạn", badge: "muted" }
   },
   EVENT_STATUS: {
     upcoming: { label: "Sắp diễn ra", badge: "info" },
     ongoing: { label: "Đang diễn ra", badge: "success" },
     finished: { label: "Đã kết thúc", badge: "muted" },
-    cancelled: { label: "Đã hủy", badge: "danger" },
+    cancelled: { label: "Đã hủy", badge: "danger" }
   },
   GROUP_STATUS: {
     pending: { label: "Chờ duyệt", badge: "warning" },
     approved: { label: "Đã duyệt", badge: "success" },
     visited: { label: "Đã tham quan", badge: "info" },
-    rejected: { label: "Từ chối", badge: "danger" },
+    rejected: { label: "Từ chối", badge: "danger" }
   },
   MENU: [
     { section: "Tổng quan" },
@@ -34,8 +34,8 @@ window.APP_CONFIG = {
     { key: "visitors", label: "Đoàn khách", icon: "👥", href: "visitors.html" },
     { key: "surveys", label: "Khảo sát hài lòng", icon: "⭐", href: "surveys.html" },
     { section: "Hệ thống" },
-    { key: "settings", label: "Cài đặt", icon: "⚙️", href: "settings.html" },
-  ],
+    { key: "settings", label: "Cài đặt", icon: "⚙️", href: "settings.html" }
+  ]
 };
 
 /* ==========================================================================
@@ -48,16 +48,25 @@ Object.assign(window.APP_CONFIG, {
 
   /** Đường dẫn tính từ thư mục frontend/ (Helpers.routeUrl tự thêm "../" khi đang ở pages/) */
   ROUTES: {
-    HOME: "index.html",
-    MUSEUMS: "index.html#museum-list",
-    BOOKING: "pages/booking.html#booking",
-    EVENTS: "pages/booking.html#events",
-    GROUP_BOOKING: "pages/booking.html#group",
-    SURVEY: "pages/booking.html#survey",
-    MY_TICKETS: "pages/booking.html#lookup",
+    HOME: "index.html",                        // Trang chủ khách tham quan
+    MUSEUMS: "pages/museums.html",             // Danh sách bảo tàng (tìm kiếm, lọc)
+    MUSEUM_DETAIL: "pages/museum-detail.html", // Chi tiết bảo tàng
+    BOOKING: "pages/ticket-selection.html",    // Bước 1: chọn ngày, khung giờ, loại vé
+    CHECKOUT: "pages/checkout.html",           // Bước 2: thông tin người đặt + thanh toán
+    PAYMENT_RESULT: "pages/payment-result.html", // Bước 3: kết quả thanh toán
+    MY_TICKETS: "pages/my-tickets.html",       // Vé điện tử của tôi
+    TICKET_DETAIL: "pages/ticket-detail.html", // Chi tiết 1 vé + mã QR
+    EVENTS: "pages/event-list.html",           // Danh sách sự kiện
+    EVENT_DETAIL: "pages/event-detail.html",   // Chi tiết + đăng ký sự kiện
+    GROUP_BOOKING: "pages/group-booking.html", // Đặt vé đoàn
+    SURVEY: "pages/survey.html",               // Khảo sát mức độ hài lòng
+    PROFILE: "pages/profile.html",             // Hồ sơ cá nhân & lịch sử đơn
+    SERVICES: "pages/booking.html",            // Trang dịch vụ gộp cũ (đặt vé QR, tra cứu...) – còn dùng logic mock
     LOGIN: "pages/login.html",
     DASHBOARD: "pages/dashboard.html",
+    CHECKIN: "pages/checkin.html"
   },
+
 
   /** Menu trên thanh điều hướng trang khách (key khớp <body data-page>) */
   PUBLIC_NAV: [
@@ -65,7 +74,7 @@ Object.assign(window.APP_CONFIG, {
     { key: "museums", label: "Bảo tàng", route: "MUSEUMS" },
     { key: "events", label: "Sự kiện", route: "EVENTS" },
     { key: "group", label: "Đoàn khách", route: "GROUP_BOOKING" },
-    { key: "lookup", label: "Tra cứu vé", route: "MY_TICKETS" },
+    { key: "lookup", label: "Tra cứu vé", route: "MY_TICKETS" }
   ],
 
   /** Khu vực — code khớp cột museums.city_code (MySQL) */
@@ -75,7 +84,7 @@ Object.assign(window.APP_CONFIG, {
     { code: "hcm", label: "TP. Hồ Chí Minh", short: "TP. HCM" },
     { code: "hue", label: "Thừa Thiên Huế" },
     { code: "danang", label: "Đà Nẵng" },
-    { code: "ninhbinh", label: "Ninh Bình" },
+    { code: "ninhbinh", label: "Ninh Bình" }
   ],
 
   /** Thể loại — code khớp cột museums.category_code */
@@ -85,6 +94,6 @@ Object.assign(window.APP_CONFIG, {
     { code: "art", label: "Mỹ thuật & Điêu khắc" },
     { code: "ethnology", label: "Dân tộc học" },
     { code: "science", label: "Khoa học & Tự nhiên" },
-    { code: "war", label: "Chiến tích" },
-  ],
+    { code: "war", label: "Chiến tích" }
+  ]
 });

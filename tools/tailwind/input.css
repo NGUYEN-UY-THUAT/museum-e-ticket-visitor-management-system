@@ -1,0 +1,4 @@
+/* Nguồn để sinh frontend/css/base/utilities.css (preflight + các lớp tiện ích thực sự được dùng). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

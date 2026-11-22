@@ -4,184 +4,781 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trang chủ | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
-  <meta name="description" content="Tra cứu thông tin, lịch hoạt động và đặt vé tham quan bảo tàng trực tuyến với vé QR điện tử." />
+  <meta name="description" content="Trang chủ khách tham quan: tìm nhanh bảo tàng, đặt vé, sự kiện nổi bật" />
 
   <!-- Font chữ & bộ icon -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
 
-  <!-- Base (dùng chung với trang quản trị) -->
-  <link rel="stylesheet" href="css/base/reset.css" />
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
   <link rel="stylesheet" href="css/base/variables.css" />
   <link rel="stylesheet" href="css/base/typography.css" />
+  <link rel="stylesheet" href="css/base/design-tokens.css" />
+  <link rel="stylesheet" href="css/base/utilities.css" />
   <!-- Layout -->
   <link rel="stylesheet" href="css/layouts/public-layout.css" />
-  <!-- Components -->
+  <link rel="stylesheet" href="css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo) -->
   <link rel="stylesheet" href="css/components/button.css" />
-  <link rel="stylesheet" href="css/components/modal.css" />
-  <link rel="stylesheet" href="css/components/chip.css" />
   <link rel="stylesheet" href="css/components/public-navbar.css" />
-  <link rel="stylesheet" href="css/components/museum-card.css" />
-  <link rel="stylesheet" href="css/components/pagination.css" />
   <link rel="stylesheet" href="css/components/footer.css" />
+  <link rel="stylesheet" href="css/components/modal.css" />
   <!-- Page -->
   <link rel="stylesheet" href="css/pages/home.css" />
 </head>
 
-<!-- theme-heritage: bật bộ màu trang khách tham quan; data-page: menu đang chọn trên thanh điều hướng -->
-<body class="theme-heritage" data-page="home">
-
-  <!-- Thanh điều hướng: được vẽ bởi js/components/public-navbar.js -->
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen" data-page="home">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
   <header id="publicNavbar"></header>
 
-  <main class="site-main">
-    <!-- ===================== HERO + TÌM KIẾM ===================== -->
-    <section class="home-hero">
-      <div class="home-hero__glow home-hero__glow--gold"></div>
-      <div class="home-hero__glow home-hero__glow--navy"></div>
-
-      <div class="container home-hero__content">
-        <div class="home-hero__top">
-          <div class="home-hero__intro">
-            <span class="eyebrow">
-              <span class="icon icon--16">explore</span>
-              Hệ Thống Bản Đồ Di Sản Số
-            </span>
-            <h1 class="home-hero__title text-headline-lg">Khám phá Hệ thống Bảo tàng Di sản Việt Nam</h1>
-            <p class="home-hero__lead text-body-lg">
-              Tra cứu thông tin, lịch hoạt động và đặt vé tham quan trực tuyến tại hơn 120 không gian lưu giữ
-              ký ức lịch sử, nghệ thuật điêu khắc và bản sắc văn hóa ngàn năm.
-            </p>
-          </div>
-
-          <div class="home-hero__stats">
-            <div class="hero-stat">
-              <div class="hero-stat__icon"><span class="icon icon--22">account_balance</span></div>
-              <div>
-                <p class="hero-stat__value" id="statPartnerCount">124</p>
-                <p class="hero-stat__label">Bảo tàng đối tác</p>
-              </div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat__icon hero-stat__icon--gold"><span class="icon icon--22">qr_code_2</span></div>
-              <div>
-                <p class="hero-stat__value">100%</p>
-                <p class="hero-stat__label">Vé QR tức thì</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hộp tìm kiếm & bộ lọc -->
-        <form class="filter-box" id="filterForm" autocomplete="off" onsubmit="return false;">
-          <div class="filter-box__row">
-            <div class="search-field">
-              <span class="icon icon--22 search-field__icon">search</span>
-              <input class="search-field__input" id="searchInput" type="search"
-                     placeholder="Tìm theo tên bảo tàng, hiện vật, địa chỉ..." aria-label="Tìm kiếm bảo tàng" />
-              <button class="search-field__clear" id="clearSearchBtn" type="button" aria-label="Xóa từ khóa" hidden>
-                <span class="icon icon--18">close</span>
-              </button>
-            </div>
-
-            <div class="filter-box__controls">
-              <div class="select-field">
-                <span class="icon select-field__icon select-field__icon--left">sort</span>
-                <select class="select-field__input" id="sortSelect" aria-label="Sắp xếp">
-                  <option value="popular">Phổ biến nhất</option>
-                  <option value="rating">Đánh giá cao nhất</option>
-                  <option value="price-asc">Giá tăng dần</option>
-                  <option value="distance">Khoảng cách gần nhất</option>
-                </select>
-                <span class="icon select-field__icon select-field__icon--right">unfold_more</span>
-              </div>
-
-              <label class="toggle-chip">
-                <input id="openNowToggle" type="checkbox" />
-                <span class="pulse-dot"></span>
-                <span>Đang mở cửa</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="filter-groups">
-            <div class="filter-group">
-              <span class="filter-group__label"><span class="icon icon--16">location_on</span> Khu vực:</span>
-              <!-- Chip được vẽ từ APP_CONFIG.CITIES (js/pages/home.js) -->
-              <div class="filter-group__chips" id="cityFilterGroup"></div>
-            </div>
-            <div class="filter-group">
-              <span class="filter-group__label"><span class="icon icon--16">category</span> Thể loại:</span>
-              <!-- Chip được vẽ từ APP_CONFIG.MUSEUM_TYPES (js/pages/home.js) -->
-              <div class="filter-group__chips" id="typeFilterGroup"></div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <!-- ===================== DANH SÁCH BẢO TÀNG ===================== -->
-    <section class="container page-section stack" id="museum-list">
-      <div class="results-header">
-        <div class="results-header__title">
-          <span class="results-header__dot"></span>
-          <h2 class="text-headline-sm text-primary" id="resultCounter">Đang tải danh sách bảo tàng...</h2>
-          <span class="tag" id="resultScope">Toàn quốc</span>
-        </div>
-        <div class="results-header__tools">
-          <button class="btn btn--tool" id="toggleMapBtn" type="button">
-            <span class="icon icon--18">map</span>
-            <span>Xem bản đồ số</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Trạng thái rỗng -->
-      <div class="emptyState" id="emptyState" hidden>
-        <div class="empty-state__icon"><span class="icon icon--44">search_off</span></div>
-        <h3 class="empty-state__title text-headline-sm">Không tìm thấy bảo tàng phù hợp</h3>
-        <p class="empty-state__text">
-          Rất tiếc, không có địa điểm nào khớp với cụm từ hoặc bộ lọc bạn đã chọn.
-          Vui lòng thử lại với các tiêu chí tìm kiếm khác.
-        </p>
-        <button class="btn btn--primary btn--lg" id="resetFilterBtn" type="button">
-          <span class="icon icon--18">refresh</span>
-          Xóa tất cả bộ lọc
-        </button>
-      </div>
-
-      <!-- Lưới thẻ bảo tàng: được vẽ bởi js/components/museum-card.js -->
-      <div class="museum-grid" id="museumGrid" aria-live="polite"></div>
-
-      <!-- Banner dịch vụ đoàn khách -->
-      <div class="group-banner">
-        <div class="group-banner__circle"></div>
-        <div class="group-banner__content">
-          <span class="group-banner__eyebrow">
-            <span class="icon icon--16">groups</span>
-            Dịch vụ Đoàn &amp; Thuyết minh viên
-          </span>
-          <h3 class="group-banner__title text-headline-md">
-            Bạn đang tổ chức chuyến tham quan cho Trường học hoặc Đoàn thể?
-          </h3>
-          <p class="group-banner__text text-body-md">
-            Đăng ký gói vé đoàn ưu đãi chiết khấu lên đến 25%, hỗ trợ hướng dẫn viên tiếng Việt/Anh/Pháp
-            chuyên nghiệp và lối vào ưu tiên riêng biệt.
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- HERO SECTION WITH INTEGRATED QUICK BOOKING & PHOTO MOSAIC -->
+<section class="relative overflow-hidden pt-8 pb-20 lg:pt-14 lg:pb-28">
+<!-- Ambient Heritage Gold and Navy Background Glows -->
+<div class="absolute -top-32 right-1/4 w-96 h-96 rounded-full bg-secondary-fixed/30 blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-1/2 -left-24 w-80 h-80 rounded-full bg-primary-fixed/20 blur-3xl pointer-events-none -z-10"></div>
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<!-- Top Badge / Overline -->
+<div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-surface-container-high/80 text-primary mb-6 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-md text-label-md tracking-wider uppercase font-semibold">
+          Hơn 500.000 lượt kh&aacute;ch tham quan mỗi n&abreve;m &bull; V&eacute; QR tức th&igrave; qua Zalo & Email
+        </span>
+</div>
+<!-- Hero Headline Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-10">
+<div class="lg:col-span-8">
+<h1 class="font-display text-display text-primary tracking-tight leading-tight">
+            Kh&aacute;m ph&aacute; di sản, <br class="hidden sm:inline">
+<span class="text-secondary italic font-light">&dstrok;ặt v&eacute; chỉ trong v&agrave;i ph&uacute;t.</span>
+</h1>
+</div>
+<div class="lg:col-span-4">
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            Hệ thống v&eacute; &dstrok;iện tử ch&iacute;nh thức kết nối c&aacute;c bảo t&agrave;ng h&agrave;ng &dstrok;ầu Việt Nam. Qu&eacute;t m&atilde; QR &dstrok;i thẳng v&agrave;o sảnh, kh&ocirc;ng cần xếp h&agrave;ng, trọn vẹn h&agrave;nh tr&igrave;nh v&abreve;n h&oacute;a ng&agrave;n n&abreve;m.
           </p>
-        </div>
-        <div class="group-banner__action">
-          <a class="btn btn--accent btn--lg" href="pages/booking.html#group">Đăng ký đoàn khách</a>
-        </div>
-      </div>
+</div>
+</div>
+<!-- QUICK BOOKING BAR (Elevated White Slab) -->
+<div class="relative bg-surface-container-lowest rounded-xl p-5 lg:p-7 shadow-[0_8px_30px_rgb(31,58,95,0.08)] mb-14">
+<form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 items-center">
+<!-- Step 1: Museum Select -->
+<div class="lg:col-span-4 flex flex-col gap-1.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-1.5 font-semibold">
+<span class="material-symbols-outlined text-[17px] text-secondary">museum</span>
+              Chọn bảo t&agrave;ng
+            </label>
+<select class="w-full bg-transparent font-title-md text-title-md text-primary font-medium focus:outline-none cursor-pointer">
+<option value="vn-history">Bảo t&agrave;ng Lịch sử Quốc gia (H&agrave; Nội)</option>
+<option value="vn-finearts">Bảo t&agrave;ng Mỹ thuật Việt Nam (H&agrave; Nội)</option>
+<option value="vn-ethnology">Bảo t&agrave;ng D&acirc;n tộc học Việt Nam (H&agrave; Nội)</option>
+<option value="hue-relics">Bảo t&agrave;ng Cổ vật Cung &dstrok;&igrave;nh Huế</option>
+<option value="cham-sculpture">Bảo t&agrave;ng &Dstrok;i&ecirc;u khắc Ch&abreve;m (&Dstrok;&agrave; Nẵng)</option>
+<option value="hcm-history">Bảo t&agrave;ng Lịch sử TP. Hồ Ch&iacute; Minh</option>
+</select>
+</div>
+<!-- Step 2: Date Picker -->
+<div class="lg:col-span-3 flex flex-col gap-1.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-1.5 font-semibold">
+<span class="material-symbols-outlined text-[17px] text-secondary">calendar_today</span>
+              Ng&agrave;y tham quan
+            </label>
+<input class="w-full bg-transparent font-title-md text-title-md text-primary font-medium focus:outline-none cursor-pointer" type="date" value="2025-04-15">
+</div>
+<!-- Step 3: Visitor / Ticket Category -->
+<div class="lg:col-span-3 flex flex-col gap-1.5 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-1.5 font-semibold">
+<span class="material-symbols-outlined text-[17px] text-secondary">group</span>
+              Số lượng & Loại v&eacute;
+            </label>
+<select class="w-full bg-transparent font-title-md text-title-md text-primary font-medium focus:outline-none cursor-pointer">
+<option>1 Người lớn (40.000&dstrok;)</option>
+<option>2 Người lớn + 1 Trẻ em</option>
+<option>Gia &dstrok;&igrave;nh (4 người ti&ecirc;u chuẩn)</option>
+<option>Học sinh / Sinh vi&ecirc;n (20.000&dstrok;)</option>
+<option>&Dstrok;o&agrave;n tr&ecirc;n 10 kh&aacute;ch (Ưu &dstrok;&atilde;i 15%)</option>
+</select>
+</div>
+<!-- CTA Button -->
+<div class="lg:col-span-2 flex items-center h-full">
+<a class="w-full h-full min-h-[56px] px-6 py-3.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200" href="pages/ticket-selection.html">
+<span class="material-symbols-outlined text-[20px] text-secondary-fixed">confirmation_number</span>
+<span class="font-semibold tracking-wide">&Dstrok;ặt v&eacute; ngay</span>
+</a>
+</div>
+</form>
+<!-- Service Commitments Strip -->
+<div class="mt-4 pt-4 flex flex-wrap items-center justify-between gap-y-3 gap-x-6 font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">sync</span>
+<span>Miễn ph&iacute; &dstrok;ổi ng&agrave;y v&eacute; trước 24 giờ</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">receipt</span>
+<span>Tự &dstrok;ộng xuất h&oacute;a &dstrok;ơn &dstrok;iện tử VAT cơ quan</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">qr_code_scanner</span>
+<span>Qu&eacute;t m&atilde; QR tại cổng kiểm so&aacute;t chỉ trong 2 gi&acirc;y</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">headphones</span>
+<span>Hỗ trợ tai nghe thuyết minh th&ocirc;ng minh (Audio Guide)</span>
+</div>
+</div>
+</div>
+<!-- VISUAL MOSAIC / CURATED GALLERY BANNER -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+<!-- Main Large Heritage Spotlight Card -->
+<div class="md:col-span-7 rounded-xl overflow-hidden relative min-h-[380px] shadow-sm flex flex-col justify-end group">
+<div aria-label="Magnificent colonial Indochine architectural hall of Vietnam National Museum of History with warm brass museum ambient spotlights, displaying ancient bronze drums, polished marble floors, visitors viewing artifacts in reverence, cinematic soft sunlight streaming through high arched windows in museum tones." class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 home-photo-1" role="img">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent"></div>
+<div class="relative z-10 p-6 lg:p-8 text-surface-lowest">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-fixed/90 text-on-secondary-fixed font-label-sm text-label-sm uppercase font-semibold mb-3">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+              Bảo vật Quốc gia
+            </div>
+<h2 class="font-headline-lg text-headline-lg text-surface-container-lowest font-bold tracking-tight mb-2">
+              Bảo t&agrave;ng Lịch sử Quốc gia
+            </h2>
+<p class="font-body-md text-body-md text-surface-container-high max-w-xl mb-4 line-clamp-2">
+              Nơi g&igrave;n giữ hơn 200.000 t&agrave;i liệu, hiện vật lịch sử từ thời tiền sử &dstrok;ến n&abreve;m 1945, nổi bật với Trống &dstrok;ồng Ngọc L&utilde; v&agrave; kiến tr&uacute;c giao thoa &Dstrok;&ocirc;ng - T&acirc;y tuyệt mỹ.
+            </p>
+<div class="flex items-center gap-4">
+<a class="inline-flex items-center gap-2 font-label-lg text-label-lg text-secondary-fixed hover:text-surface-lowest font-semibold" href="pages/museum-detail.html">
+<span>Kh&aacute;m ph&aacute; kh&ocirc;ng gian trưng b&agrave;y</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- 2 Side Cards Stack -->
+<div class="md:col-span-5 flex flex-col gap-5">
+<!-- Fine Arts Card -->
+<div class="flex-1 rounded-xl overflow-hidden relative min-h-[180px] p-6 flex flex-col justify-end group shadow-sm">
+<div aria-label="Exquisite antique Vietnamese traditional lacquer painting and silk scroll artwork inside Vietnam National Fine Arts Museum gallery, framed in golden wood, soft warm archival accent lighting, serene atmosphere of fine arts heritage." class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 home-photo-2" role="img">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
+<div class="relative z-10 text-surface-lowest">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary-fixed font-semibold">Kiệt t&aacute;c mỹ thuật</span>
+<h3 class="font-headline-sm text-headline-sm text-surface-container-lowest font-semibold mt-1">Bảo t&agrave;ng Mỹ thuật Việt Nam</h3>
+<p class="font-body-sm text-body-sm text-surface-container-high mt-1">Trưng b&agrave;y tranh Sơn m&agrave;i, Lụa cổ & &Dstrok;i&ecirc;u khắc Champa trứ danh.</p>
+</div>
+</div>
+<!-- Ethnology Card -->
+<div class="flex-1 rounded-xl overflow-hidden relative min-h-[180px] p-6 flex flex-col justify-end group shadow-sm">
+<div aria-label="Authentic traditional tall Rong stilt house of Central Highlands Vietnam situated inside lush green outdoor park of Vietnam Museum of Ethnology, cultural indigenous architecture, sunny gentle day." class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 home-photo-3" role="img">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
+<div class="relative z-10 text-surface-lowest">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary-fixed font-semibold">Kh&ocirc;ng gian sống 54 d&acirc;n tộc</span>
+<h3 class="font-headline-sm text-headline-sm text-surface-container-lowest font-semibold mt-1">Bảo t&agrave;ng D&acirc;n tộc học</h3>
+<p class="font-body-sm text-body-sm text-surface-container-high mt-1">Khu trưng b&agrave;y ngo&agrave;i trời rợp b&oacute;ng c&acirc;y c&ugrave;ng c&aacute;c ng&ocirc;i nh&agrave; cổ truyền.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3 CORE PILLARS / BENEFIT STRIP -->
+<section class="py-12 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Benefit 1 -->
+<div class="bg-surface-container-lowest p-7 rounded-xl shadow-sm flex flex-col gap-3 group hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed/30 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px] text-primary">qr_code_2</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold">V&eacute; QR &dstrok;iện tử bảo mật</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            M&atilde; h&oacute;a chuẩn ECC-256 bit tức th&igrave; qua Zalo v&agrave; Email. Lưu trữ nhanh v&agrave;o Apple Wallet hoặc Google Wallet, chống gian lận v&agrave; l&agrave;m giả v&eacute; tuyệt &dstrok;ối.
+          </p>
+</div>
+<!-- Benefit 2 -->
+<div class="bg-surface-container-lowest p-7 rounded-xl shadow-sm flex flex-col gap-3 group hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px] text-secondary">flash_on</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold">Kh&ocirc;ng cần xếp h&agrave;ng</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Bỏ qua quầy mua v&eacute; truyền thống trong giờ cao &dstrok;iểm. Qu&eacute;t trực tiếp tại l&agrave;n cửa tự &dstrok;ộng (Flap Barrier) v&agrave; bước ngay v&agrave;o kh&ocirc;ng gian trưng b&agrave;y.
+          </p>
+</div>
+<!-- Benefit 3 -->
+<div class="bg-surface-container-lowest p-7 rounded-xl shadow-sm flex flex-col gap-3 group hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed/30 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px] text-tertiary-container">school</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold">Ưu &dstrok;&atilde;i &dstrok;o&agrave;n & Gi&aacute;o dục</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Ch&iacute;nh s&aacute;ch chiết khấu bậc thang l&ecirc;n &dstrok;ến 25% cho trường học v&agrave; c&ocirc;ng ty lữ h&agrave;nh. Hỗ trợ &dstrok;ặt trước thuyết minh vi&ecirc;n chuy&ecirc;n nghiệp k&egrave;m hồ sơ h&oacute;a &dstrok;ơn.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- FEATURED MUSEUMS SECTION -->
+<section class="py-16 lg:py-24">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-semibold">&Dstrok;iểm &dstrok;ến di sản quốc gia</span>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-1">Bảo t&agrave;ng nổi bật</h2>
+</div>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg text-primary hover:text-secondary transition-colors font-semibold" href="pages/museums.html">
+<span>Xem tất cả 12 bảo t&agrave;ng th&agrave;nh vi&ecirc;n</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+<!-- 3 Museum Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Museum 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+<div class="relative h-56 w-full overflow-hidden">
+<div aria-label="Facade of Vietnam National Museum of History in Hanoi, beautiful yellow French Indochina colonial architecture with octagonal roof, lush tropical trees under clear blue sky." class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105 home-photo-4" role="img">
+</div>
+<div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary">star</span>
+<span>4.9 (1.2k)</span>
+</div>
+<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-primary/85 text-surface-container-lowest font-label-sm text-label-sm">
+              Tr&agrave;ng Tiền, H&agrave; Nội
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-2">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>08:00 - 17:00 (Thứ 3 - Chủ nhật)</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold group-hover:text-secondary transition-colors">
+                Bảo t&agrave;ng Lịch sử Quốc gia
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+                Lưu giữ bảo vật quốc gia từ V&abreve;n h&oacute;a &Dstrok;&ocirc;ng Sơn, &Dstrok;i&ecirc;u khắc Ch&abreve;m Pa &dstrok;ến triều &dstrok;ại phong kiến Việt Nam.
+              </p>
+</div>
+<div class="mt-6 pt-4 bg-surface-container-low/50 -mx-6 -mb-6 p-6 flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">V&eacute; ti&ecirc;u chuẩn</span>
+<p class="font-title-md text-title-md text-primary font-bold">40.000&dstrok; <span class="text-xs text-on-surface-variant font-normal">/ lượt</span></p>
+</div>
+<div class="flex items-center gap-2">
+<a class="px-3.5 py-2 rounded-xl bg-surface-container-high hover:bg-surface-container font-label-sm text-label-sm text-primary font-medium transition-colors" href="pages/museum-detail.html">
+                  Chi tiết
+                </a>
+<a class="px-3.5 py-2 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold shadow-sm transition-colors" href="pages/ticket-selection.html">
+                  &Dstrok;ặt v&eacute;
+                </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Museum 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+<div class="relative h-56 w-full overflow-hidden">
+<div aria-label="Vietnam National Fine Arts Museum colonial building exterior surrounded by quiet courtyards with marble sculptures and flowering frangipani trees, soft daylight." class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105 home-photo-5" role="img">
+</div>
+<div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary">star</span>
+<span>4.8 (980)</span>
+</div>
+<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-primary/85 text-surface-container-lowest font-label-sm text-label-sm">
+              Nguyễn Th&aacute;i Học, H&agrave; Nội
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-2">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>08:30 - 17:00 (H&agrave;ng ng&agrave;y)</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold group-hover:text-secondary transition-colors">
+                Bảo t&agrave;ng Mỹ thuật Việt Nam
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+                Kh&ocirc;ng gian nghệ thuật h&agrave;n l&acirc;m với bộ sưu tập tượng Phật b&agrave; Quan &Acirc;m ngh&igrave;n mắt ngh&igrave;n tay v&agrave; mỹ thuật &Dstrok;&ocirc;ng Dương.
+              </p>
+</div>
+<div class="mt-6 pt-4 bg-surface-container-low/50 -mx-6 -mb-6 p-6 flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">V&eacute; ti&ecirc;u chuẩn</span>
+<p class="font-title-md text-title-md text-primary font-bold">40.000&dstrok; <span class="text-xs text-on-surface-variant font-normal">/ lượt</span></p>
+</div>
+<div class="flex items-center gap-2">
+<a class="px-3.5 py-2 rounded-xl bg-surface-container-high hover:bg-surface-container font-label-sm text-label-sm text-primary font-medium transition-colors" href="pages/museum-detail.html">
+                  Chi tiết
+                </a>
+<a class="px-3.5 py-2 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold shadow-sm transition-colors" href="pages/ticket-selection.html">
+                  &Dstrok;ặt v&eacute;
+                </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Museum 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+<div class="relative h-56 w-full overflow-hidden">
+<div aria-label="Vietnam Museum of Ethnology Drum Bronze shaped modern building with peaceful outdoor ponds, water puppets pavilion, visitors strolling peacefully under shade trees." class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105 home-photo-6" role="img">
+</div>
+<div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary">star</span>
+<span>4.9 (2.4k)</span>
+</div>
+<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-primary/85 text-surface-container-lowest font-label-sm text-label-sm">
+              Nguyễn V&abreve;n Huy&ecirc;n, Cầu Giấy
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-2">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>08:30 - 17:30 (Thứ 3 - Chủ nhật)</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold group-hover:text-secondary transition-colors">
+                Bảo t&agrave;ng D&acirc;n tộc học Việt Nam
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+                Kh&aacute;m ph&aacute; v&abreve;n h&oacute;a &dstrok;a sắc tộc, trải nghiệm m&uacute;a rối nước d&acirc;n gian v&agrave; nh&agrave; r&ocirc;ng, nh&agrave; d&agrave;i nguy&ecirc;n bản.
+              </p>
+</div>
+<div class="mt-6 pt-4 bg-surface-container-low/50 -mx-6 -mb-6 p-6 flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">V&eacute; ti&ecirc;u chuẩn</span>
+<p class="font-title-md text-title-md text-primary font-bold">40.000&dstrok; <span class="text-xs text-on-surface-variant font-normal">/ lượt</span></p>
+</div>
+<div class="flex items-center gap-2">
+<a class="px-3.5 py-2 rounded-xl bg-surface-container-high hover:bg-surface-container font-label-sm text-label-sm text-primary font-medium transition-colors" href="pages/museum-detail.html">
+                  Chi tiết
+                </a>
+<a class="px-3.5 py-2 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold shadow-sm transition-colors" href="pages/ticket-selection.html">
+                  &Dstrok;ặt v&eacute;
+                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SPECIAL EXHIBITIONS & EXPERIENCES (UPCOMING EVENTS) -->
+<section class="py-16 bg-surface-container-low/60">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+<div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/40 text-secondary font-label-sm text-label-sm font-bold uppercase tracking-wider mb-2">
+<span class="material-symbols-outlined text-[16px]">event</span>
+            M&ugrave;a triển l&atilde;m qu&yacute; II / 2025
+          </div>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">Sự kiện & Triển l&atilde;m &dstrok;ặc biệt</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">
+          C&aacute;c chuy&ecirc;n &dstrok;ề v&abreve;n h&oacute;a c&oacute; số lượng v&eacute; giới hạn theo khung giờ nhằm &dstrok;ảm bảo trải nghiệm thưởng l&atilde;m t&itilde;nh lặng v&agrave; t&ocirc;n nghi&ecirc;m.
+        </p>
+</div>
+<!-- Events List / Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Event 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative h-48 w-full overflow-hidden">
+<div aria-label="Exquisite Imperial Gold treasures exhibition with golden bowls, dragon seals, and imperial jade relics behind glass showcase in dimly lit museum room." class="w-full h-full bg-cover bg-center home-photo-7" role="img">
+</div>
+<span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-secondary text-surface-lowest font-label-sm text-label-sm font-semibold">
+                Sắp hết chỗ (8 v&eacute;)
+              </span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm font-semibold mb-2">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span>15/04 - 30/05/2025 &bull; Khung 09:30 & 14:30</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold leading-snug">
+                Triển l&atilde;m Chuy&ecirc;n &dstrok;ề: B&aacute;u vật Ho&agrave;ng cung Th&abreve;ng Long
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                Chi&ecirc;m ngưỡng bộ sưu tập 60 cổ vật kim ho&agrave;n triều L&yacute; - Trần &dstrok;ược phục dựng kỹ thuật số 3D hologram.
+              </p>
+<div class="mt-4 flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Ph&ograve;ng Chuy&ecirc;n &dstrok;ề 1 - Bảo t&agrave;ng Lịch sử Quốc gia</span>
+</div>
+</div>
+</div>
+<div class="p-6 pt-0">
+<div class="pt-4 flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Phụ thu chuy&ecirc;n &dstrok;ề</span>
+<p class="font-title-md text-title-md text-primary font-bold">80.000&dstrok;</p>
+</div>
+<a class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold transition-colors" href="pages/event-detail.html">
+                &Dstrok;&abreve;ng k&yacute; ngay
+              </a>
+</div>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative h-48 w-full overflow-hidden">
+<div aria-label="Artisans teaching pottery carving Dong Son bronze drum bird patterns on ceramic clay vessel, traditional craft workshop with natural sunlight." class="w-full h-full bg-cover bg-center home-photo-8" role="img">
+</div>
+<span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-error text-on-error font-label-sm text-label-sm font-semibold">
+                C&ograve;n 3 chỗ cuối
+              </span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm font-semibold mb-2">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span>Thứ Bảy h&agrave;ng tuần &bull; 14:00 - 16:30</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold leading-snug">
+                Workshop: Nghệ thuật Gốm & Hoa v&abreve;n Trống &Dstrok;ồng
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                Tự tay khắc họa tiết chim Lạc, mặt trời 14 tia tr&ecirc;n sản phẩm gốm mộc dưới sự hướng dẫn của nghệ nh&acirc;n di sản.
+              </p>
+<div class="mt-4 flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Xưởng s&aacute;ng tạo - Bảo t&agrave;ng D&acirc;n tộc học</span>
+</div>
+</div>
+</div>
+<div class="p-6 pt-0">
+<div class="pt-4 flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Chi ph&iacute; trọn g&oacute;i</span>
+<p class="font-title-md text-title-md text-primary font-bold">150.000&dstrok;</p>
+</div>
+<a class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold transition-colors" href="pages/event-detail.html">
+                Giữ chỗ trải nghiệm
+              </a>
+</div>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+<div>
+<div class="relative h-48 w-full overflow-hidden">
+<div aria-label="Atmospheric nocturnal light projection mapping showing ancient Vietnamese mythologies and historical dynasties on heritage building facade in Hanoi evening, mesmerizing blue and gold hues." class="w-full h-full bg-cover bg-center home-photo-9" role="img">
+</div>
+<span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary-container text-surface-container-lowest font-label-sm text-label-sm font-semibold">
+                V&eacute; giới hạn ban &dstrok;&ecirc;m
+              </span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm font-semibold mb-2">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span>Thứ S&aacute;u & Thứ Bảy &bull; 19:30 - 21:00</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary font-bold leading-snug">
+                &Dstrok;&ecirc;m Di sản: Tr&igrave;nh diễn &Aacute;nh s&aacute;ng &ldquo;K&yacute; ức Ng&agrave;n n&abreve;m&rdquo;
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                Kh&aacute;m ph&aacute; kh&ocirc;ng gian bảo t&agrave;ng về &dstrok;&ecirc;m với c&ocirc;ng nghệ 3D Mapping v&agrave; h&ograve;a tấu nh&atilde; nhạc cung &dstrok;&igrave;nh lắng &dstrok;ọng.
+              </p>
+<div class="mt-4 flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>S&acirc;n vườn &Dstrok;ại sảnh - Bảo t&agrave;ng Mỹ thuật Việt Nam</span>
+</div>
+</div>
+</div>
+<div class="p-6 pt-0">
+<div class="pt-4 flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">V&eacute; tham quan &dstrok;&ecirc;m</span>
+<p class="font-title-md text-title-md text-primary font-bold">120.000&dstrok;</p>
+</div>
+<a class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold transition-colors" href="pages/event-detail.html">
+                &Dstrok;ặt v&eacute; &dstrok;&ecirc;m
+              </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4-STEP SMART TICKETING JOURNEY & MOCK E-TICKET STUB -->
+<section class="py-16 lg:py-24">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left: Steps explanation -->
+<div class="lg:col-span-7 space-y-8">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary font-semibold">Quy tr&igrave;nh kh&ocirc;ng chạm</span>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-1">
+              Trải nghiệm tham quan th&ocirc;ng minh trong 4 bước
+            </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-3">
+              &Aacute;p dụng chuẩn số h&oacute;a c&ocirc;ng cộng của Bộ V&abreve;n h&oacute;a, Thể thao v&agrave; Du lịch nhằm mang lại h&agrave;nh tr&igrave;nh v&abreve;n h&oacute;a thảnh thơi, v&abreve;n minh.
+            </p>
+</div>
+<!-- Step Nodes -->
+<div class="space-y-6">
+<!-- Step 1 -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-md text-title-md font-bold shrink-0 shadow-sm">
+                1
+              </div>
+<div>
+<h3 class="font-title-md text-title-md text-primary font-bold">Chọn bảo t&agrave;ng & Ng&agrave;y tham quan</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Chủ &dstrok;ộng kiểm tra sức chứa thời gian thực, lựa chọn khung giờ vắng kh&aacute;ch &dstrok;ể c&oacute; trải nghiệm thưởng l&atilde;m chất lượng nhất.
+                </p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-md text-title-md font-bold shrink-0 shadow-sm">
+                2
+              </div>
+<div>
+<h3 class="font-title-md text-title-md text-primary font-bold">Thanh to&aacute;n an to&agrave;n & Nhận m&atilde; QR tức th&igrave;</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Hỗ trợ VietQR, VNPay, Thẻ nội &dstrok;ịa & Quốc tế. V&eacute; &dstrok;iện tử k&egrave;m m&atilde; QR &dstrok;ộ ph&acirc;n giải cao gửi thẳng về Zalo/Email trong 3 gi&acirc;y.
+                </p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-md text-title-md font-bold shrink-0 shadow-sm">
+                3
+              </div>
+<div>
+<h3 class="font-title-md text-title-md text-primary font-bold">Qu&eacute;t m&atilde; tại cổng so&aacute;t v&eacute; tự &dstrok;ộng</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Kh&ocirc;ng cần in giấy hay &dstrok;ổi v&eacute; cứng. &Dstrok;ưa m&agrave;n h&igrave;nh &dstrok;iện thoại v&agrave;o &dstrok;ầu &dstrok;ọc cổng Flap Barrier v&agrave; cửa tự &dstrok;ộng mở.
+                </p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary text-primary font-title-md text-title-md font-bold shrink-0 shadow-sm">
+                4
+              </div>
+<div>
+<h3 class="font-title-md text-title-md text-primary font-bold">Tận hưởng kh&ocirc;ng gian & Audio Guide &dstrok;a ngữ</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  K&iacute;ch hoạt ứng dụng thuyết minh tự &dstrok;ộng qua &dstrok;iện thoại, lắng nghe c&acirc;u chuyện lịch sử ch&acirc;n thực bằng Tiếng Việt, Anh, Ph&aacute;p...
+                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Digital E-Ticket Mockup Card (With Inverted Cutouts) -->
+<div class="lg:col-span-5 flex justify-center">
+<div class="w-full max-w-sm bg-surface-container-lowest rounded-xl shadow-[0_12px_40px_rgb(31,58,95,0.12)] overflow-hidden">
+<!-- Ticket Header -->
+<div class="bg-primary p-6 text-on-primary">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary-fixed">museum</span>
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-wider font-semibold">CỔNG V&Eacute; QUỐC GIA</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-lowest/15 text-surface-lowest font-label-sm text-label-sm">
+                  &Dstrok;&Atilde; X&Aacute;C THỰC
+                </span>
+</div>
+<h4 class="font-title-md text-title-md text-surface-container-lowest font-bold">BẢO T&Agrave;NG LỊCH SỬ QUỐC GIA</h4>
+<p class="font-label-sm text-label-sm text-surface-container-high mt-1">01 Tr&agrave;ng Tiền, Ho&agrave;n Kiếm, H&agrave; Nội</p>
+</div>
+<!-- Ticket Details -->
+<div class="p-6 bg-surface-container-lowest space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Kh&aacute;ch tham quan</span>
+<p class="font-title-md text-title-md text-primary font-semibold mt-0.5">Trần Minh Qu&acirc;n</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Loại v&eacute;</span>
+<p class="font-title-md text-title-md text-primary font-semibold mt-0.5">Ti&ecirc;u chuẩn (Người lớn)</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Ng&agrave;y hiệu lực</span>
+<p class="font-title-md text-title-md text-primary font-semibold mt-0.5">18/04/2025</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Khung giờ</span>
+<p class="font-title-md text-title-md text-primary font-semibold mt-0.5">09:00 - 11:30</p>
+</div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Cổng v&agrave;o</span>
+<p class="font-body-sm text-body-sm text-secondary font-bold">Cổng A (Tr&agrave;ng Tiền) &bull; L&agrave;n so&aacute;t v&eacute; tự &dstrok;ộng #02</p>
+</div>
+</div>
+<!-- Ticket Perforated Cutout Separator -->
+<div class="relative bg-surface-container-lowest flex items-center justify-between py-1">
+<div class="w-6 h-6 -ml-3 rounded-full bg-surface"></div>
+<div class="flex-1 mx-3 border-b-2 border-dashed border-outline-variant/40"></div>
+<div class="w-6 h-6 -mr-3 rounded-full bg-surface"></div>
+</div>
+<!-- QR Code Section -->
+<div class="p-6 bg-surface-container-lowest flex flex-col items-center text-center">
+<!-- Crisp SVG QR Code Mockup -->
+<div class="p-3 bg-white rounded-xl shadow-inner mb-3">
+<svg class="w-36 h-36 text-primary" fill="currentColor" viewbox="0 0 100 100">
+<!-- Outer frame corners -->
+<rect fill="#032448" height="30" rx="3" width="30" x="0" y="0"></rect>
+<rect fill="#ffffff" height="18" rx="2" width="18" x="6" y="6"></rect>
+<rect fill="#032448" height="10" rx="1" width="10" x="10" y="10"></rect>
+<rect fill="#032448" height="30" rx="3" width="30" x="70" y="0"></rect>
+<rect fill="#ffffff" height="18" rx="2" width="18" x="76" y="6"></rect>
+<rect fill="#032448" height="10" rx="1" width="10" x="80" y="10"></rect>
+<rect fill="#032448" height="30" rx="3" width="30" x="0" y="70"></rect>
+<rect fill="#ffffff" height="18" rx="2" width="18" x="6" y="76"></rect>
+<rect fill="#032448" height="10" rx="1" width="10" x="10" y="80"></rect>
+<!-- Digital Grid Elements -->
+<rect fill="#032448" height="6" width="6" x="36" y="8"></rect>
+<rect fill="#032448" height="6" width="8" x="46" y="8"></rect>
+<rect fill="#032448" height="6" width="6" x="58" y="8"></rect>
+<rect fill="#032448" height="6" width="12" x="36" y="20"></rect>
+<rect fill="#032448" height="12" width="6" x="52" y="20"></rect>
+<rect fill="#032448" height="6" width="4" x="62" y="20"></rect>
+<rect fill="#032448" height="8" width="8" x="10" y="36"></rect>
+<rect fill="#032448" height="6" width="6" x="22" y="36"></rect>
+<rect fill="#785918" height="16" width="16" x="36" y="36"></rect>
+<rect fill="#032448" height="8" width="8" x="56" y="36"></rect>
+<rect fill="#032448" height="6" width="12" x="68" y="36"></rect>
+<rect fill="#032448" height="12" width="6" x="84" y="36"></rect>
+<rect fill="#032448" height="6" width="12" x="8" y="48"></rect>
+<rect fill="#032448" height="10" width="8" x="24" y="48"></rect>
+<rect fill="#032448" height="6" width="18" x="56" y="48"></rect>
+<rect fill="#032448" height="6" width="12" x="78" y="48"></rect>
+<rect fill="#032448" height="12" width="6" x="36" y="58"></rect>
+<rect fill="#032448" height="6" width="10" x="46" y="58"></rect>
+<rect fill="#032448" height="6" width="16" x="60" y="58"></rect>
+<rect fill="#032448" height="12" width="10" x="80" y="58"></rect>
+<rect fill="#032448" height="8" width="12" x="36" y="74"></rect>
+<rect fill="#032448" height="6" width="8" x="52" y="74"></rect>
+<rect fill="#032448" height="8" width="14" x="64" y="74"></rect>
+<rect fill="#032448" height="16" width="8" x="82" y="74"></rect>
+<rect fill="#032448" height="6" width="6" x="36" y="86"></rect>
+<rect fill="#032448" height="6" width="14" x="46" y="86"></rect>
+<rect fill="#032448" height="6" width="8" x="64" y="86"></rect>
+</svg>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant font-mono">M&Atilde; V&Eacute;: VN-HIS-2025-889921</p>
+<p class="font-label-sm text-label-sm text-tertiary-container font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+                &Dstrok;&atilde; &dstrok;ồng bộ Cơ sở Dữ liệu Quốc gia
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SPECIALIZED AUDIENCE SECTORS (GROUP & MANAGEMENT) -->
+<section class="py-16 bg-surface-container-high/40">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Sector 1: School & Travel Groups -->
+<div class="bg-surface-container-lowest p-8 lg:p-10 rounded-xl shadow-sm flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 text-secondary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[28px]">groups_3</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Chương tr&igrave;nh gi&aacute;o dục & Lữ h&agrave;nh</span>
+<h3 class="font-headline-sm text-headline-sm text-primary font-bold mt-1">&Dstrok;o&agrave;n kh&aacute;ch & Trường học</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed">
+              Ưu &dstrok;&atilde;i chiết khấu theo số lượng, miễn ph&iacute; v&eacute; cho gi&aacute;o vi&ecirc;n phụ tr&aacute;ch, ưu ti&ecirc;n sắp xếp thuyết minh vi&ecirc;n chuy&ecirc;n &dstrok;ề v&agrave; hỗ trợ thủ tục xuất h&oacute;a &dstrok;ơn &dstrok;iện tử cơ quan nhanh ch&oacute;ng.
+            </p>
+<ul class="mt-4 space-y-2 font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span>&Dstrok;o&agrave;n từ 20 học sinh: Giảm ngay 20% tổng gi&aacute; v&eacute;</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span>Miễn ph&iacute; 01 hướng dẫn vi&ecirc;n cho &dstrok;o&agrave;n tr&ecirc;n 30 kh&aacute;ch</span>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-4">
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-semibold hover:bg-primary-container transition-colors shadow-sm" href="pages/group-booking.html">
+<span>&Dstrok;&abreve;ng k&yacute; &dstrok;ặt lịch &dstrok;o&agrave;n</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Sector 2: Museum Staff & Gate Operations -->
+<div class="bg-surface-container-lowest p-8 lg:p-10 rounded-xl shadow-sm flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed/30 text-primary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[28px]">admin_panel_settings</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">D&agrave;nh cho c&aacute;n bộ quản l&yacute; & So&aacute;t v&eacute;</span>
+<h3 class="font-headline-sm text-headline-sm text-primary font-bold mt-1">Cổng Quản trị & Kiểm so&aacute;t v&eacute;</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed">
+              Giao diện qu&eacute;t m&atilde; QR tốc &dstrok;ộ cao d&agrave;nh cho nh&acirc;n vi&ecirc;n cửa so&aacute;t v&eacute;, theo d&otilde;i lưu lượng kh&aacute;ch tức thời trong bảo t&agrave;ng v&agrave; thống k&ecirc; doanh thu theo thời gian thực.
+            </p>
+<ul class="mt-4 space-y-2 font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span>Tốc &dstrok;ộ x&aacute;c thực v&eacute; dưới 0.3 gi&acirc;y qua camera qu&eacute;t</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span>B&aacute;o c&aacute;o luồng kh&aacute;ch v&agrave; cảnh b&aacute;o qu&aacute; tải gian trưng b&agrave;y</span>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-4 flex flex-wrap gap-3">
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-high hover:bg-surface-container text-primary font-label-lg text-label-lg font-semibold transition-colors" href="pages/checkin.html">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+<span>Cổng So&aacute;t v&eacute;</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg font-semibold transition-colors shadow-sm" href="pages/login.html">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
+<span>&Dstrok;&abreve;ng nhập Quản trị</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- HERITAGE NEWSLETTER SECTION -->
+<section class="py-16 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="bg-primary rounded-xl p-8 lg:p-14 text-surface-container-lowest relative overflow-hidden shadow-lg">
+<!-- Subtle Pattern Decor -->
+<div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-secondary/15 blur-2xl pointer-events-none"></div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+<div class="lg:col-span-7 space-y-3">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary-fixed font-semibold">Bản tin v&abreve;n h&oacute;a di sản</span>
+<h2 class="font-headline-lg text-headline-lg text-surface-container-lowest font-bold tracking-tight">
+              &Dstrok;&oacute;n nhận th&ocirc;ng b&aacute;o triển l&atilde;m & V&eacute; ưu &dstrok;&atilde;i sớm
+            </h2>
+<p class="font-body-md text-body-md text-surface-container-high leading-relaxed max-w-xl">
+              &Dstrok;&abreve;ng k&yacute; &dstrok;ể kh&ocirc;ng bỏ lỡ c&aacute;c buổi tọa &dstrok;&agrave;m v&abreve;n h&oacute;a giới hạn, ng&agrave;y mở cửa miễn ph&iacute; v&agrave; c&aacute;c triển l&atilde;m cổ vật qu&yacute; gi&aacute; bậc nhất Việt Nam.
+            </p>
+</div>
+<div class="lg:col-span-5">
+<form class="flex flex-col sm:flex-row gap-2.5">
+<input class="w-full px-4 py-3.5 rounded-xl bg-surface-container-lowest text-primary font-body-sm text-body-sm focus:outline-none placeholder:text-on-surface-variant" placeholder="Nhập &dstrok;ịa chỉ email của bạn..." type="email">
+<button class="shrink-0 px-6 py-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim font-label-lg text-label-lg font-semibold transition-colors shadow-sm flex items-center justify-center gap-1.5" type="button">
+<span>&Dstrok;&abreve;ng k&yacute;</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</form>
+<p class="font-label-sm text-label-sm text-surface-container-high mt-3">
+              Cam kết bảo mật th&ocirc;ng tin. Bạn c&oacute; thể hủy &dstrok;&abreve;ng k&yacute; bất cứ l&uacute;c n&agrave;o.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div></main>
 
-      <!-- Phân trang: được vẽ bởi js/components/pagination.js -->
-      <div class="pagination" id="pagination" hidden></div>
-    </section>
-  </main>
-
-  <!-- Chân trang: được vẽ bởi js/components/footer.js -->
+  <!-- Chân trang: js/components/footer.js -->
   <footer id="siteFooter"></footer>
 
   <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
@@ -191,14 +788,9 @@
   <script src="js/utils/helpers.js"></script>
   <script src="js/services/api.service.js"></script>
   <script src="js/services/auth.service.js"></script>
-  <script src="js/services/mock/museum.mock.js"></script>
-  <script src="js/services/museum.service.js"></script>
   <script src="js/components/notification.js"></script>
-  <script src="js/components/modal.js"></script>
   <script src="js/components/public-navbar.js"></script>
   <script src="js/components/footer.js"></script>
-  <script src="js/components/museum-card.js"></script>
-  <script src="js/components/pagination.js"></script>
   <script src="js/pages/home.js"></script>
 </body>
 </html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kết quả thanh toán | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Bước 3 đặt vé: thanh toán thành công / thất bại" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="../css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="../css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo) -->
+  <link rel="stylesheet" href="../css/components/button.css" />
+  <link rel="stylesheet" href="../css/components/public-navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/payment-result.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- Interactive View Switcher (For demonstration purposes to toggle between states) -->
+<div class="max-w-6xl mx-auto w-full px-6 pt-6 pb-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed-dim inline-block animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Tr&igrave;nh m&ocirc; phỏng kết quả giao dịch</span>
+</div>
+<div class="inline-flex p-1 bg-surface-container rounded-xl shadow-inner gap-1">
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-semibold flex items-center gap-1.5" id="btn-show-success" onclick="switchState('success')">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container icon-filled">check_circle</span>
+        Giao dịch th&agrave;nh c&ocirc;ng
+      </button>
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-primary flex items-center gap-1.5" id="btn-show-failed" onclick="switchState('failed')">
+<span class="material-symbols-outlined text-[16px] text-error">cancel</span>
+        Giao dịch thất bại
+      </button>
+</div>
+</div>
+<!-- MAIN WRAPPER CONTAINER -->
+<div class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 space-y-12">
+<!-- ==========================================
+         SECTION 1: KHỐI CHÍNH (SUCCESS STATE)
+         ========================================== -->
+<div class="flex flex-col items-center w-full transition-opacity duration-300" id="state-success">
+<!-- Top Success Stamp & Heading -->
+<div class="text-center max-w-2xl mx-auto flex flex-col items-center">
+<!-- Verified Security Badge with large green checkmark -->
+<div class="relative mb-5 flex items-center justify-center">
+<div class="absolute w-24 h-24 rounded-full bg-tertiary-fixed/30 animate-ping opacity-30"></div>
+<div class="relative w-20 h-20 rounded-full bg-surface-container-lowest shadow-md flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-tertiary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[44px] text-tertiary-container icon-filled">verified</span>
+</div>
+</div>
+<!-- Decorative subtle heritage badge rim -->
+<div class="absolute -bottom-1 -right-1 bg-secondary text-surface-bright p-1 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px] block">shield_with_heart</span>
+</div>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-container/10 text-tertiary-container font-label-sm text-label-sm uppercase tracking-widest mb-3">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+          Giao dịch &dstrok;&atilde; x&aacute;c thực & &Dstrok;&atilde; thanh to&aacute;n
+        </div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-semibold text-center mb-2">
+          Thanh to&aacute;n th&agrave;nh c&ocirc;ng!
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl text-center leading-relaxed">
+          Ch&uacute;c bạn c&oacute; chuyến tham quan trọn vẹn v&agrave; nhiều trải nghiệm v&abreve;n h&oacute;a &yacute; ngh&itilde;a tại kh&ocirc;ng gian di sản.
+        </p>
+<!-- Transaction Quick Meta Bar -->
+<div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-4 p-3 bg-surface-container-low rounded-xl text-on-surface-variant font-label-md text-label-md shadow-sm">
+<div class="flex items-center gap-1.5 px-2">
+<span class="text-on-surface-variant/70">M&atilde; &dstrok;ơn h&agrave;ng:</span>
+<span class="font-title-md text-primary font-semibold tracking-wide">#VN-HIS-89214</span>
+</div>
+<span class="hidden sm:inline text-outline-variant">&bull;</span>
+<div class="flex items-center gap-1.5 px-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span>
+<span>10:24 - 18/05/2025</span>
+</div>
+<span class="hidden sm:inline text-outline-variant">&bull;</span>
+<div class="flex items-center gap-1.5 px-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">payments</span>
+<span class="font-medium text-primary">Cổng VNPAY-QR</span>
+</div>
+</div>
+</div>
+<!-- MAIN TICKET ARTIFACT & DETAILS GRID -->
+<div class="w-full mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT/MAIN: BESPOKE E-TICKET STUB (7 COLS) -->
+<div class="lg:col-span-7 flex flex-col space-y-4">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">confirmation_number</span>
+<span class="font-title-md text-title-md text-primary font-semibold">Thẻ v&eacute; tham quan &dstrok;iện tử</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed/50 text-on-secondary-container font-label-sm text-label-sm font-semibold">
+              Kh&aacute;ch &dstrok;o&agrave;n gia &dstrok;&igrave;nh
+            </span>
+</div>
+<!-- Ticket Card with Archival Visual Styling & Perforated Notch Divider -->
+<div class="relative bg-surface-container-lowest rounded-xl shadow-lg overflow-hidden flex flex-col">
+<!-- Top Heritage Accent Ribbon -->
+<div class="h-2 w-full bg-gradient-to-r from-primary via-secondary to-primary-container"></div>
+<!-- Ticket Header Info inside Stub -->
+<div class="p-6 sm:p-8 space-y-6">
+<div class="flex items-start justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">account_balance</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">&Dstrok;ịa &dstrok;iểm di sản quốc gia</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">
+                    Bảo t&agrave;ng Lịch sử Quốc gia
+                  </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">place</span>
+                    Số 01 Tr&agrave;ng Tiền & 216 Trần Quang Khải, Ho&agrave;n Kiếm, H&agrave; Nội
+                  </p>
+</div>
+<!-- Museum Emblem Monogram -->
+<div class="w-12 h-12 rounded-xl bg-primary-container text-surface-bright flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[26px] text-secondary-fixed">museum</span>
+</div>
+</div>
+<!-- Ticket Spec Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-surface-container-low">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Họ t&ecirc;n kh&aacute;ch</span>
+<span class="font-title-md text-title-md text-primary font-semibold truncate block">Nguyễn V&abreve;n An</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Ng&agrave;y tham quan</span>
+<span class="font-title-md text-title-md text-primary font-semibold block">18/05/2025</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Khung giờ v&agrave;o</span>
+<span class="font-title-md text-title-md text-primary font-semibold block">08:00 - 10:00</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Số lượng v&eacute;</span>
+<span class="font-title-md text-title-md text-secondary font-bold block">04 V&eacute; v&agrave;o cổng</span>
+</div>
+</div>
+<!-- Ticket Category Breakdown Mini List -->
+<div class="space-y-2 pt-1 font-body-sm text-body-sm">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>02 V&eacute; người lớn ti&ecirc;u chuẩn</span>
+<span class="font-medium text-on-surface">160.000 &dstrok;</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>02 V&eacute; trẻ em / học sinh (ưu &dstrok;&atilde;i di sản)</span>
+<span class="font-medium text-on-surface">80.000 &dstrok;</span>
+</div>
+<div class="flex justify-between items-center pt-2 text-primary font-semibold">
+<span>Tổng tiền &dstrok;&atilde; thanh to&aacute;n</span>
+<span class="font-title-md text-title-md text-primary font-bold">240.000 &dstrok;</span>
+</div>
+</div>
+</div>
+<!-- Perforated Cutout Separator Row -->
+<div class="relative w-full flex items-center justify-between py-1 bg-surface-container-lowest">
+<!-- Left Circular Notch -->
+<div class="w-6 h-6 rounded-r-full bg-surface shadow-inner -ml-3"></div>
+<!-- Dashed perforated dividing rule -->
+<div class="flex-1 h-[2px] border-b-2 border-dashed border-outline-variant/60 mx-2"></div>
+<!-- Right Circular Notch -->
+<div class="w-6 h-6 rounded-l-full bg-surface shadow-inner -mr-3"></div>
+</div>
+<!-- Bottom QR Code Scan Section -->
+<div class="p-6 sm:p-8 bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-6">
+<!-- High-Contrast Clean QR Stub -->
+<div class="flex flex-col items-center p-3 rounded-xl bg-surface-container-low shadow-sm shrink-0">
+<!-- SVG High Precision QR Representation -->
+<div class="w-36 h-36 bg-surface-container-lowest p-2 rounded-lg flex items-center justify-center shadow-inner relative group">
+<svg class="w-32 h-32 text-primary" fill="currentColor" viewbox="0 0 120 120">
+<!-- Outer Corner Targets -->
+<rect fill="currentColor" height="30" rx="3" width="30" x="10" y="10"></rect>
+<rect fill="white" height="18" rx="2" width="18" x="16" y="16"></rect>
+<rect fill="currentColor" height="10" rx="1" width="10" x="20" y="20"></rect>
+<rect fill="currentColor" height="30" rx="3" width="30" x="80" y="10"></rect>
+<rect fill="white" height="18" rx="2" width="18" x="86" y="16"></rect>
+<rect fill="currentColor" height="10" rx="1" width="10" x="90" y="20"></rect>
+<rect fill="currentColor" height="30" rx="3" width="30" x="10" y="80"></rect>
+<rect fill="white" height="18" rx="2" width="18" x="16" y="86"></rect>
+<rect fill="currentColor" height="10" rx="1" width="10" x="20" y="90"></rect>
+<!-- Internal Data Matrices Mock -->
+<rect fill="currentColor" height="6" width="6" x="46" y="12"></rect>
+<rect fill="currentColor" height="14" width="6" x="56" y="12"></rect>
+<rect fill="currentColor" height="6" width="8" x="66" y="18"></rect>
+<rect fill="currentColor" height="6" width="6" x="46" y="24"></rect>
+<rect fill="currentColor" height="12" width="6" x="12" y="46"></rect>
+<rect fill="currentColor" height="6" width="12" x="22" y="52"></rect>
+<rect fill="currentColor" height="8" width="8" x="38" y="44"></rect>
+<rect fill="#785918" height="16" rx="2" width="16" x="52" y="40"></rect>
+<rect fill="white" height="8" width="8" x="56" y="44"></rect>
+<rect fill="currentColor" height="6" width="14" x="74" y="46"></rect>
+<rect fill="currentColor" height="8" width="14" x="94" y="46"></rect>
+<rect fill="currentColor" height="14" width="6" x="82" y="58"></rect>
+<rect fill="currentColor" height="14" width="8" x="46" y="66"></rect>
+<rect fill="currentColor" height="6" width="8" x="60" y="64"></rect>
+<rect fill="currentColor" height="6" width="12" x="62" y="76"></rect>
+<rect fill="currentColor" height="6" width="8" x="12" y="66"></rect>
+<rect fill="currentColor" height="8" width="6" x="26" y="66"></rect>
+<rect fill="currentColor" height="6" width="14" x="46" y="86"></rect>
+<rect fill="currentColor" height="14" width="6" x="46" y="96"></rect>
+<rect fill="currentColor" height="6" width="14" x="58" y="96"></rect>
+<rect fill="currentColor" height="6" width="6" x="68" y="86"></rect>
+<rect fill="currentColor" height="6" width="8" x="68" y="106"></rect>
+<rect fill="currentColor" height="12" width="12" x="82" y="82"></rect>
+<rect fill="currentColor" height="6" width="12" x="98" y="82"></rect>
+<rect fill="currentColor" height="10" width="8" x="82" y="100"></rect>
+<rect fill="currentColor" height="16" width="14" x="96" y="94"></rect>
+</svg>
+</div>
+<span class="mt-2 font-title-md text-title-md text-primary font-bold tracking-wider">VN-89214</span>
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase">M&atilde; so&aacute;t v&eacute; hợp lệ</span>
+</div>
+<!-- QR Instructions & Gate Guidelines -->
+<div class="flex-1 space-y-3">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<strong class="text-on-surface font-semibold">Quy &dstrok;ịnh v&agrave;o cổng:</strong> Qu&yacute; kh&aacute;ch vui l&ograve;ng xuất tr&igrave;nh m&atilde; QR n&agrave;y trực tiếp tại cổng qu&eacute;t tự &dstrok;ộng hoặc cho nh&acirc;n vi&ecirc;n kiểm so&aacute;t v&eacute;. <span class="text-primary font-medium">Kh&ocirc;ng cần in v&eacute; giấy.</span>
+</p>
+</div>
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-tertiary-container/5 text-tertiary-container font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">door_front</span>
+<span>Cổng v&agrave;o &dstrok;ề xuất: <strong>Cổng ch&iacute;nh số 01 Tr&agrave;ng Tiền</strong></span>
+</div>
+<div class="flex items-center gap-3 pt-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">brightness_medium</span>
+                    &Dstrok;ộ s&aacute;ng m&agrave;n h&igrave;nh &gt; 70%
+                  </span>
+<span>&bull;</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">timer</span>
+                    C&oacute; mặt trước 10 ph&uacute;t
+                  </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDE: CONFIRMATION DISPATCH & ACTION BUTTONS (5 COLS) -->
+<div class="lg:col-span-5 flex flex-col space-y-6">
+<!-- Dispatch Notification Box (Email & Zalo confirmation) -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-md space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed/50 flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-[22px]">mark_email_read</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-primary font-semibold">&Dstrok;&atilde; gửi bản sao v&eacute;</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tự &dstrok;ộng &dstrok;ồng bộ h&oacute;a &dstrok;a k&ecirc;nh</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              V&eacute; &dstrok;iện tử &dstrok;ịnh dạng PDF v&agrave; m&atilde; QR tra cứu &dstrok;&atilde; &dstrok;ược gửi tự &dstrok;ộng &dstrok;ến:
+            </p>
+<div class="space-y-2.5">
+<div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-[20px] text-primary">mail</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hộp thư &dstrok;iện tử (PDF &dstrok;&iacute;nh k&egrave;m)</p>
+<p class="font-label-lg text-label-lg text-primary font-medium truncate">an.nguyen@example.com</p>
+</div>
+<span class="material-symbols-outlined text-tertiary-container text-[18px]">done</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-[20px] text-primary">chat</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Tin nhắn Zalo Notification (ZNS)</p>
+<p class="font-label-lg text-label-lg text-primary font-medium truncate">0912***678</p>
+</div>
+<span class="material-symbols-outlined text-tertiary-container text-[18px]">done</span>
+</div>
+</div>
+<div class="pt-2 text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">
+                Chưa nhận &dstrok;ược? Vui l&ograve;ng kiểm tra thư mục Spam/Quảng c&aacute;o
+              </span>
+</div>
+</div>
+<!-- Primary Actions Hub -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-md space-y-3.5">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold block">Thao t&aacute;c người tham quan</span>
+<!-- Button 1: Deep Navy Primary Button -->
+<a class="w-full h-12 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-[0.99]" href="my-tickets.html">
+<span class="material-symbols-outlined text-[20px] text-secondary-fixed">wallet</span>
+<span>Xem & Lưu v&eacute; của t&ocirc;i</span>
+</a>
+<!-- Button 2: Secondary Action (Download PDF) -->
+<button class="w-full h-12 rounded-xl bg-surface-container-low hover:bg-surface-container text-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.99] shadow-sm" onclick="handleDownloadPDF()">
+<span class="material-symbols-outlined text-[20px] text-secondary">download</span>
+<span>Tải v&eacute; PDF về m&aacute;y (.pdf)</span>
+</button>
+<!-- Button 3: Return Home -->
+<a class="w-full h-11 rounded-xl hover:bg-surface-container-low text-on-surface-variant hover:text-primary font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 transition-colors" href="../index.html">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Về trang chủ</span>
+</a>
+</div>
+<!-- Museum Visit Advisory Card -->
+<div class="p-5 rounded-xl bg-surface-container-low space-y-3">
+<div class="flex items-center gap-2 text-primary font-title-md text-title-md font-semibold">
+<span class="material-symbols-outlined text-secondary text-[20px]">info</span>
+<span>Tiện &iacute;ch cho chuyến &dstrok;i</span>
+</div>
+<ul class="space-y-2 font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-[16px] mt-0.5">headphones</span>
+<span>Thu&ecirc; m&aacute;y thuyết minh tự &dstrok;ộng (Audio Guide) &dstrok;a ng&ocirc;n ngữ tại quầy sảnh ch&iacute;nh.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-[16px] mt-0.5">no_photography</span>
+<span>Kh&ocirc;ng sử dụng &dstrok;&egrave;n flash m&aacute;y ảnh tại ph&ograve;ng trưng b&agrave;y Cổ vật Ho&agrave;ng gia.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- ==========================================
+         SECTION 2: KHỐI PHỤ MINH HỌA (FAILED STATE CARD)
+         ========================================== -->
+<div class="flex flex-col items-center w-full transition-opacity duration-300" id="state-failed">
+<!-- Informative Sub-banner for demo clarity -->
+<div class="w-full mb-4 flex items-center justify-center">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+          Minh họa giao diện khi hệ thống ghi nhận thanh to&aacute;n chưa th&agrave;nh c&ocirc;ng
+        </span>
+</div>
+<!-- Failed State Main Container Card -->
+<div class="w-full max-w-2xl bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<!-- Red Soft Header Highlight -->
+<div class="h-2 w-full bg-error"></div>
+<div class="p-8 sm:p-10 flex flex-col items-center text-center space-y-6">
+<!-- Large Warning / Interrupted Emblem -->
+<div class="relative flex items-center justify-center">
+<div class="w-20 h-20 rounded-full bg-error-container/40 flex items-center justify-center shadow-inner">
+<div class="w-14 h-14 rounded-full bg-error text-on-error flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[36px]">priority_high</span>
+</div>
+</div>
+</div>
+<!-- Main Notice -->
+<div class="space-y-2 max-w-lg">
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">
+              Giao dịch chưa ho&agrave;n tất hoặc bị gi&aacute;n &dstrok;oạn
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Hệ thống chưa nhận &dstrok;ược t&iacute;n hiệu x&aacute;c nhận thanh to&aacute;n th&agrave;nh c&ocirc;ng từ &dstrok;ơn vị cung cấp dịch vụ ng&acirc;n h&agrave;ng.
+            </p>
+</div>
+<!-- Failed Reason Details Card -->
+<div class="w-full p-4 rounded-xl bg-error-container/15 text-left space-y-3">
+<div class="flex items-center gap-2 text-error font-title-md text-title-md font-semibold">
+<span class="material-symbols-outlined text-[20px]">error_outline</span>
+<span>Nguy&ecirc;n nh&acirc;n c&oacute; thể xảy ra:</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed pl-7">
+              T&agrave;i khoản của qu&yacute; kh&aacute;ch chưa trừ tiền hoặc phi&ecirc;n l&agrave;m việc bảo mật của ng&acirc;n h&agrave;ng &dstrok;&atilde; hết hạn (qu&aacute; thời gian qu&eacute;t m&atilde; QR quy &dstrok;ịnh).
+            </p>
+<div class="pl-7 pt-1 font-label-sm text-label-sm text-on-surface-variant/80 flex flex-wrap gap-4">
+<span>M&atilde; lỗi kỹ thuật: <strong class="text-error font-semibold">ERR_SESSION_TIMEOUT_99</strong></span>
+<span>M&atilde; &dstrok;ơn: <strong class="text-primary font-semibold">#VN-HIS-89214</strong></span>
+</div>
+</div>
+<!-- Safe Assurance Callout -->
+<div class="w-full p-3.5 rounded-xl bg-surface-container-low flex items-center gap-3 text-left">
+<span class="material-symbols-outlined text-secondary text-[22px] shrink-0">security</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-normal">
+<strong>Y&ecirc;n t&acirc;m tuyệt &dstrok;ối:</strong> Nếu t&agrave;i khoản ng&acirc;n h&agrave;ng của bạn &dstrok;&atilde; bị trừ tiền, hệ thống &dstrok;ối so&aacute;t tự &dstrok;ộng sẽ gửi v&eacute; qua email trong v&ograve;ng 15 ph&uacute;t hoặc ho&agrave;n lại tiền theo quy &dstrok;ịnh bảo &dstrok;ảm quyền lợi.
+            </p>
+</div>
+<!-- Actions For Failed Recovery -->
+<div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+<!-- Retry Same Payment -->
+<a class="w-full h-12 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 shadow-md transition-all" href="checkout.html">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+<span>Thử thanh to&aacute;n lại</span>
+</a>
+<!-- Choose other payment method -->
+<a class="w-full h-12 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 transition-all shadow-sm" href="checkout.html">
+<span class="material-symbols-outlined text-[20px]">credit_card</span>
+<span>Chọn phương thức kh&aacute;c</span>
+</a>
+</div>
+<!-- Hotline 24/7 Support Block -->
+<div class="w-full pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-surface-container-low/70 p-4 rounded-xl">
+<div class="flex items-center gap-2.5 text-left">
+<div class="w-9 h-9 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Trung t&acirc;m hỗ trợ v&eacute; tham quan 24/7</span>
+<span class="font-title-md text-title-md text-primary font-bold">1900 8899</span>
+</div>
+</div>
+<a class="px-4 py-2 rounded-lg bg-secondary text-surface-bright hover:bg-secondary/90 font-label-md text-label-md font-semibold flex items-center gap-1.5 transition-colors" href="tel:19008899">
+<span class="material-symbols-outlined text-[16px]">call</span>
+<span>Gọi tư vấn ngay</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Toast Modal Simulation -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none" id="action-toast">
+<div class="bg-primary text-surface-bright px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium" id="toast-message">&Dstrok;ang tải xuống tệp v&eacute; PDF...</span>
+</div>
+</div>
+<!-- Vanilla Interaction Handling Script -->
+
+</div></main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/payment-result.js"></script>
+</body>
+</html>

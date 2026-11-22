@@ -1,167 +1,32 @@
 /* ==========================================================================
-   home.css — Riêng cho trang chủ (index.html)
+   home.css — Trang chủ (index.html)
+   Bố cục dùng lớp tiện ích trong css/base/utilities.css; file này chỉ chứa phần riêng của trang.
+   Ảnh đang trỏ tới link ảnh mẫu của Stitch: nên tải về assets/images/ rồi đổi url().
    ========================================================================== */
-/* ---------- Hero + bộ lọc ---------- */
-.home-hero {
-  position: relative; overflow: hidden;
-  padding: 3rem 0; background: var(--color-surface-low);
-}
-.home-hero__glow { position: absolute; border-radius: var(--radius-full); pointer-events: none; }
-.home-hero__glow--gold { right: -6rem; top: -6rem; width: 24rem; height: 24rem; background: rgba(255, 222, 165, 0.2); filter: blur(64px); }
-.home-hero__glow--navy { left: 33%; bottom: -5rem; width: 20rem; height: 20rem; background: rgba(3, 36, 72, 0.05); filter: blur(40px); }
-.home-hero__content { position: relative; z-index: 1; }
 
-.home-hero__top { display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; padding-bottom: 2rem; }
-.home-hero__intro { max-width: 48rem; }
-.home-hero__intro > * + * { margin-top: 0.75rem; }
-.home-hero__title { color: var(--color-primary); }
-.home-hero__lead { max-width: 42rem; color: var(--color-muted); line-height: 1.625; }
-.home-hero__stats { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+/* Magnificent colonial Indochine architectural hall of Vietnam National Museum of History with warm brass museum */
+.home-photo-1 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBn9m6zX4wpmorjfti_mkIX1J6IE8RkImOW1sv02LwSd7Jq0acjD9FzEO3xwjujP_NmfQhiJBuPs4f_yPINAyfKNtZU-nG2mv5_bsaG0mVJI0GVXTqoVv4DmXBNx58GU-6WFhvi1oOR7QtgA0F_aSCQRygs4D3Kh80HJwjOJVARrswq42wpO1eR2QVIEaB-xV2oAM1tGzJCzDYCVsh1UbsQzuTYeX7IyPOo5P5O1f2n59VzftyuBDU5"); }
 
-.filter-box {
-  margin-top: 1rem; padding: 1rem; border-radius: var(--radius-xl);
-  background: var(--color-surface); box-shadow: var(--shadow-md);
-}
-.filter-box > * + * { margin-top: 1.25rem; }
-.filter-box__row { display: flex; flex-direction: column; gap: 0.75rem; }
-.filter-box__controls { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+/* Exquisite antique Vietnamese traditional lacquer painting and silk scroll artwork inside Vietnam National Fine */
+.home-photo-2 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFY2YTDpZ_nf1GcuK99GXMz51qdk3suK63_WWZN2Tigr4tcqrBcWql1cabQcTOwKOvJHrxeOrhUJeEj9tFwT0h9az852SD0uEKtH-zQcC7gKtKvyr2WUvqrYA_MEZqr-NRtoeh8xdDkTTksB-4pY2PIay1VmpRGp1IIWfEhflhjtC0VHX3wMe9kRayINyW78UyueSJC3eBsC2karZ5j25DpmmncN7gKyOzyRkBjLFXbKzDRBmHKa4v"); }
 
-/* Ô tìm kiếm */
-.search-field { position: relative; flex: 1; }
-.search-field__icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-outline); pointer-events: none; }
-.search-field__input, .select-field__input {
-  width: 100%; height: 48px; border: 0; border-radius: var(--radius-xl);
-  background: var(--color-surface-low); color: var(--color-text);
-  transition: background var(--transition), box-shadow var(--transition);
-}
-.search-field__input { padding: 0 2.5rem 0 3rem; font-size: 16px; }
-.search-field__input::placeholder { color: var(--color-outline); }
-.search-field__input:focus, .select-field__input:focus {
-  outline: none; background: var(--color-surface);
-  box-shadow: 0 0 0 2px rgba(120, 89, 24, 0.4);
-}
-.search-field__clear {
-  position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%);
-  padding: 0.25rem; color: var(--color-outline);
-}
-.search-field__clear:hover { color: var(--color-primary); }
+/* Authentic traditional tall Rong stilt house of Central Highlands Vietnam situated inside lush green outdoor pa */
+.home-photo-3 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAIfmCrXJEQoh0lVuwojYpvkyfYX_tul-I8WaWdQzTzwAZyqAAt_8QI_6owtwGPKYypuq0jCEa2UwkeoLGVsh9SAp6z2hf5cMKlFj6qo_haHazuzggHMsCTDvjk3-BML3gMUSPLnz4npr9dGID4wOksRYc3SbFxKJm70Jo7Jy4YuWr7Fjtn_ov5iwbJkcfWXaIzB5XSjINy5O0x-5dEqzxN4YxY2jzQCorHZ_rV5IrPK-hiMXpwJO6n"); }
 
-/* Ô sắp xếp */
-.select-field { position: relative; min-width: 210px; flex: 1 1 210px; }
-.select-field__input {
-  appearance: none; -webkit-appearance: none; cursor: pointer;
-  padding: 0 2.5rem 0 2.75rem; font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
-}
-.select-field__icon { position: absolute; top: 50%; transform: translateY(-50%); pointer-events: none; }
-.select-field__icon--left { left: 0.875rem; color: var(--color-gold); }
-.select-field__icon--right { right: 0.875rem; color: var(--color-outline); }
+/* Facade of Vietnam National Museum of History in Hanoi, beautiful yellow French Indochina colonial architecture */
+.home-photo-4 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDc4tpIemicTw_ciub0vmlj6ONSsVaOopDwe386pjEc2gs7ieApBYvnBsDOyhNBjzaau4nRMMEvnmvnXV4eRXJeug7o1ItH_G-TgWO0rUmSvCMbl-Ei9h2N5t_oSN4xIvz15bX2l5d7XjB6mD0kvbrPScC5o4vOJddZAZi0_1js6L9njZDSTwt7pEGhpLA7frdj1JpbWZ96jhW0dw-NLj7fhknSI-lfqc9noMt-zgsL7iHp6zHpG_cr"); }
 
-/* Công tắc "Đang mở cửa" */
-.toggle-chip {
-  height: 48px; padding: 0 1rem; border-radius: var(--radius-xl);
-  display: flex; align-items: center; gap: 0.625rem; flex-shrink: 0;
-  background: var(--color-surface-low); cursor: pointer; user-select: none;
-  font-size: 14px; font-weight: 600; color: var(--color-primary); white-space: nowrap;
-  transition: background var(--transition);
-}
-.toggle-chip:hover { background: var(--color-surface-container); }
-.toggle-chip input { width: 16px; height: 16px; accent-color: var(--color-primary); cursor: pointer; margin: 0; }
+/* Vietnam National Fine Arts Museum colonial building exterior surrounded by quiet courtyards with marble sculpt */
+.home-photo-5 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFX_d5rHv_zxBNxN4shz0Sx7x3l-QZkg2YPsHODitp38Scswlgqb_AHmCtc2eEwPAo3Gn2YBPQYKj8esgnMK_i9pWI9eOLlxf7fwToR4yrE2WaNoKaHw8k_c-_PETM3DZRb8dnEGLrW5bLT21RXQpxZDEdBqcZVPc3aAh-WS8eRFbXHzlia7Ze_AreiTb2CCUl832oRtdxIn3_1Z76kMSm-J5GbKC66Ipcvj0i7jggcyvDpgjhQzwU"); }
 
-/* Nhóm chip lọc */
-.filter-groups { padding-top: 0.5rem; }
-.filter-groups > * + * { margin-top: 0.75rem; }
-.filter-group { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
-.filter-group__label {
-  min-width: 70px; display: flex; align-items: center; gap: 0.25rem;
-  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--color-muted);
-}
-.filter-group__chips { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+/* Vietnam Museum of Ethnology Drum Bronze shaped modern building with peaceful outdoor ponds, water puppets pavi */
+.home-photo-6 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBbIYkKULPNhcdvzjGE8GYUmFqr5_m3aWXRjJKACHRQSOsuc1QkBRp-6JxC82s4uZcvH6FZxXtJe84y1NA-9jZLnF6u_VA-f2hbm8ZZfdBl9JLb3Xt-PKCX71aabgJTmUEw-4-JyGwK5a9wOc3-k28bTdXk9BIWaujza33UMqagaUeRqUrqeg07ELYV3ssMSBF2zaiYBaGNeZE2wAtas_caevU7_IyOHHrOSLQTpekkAL0SFbgG02fm"); }
 
-/* ---------- Thẻ số liệu ở hero ---------- */
-.hero-stat {
-  display: flex; align-items: center; gap: 0.875rem;
-  padding: 0.875rem 1.25rem; border-radius: var(--radius-xl);
-  background: var(--color-surface); box-shadow: var(--shadow-sm);
-}
-.hero-stat__icon {
-  width: 40px; height: 40px; border-radius: var(--radius-xl);
-  display: flex; align-items: center; justify-content: center;
-  background: var(--color-primary-dark); color: var(--color-gold-light);
-}
-.hero-stat__icon--gold { background: rgba(255, 222, 165, 0.3); color: var(--color-gold); }
-.hero-stat__value { font-size: 18px; line-height: 1.25; font-weight: 700; color: var(--color-primary); }
-.hero-stat__label { font-size: 11px; line-height: 14px; font-weight: 500; letter-spacing: 0.05em; color: var(--color-muted); }
+/* Exquisite Imperial Gold treasures exhibition with golden bowls, dragon seals, and imperial jade relics behind  */
+.home-photo-7 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBs8dcblX30ejlxHO0C2EtbmmT5r3uyFuiAwqg-QH1cbU4KW2LDOi8C3ZDF8HPIujiZLkMaVBkGqHSXlL38QtCJsuYUxGk7k0LigghBCAmNppm7X38HIX_kippwxhoX8tcU7FfFwa3BCW8HoLbRvDmY8sgsJIIl7SlsxjSa6PEjy3Et3CzFuoWZWtvGv-eeTyo6_J2z0dMEIlaQH3Z1x8NHZzsznHFI9hg7d68L_QzX4fh8xsRFdwh-"); }
 
+/* Artisans teaching pottery carving Dong Son bronze drum bird patterns on ceramic clay vessel, traditional craft */
+.home-photo-8 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD7tTQImghn9PRji8OdS1q5NDsBnmbIihT2ou0QG5i_LQA-1H29Hq2QqrLKF55Fsc-r9ljE_et3TFH4kmN0AvJPVhE4aySnUF8doRQzJEub4Wnpqrp8JpNnlYyBOZ65m2u3_40Nvpco4YbiQwS_VWk_bzSlgm7qFHTUUcDA6JdfGwMUJCaHehDXkvsIaDc78Pm17-B_FN_DZ4KOWWnwWApnqsVN8kjnc8XZaHob66KarqHX3Iv1sjYy"); }
 
-/* ---------- Danh sách kết quả ---------- */
-.results-header { display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; padding-bottom: 0.5rem; }
-.results-header__title { display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap; }
-.results-header__dot { width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--color-gold); }
-.results-header__tools { display: flex; align-items: center; gap: 0.75rem; }
-
-.museum-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-
-/* Trạng thái đang tải (khung xương) */
-.museum-card--skeleton { min-height: 28rem; background: linear-gradient(90deg, var(--color-surface-low), var(--color-surface-high), var(--color-surface-low)); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
-@keyframes shimmer { to { background-position: -200% 0; } }
-
-/* Trạng thái rỗng */
-.empty-state {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-  padding: 4rem 1.5rem; margin: 1.5rem 0; border-radius: var(--radius-xl);
-  background: var(--color-surface); box-shadow: var(--shadow-sm);
-}
-.empty-state__icon {
-  width: 80px; height: 80px; margin-bottom: 1rem; border-radius: var(--radius-full);
-  display: flex; align-items: center; justify-content: center;
-  background: var(--color-surface-low); color: var(--color-gold);
-}
-.empty-state__title { margin-bottom: 0.5rem; color: var(--color-primary); }
-.empty-state__text { max-width: 28rem; margin-bottom: 1.5rem; color: var(--color-muted); line-height: 1.625; }
-
-/* ---------- Banner đoàn khách ---------- */
-.group-banner {
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem;
-  padding: 2rem; border-radius: var(--radius-xl);
-  background: var(--color-primary); color: var(--color-surface); box-shadow: var(--shadow-lg);
-}
-.group-banner__circle {
-  position: absolute; right: -2.5rem; bottom: -2.5rem; width: 16rem; height: 16rem;
-  border-radius: var(--radius-full); background: rgba(255, 222, 165, 0.1); pointer-events: none;
-}
-.group-banner__content { position: relative; z-index: 1; max-width: 42rem; }
-.group-banner__content > * + * { margin-top: 0.5rem; }
-.group-banner__eyebrow {
-  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.1); color: var(--color-gold-light);
-  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.05em;
-}
-.group-banner__title { color: var(--color-bg); }
-.group-banner__text { color: var(--color-surface-high); line-height: 1.625; }
-.group-banner__action { position: relative; z-index: 1; flex-shrink: 0; }
-
-/* ---------- Responsive ---------- */
-@media (min-width: 640px) {
-  .results-header { flex-direction: row; align-items: center; }
-}
-@media (min-width: 768px) {
-  .home-hero__top { flex-direction: row; align-items: flex-end; }
-  .museum-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1024px) {
-  .filter-box { padding: 1.5rem; }
-  .filter-box__row { flex-direction: row; }
-  .filter-box__controls { flex-wrap: nowrap; }
-  .select-field { flex: 0 0 auto; }
-  .museum-grid { grid-template-columns: repeat(3, 1fr); }
-  .group-banner { flex-direction: row; align-items: center; }
-}
-
-/* ---------- Modal chi tiết bảo tàng ---------- */
-.museum-detail__image { height: 12rem; margin-bottom: 1rem; border-radius: var(--radius-xl); background-size: cover; background-position: center; }
-.museum-detail__desc { color: var(--color-muted); line-height: 1.6; margin-bottom: 1rem; }
-.museum-detail__info { display: flex; flex-direction: column; gap: .5rem; font-size: 14px; }
-.museum-detail__info li { display: flex; align-items: center; gap: .5rem; }
-.museum-detail__info .icon { color: var(--color-gold); }
+/* Atmospheric nocturnal light projection mapping showing ancient Vietnamese mythologies and historical dynasties */
+.home-photo-9 { background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDGi_VuxBso3h-HKSd2lIaIl7Alberr8XhEdh4LOM57tu7KfnoHfpvp0Kx-sQ1AcGAZCuxqAFk_y_7VZoJ4JIhdsLVAf4yzw_q7PWy71G0C57G3C-RReSZVzLPG6SZx2lWwcPaGAI2deIcewPobTuMDTmr7-68mozmnPI75EExoKPCmByLjL8d0mMJTYQ2Y2XbtKv-AeaCpwcVrtjS5KzjhGIa6qW5Lqf6IR5-PN5aEV0l_gVEv4CVv"); }
