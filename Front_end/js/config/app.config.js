@@ -53,6 +53,8 @@ Object.assign(window.APP_CONFIG, {
   REQUEST_TYPES: { change: "Đổi ngày / khung giờ", cancel: "Hủy vé & hoàn tiền" },
   /** Khung giờ vào cổng (dùng cho đổi giờ) */
   TIME_SLOTS: ["08:00 - 10:00", "10:00 - 12:00", "13:30 - 15:30", "15:30 - 17:00"],
+  /** Client ID OAuth của Google (Google Cloud Console → Credentials). Để trống thì nút Google chạy giả lập. */
+  GOOGLE_CLIENT_ID: "",
   SITE_NAME: "BẢO TÀNG DI SẢN",
   SITE_TAGLINE: "Cổng Vé Quốc Gia",
   HOME_PAGE_SIZE: 6, // số thẻ bảo tàng mỗi trang ở trang chủ

@@ -6,6 +6,12 @@ SiteFooter.render();
   const form = document.getElementById("loginForm");
   const btn = document.getElementById("loginBtn");
   Helpers.bindPasswordToggles();
+
+  // Đăng nhập / đăng ký nhanh bằng Google (js/components/google-login.js)
+  GoogleLogin.bind(document.getElementById("googleBtn"), (c) => {
+    Notify.success("Xin chào " + c.full_name + "!");
+    setTimeout(() => (location.href = Helpers.routeUrl("MY_TICKETS")), 500);
+  });
   if (!API_CONFIG.USE_MOCK) document.getElementById("demoHint").remove();
 
   // Đã đăng nhập rồi thì vào thẳng trang vé

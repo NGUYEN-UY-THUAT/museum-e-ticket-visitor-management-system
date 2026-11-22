@@ -24,6 +24,7 @@ window.API_CONFIG = {
     CUSTOMER_LOGIN: "/customers/login", // POST {account,password} -> {token,customer}
     CUSTOMER_FORGOT: "/customers/forgot-password", // POST {email} -> gửi OTP qua email
     CUSTOMER_RESET: "/customers/reset-password", // POST {email,otp,password}
+    CUSTOMER_GOOGLE: "/customers/google", // POST {id_token} (Google Identity Services) -> {token,customer}
     TICKET_REQUESTS: "/ticket-requests", // Yêu cầu đổi giờ / hủy vé / hoàn tiền
     CONTACT_MESSAGES: "/contact-messages", // Tin nhắn từ trang Liên hệ
   },

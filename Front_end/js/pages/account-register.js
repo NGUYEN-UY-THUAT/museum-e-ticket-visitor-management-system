@@ -7,6 +7,12 @@ SiteFooter.render();
   const btn = document.getElementById("registerBtn");
   Helpers.bindPasswordToggles();
 
+  // Đăng nhập / đăng ký nhanh bằng Google (js/components/google-login.js)
+  GoogleLogin.bind(document.getElementById("googleBtn"), (c) => {
+    Notify.success("Xin chào " + c.full_name + "!");
+    setTimeout(() => (location.href = Helpers.routeUrl("MY_TICKETS")), 500);
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = {

@@ -151,3 +151,16 @@ select.hh-input { cursor: pointer; }
 
 /* File này nạp sau utilities.css nên phải giữ lớp "hidden" thắng display của các thành phần hh-* */
 [class*="hh-"].hidden { display: none !important; }
+
+/* ---------- Nút đăng nhập Google + hộp chọn tài khoản (js/components/google-login.js) ---------- */
+.hh-btn--google { background: #fff; color: #1f1f1f; border: 1px solid rgb(var(--hh-outline-variant)); }
+.hh-btn--google:hover { background: rgb(var(--hh-surface-container-low)); }
+.hh-btn--google svg { width: 18px; height: 18px; }
+.glogin { display: flex; flex-direction: column; gap: 1rem; }
+.glogin__list { display: flex; flex-direction: column; gap: 0.5rem; }
+.glogin__acc { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.7rem 0.9rem; border-radius: 0.6rem; border: 1px solid rgb(var(--hh-outline-variant) / 0.6); text-align: left; background: transparent; cursor: pointer; }
+.glogin__acc:hover { background: rgb(var(--hh-surface-container-low)); }
+.glogin__acc strong { display: block; font-size: 14px; color: rgb(var(--hh-on-surface)); }
+.glogin__acc small { display: block; font-size: 13px; color: rgb(var(--hh-on-surface-variant)); }
+.glogin__avatar { width: 2.25rem; height: 2.25rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: rgb(var(--hh-primary)); color: rgb(var(--hh-on-primary)); font-weight: 700; flex-shrink: 0; }
+.glogin__other { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid rgb(var(--hh-outline-variant) / 0.4); }

@@ -58,6 +58,21 @@ window.CustomerService = (function () {
       return saveSession("mock-c-" + Helpers.uid(), strip(c));
     },
 
+    /** Đăng nhập bằng Google.
+        Thật: gửi id_token (do Google Identity Services trả về) cho backend kiểm tra → {token, customer}.
+        Mock: nhận {email, full_name}; email chưa có thì tự tạo tài khoản (không có mật khẩu). */
+    async loginWithGoogle({ id_token, email, full_name } = {}) {
+      if (!API_CONFIG.USE_MOCK) {
+        const r = await ApiService.post(E().CUSTOMER_GOOGLE, { id_token });
+        return saveSession(r.token, r.customer);
+      }
+      email = String(email || "").trim().toLowerCase();
+      if (!Validation.email(email)) throw new Error("Email Google không hợp lệ");
+      let c = await findByAccount(email);
+      if (!c) c = await ApiService.post(E().CUSTOMERS, { full_name: (full_name || email.split("@")[0]).trim(), email, phone: "", password: null, provider: "google" });
+      return saveSession("mock-g-" + Helpers.uid(), strip(c));
+    },
+
     logout(redirectKey = "HOME") {
       localStorage.removeItem(APP_CONFIG.CUSTOMER_TOKEN_KEY);
       localStorage.removeItem(APP_CONFIG.CUSTOMER_KEY);

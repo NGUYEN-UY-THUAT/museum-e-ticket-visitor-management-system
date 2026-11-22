@@ -5,7 +5,7 @@ HTML + CSS + JavaScript thuần (không React, không cần build). Backend dùn
 ## Chạy thử
 - Mở `index.html` bằng trình duyệt, hoặc dùng Live Server của VS Code (khuyên dùng, để camera quét QR hoạt động).
 - Trang khách tham quan bắt đầu từ `index.html`; trang cán bộ bắt đầu từ `pages/login.html`.
-- Tài khoản khách chạy thử: `an@gmail.com / 123456`. Vé chạy thử: `TK5E6F7GH8` (đổi / hủy được), `TK7A1X9QZ2` (vé hôm nay). Tài khoản thử: `admin / admin123` (quản trị), `staff / staff123` (soát vé).
+- Tài khoản khách chạy thử: `an@gmail.com / 123456`. Vé chạy thử: `TK5E6F7GH8` (đổi / hủy được), `TK7A1X9QZ2` (vé hôm nay). Nút "Tiếp tục với Google" chạy giả lập khi `USE_MOCK` bật hoặc `APP_CONFIG.GOOGLE_CLIENT_ID` để trống; điền Client ID và tắt mock để dùng Google thật. Tài khoản thử: `admin / admin123` (quản trị), `staff / staff123` (soát vé).
 
 Mặc định `USE_MOCK: true` trong `js/config/api.config.js`: dữ liệu mẫu lưu ở localStorage của trình duyệt.
 Khi backend MySQL sẵn sàng, đổi thành `false` và sửa `BASE_URL`.
@@ -92,6 +92,7 @@ Thứ tự nạp script: config → utils → services → components → pages.
 | POST | /api/customers/login | Đăng nhập khách `{account,password}` (account = email hoặc SĐT) → `{token,customer}` |
 | POST | /api/customers/forgot-password | Gửi mã OTP 6 số qua email `{email}` |
 | POST | /api/customers/reset-password | Đặt lại mật khẩu `{email,otp,password}` |
+| POST | /api/customers/google | Đăng nhập Google `{id_token}` → `{token,customer}` (backend kiểm tra id_token, chưa có email thì tạo tài khoản) |
 | GET | /api/tickets?email= / ?phone= / ?code= | Tra cứu vé không cần đăng nhập |
 | GET/POST | /api/ticket-requests | Yêu cầu đổi giờ / hủy vé (`type: change|cancel`, `status: pending|approved|rejected`) |
 | POST | /api/contact-messages | Tin nhắn hỗ trợ từ trang Liên hệ |
