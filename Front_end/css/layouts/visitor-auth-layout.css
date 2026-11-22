@@ -1,0 +1,31 @@
+/* ==========================================================================
+   visitor-auth-layout.css — Khung 2 cột cho trang tài khoản khách
+   (account-login, account-register, forgot-password): cột trái giới thiệu, cột phải biểu mẫu.
+   ========================================================================== */
+.auth-shell {
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  max-width: 72rem; margin: 0 auto; border-radius: 1rem; overflow: hidden;
+  background: rgb(var(--hh-surface-container-lowest));
+  box-shadow: 0 12px 40px rgb(31 58 95 / 0.10);
+  border: 1px solid rgb(var(--hh-outline-variant) / 0.3);
+}
+@media (min-width: 1024px) { .auth-shell { grid-template-columns: 5fr 6fr; } }
+
+.auth-aside {
+  position: relative; overflow: hidden; display: none;
+  padding: 3rem 2.75rem; color: rgb(var(--hh-surface-container-lowest));
+  background:
+    radial-gradient(circle at 85% 10%, rgb(var(--hh-secondary-fixed) / 0.28), transparent 45%),
+    radial-gradient(circle at 10% 95%, rgb(var(--hh-primary-fixed) / 0.18), transparent 40%),
+    linear-gradient(160deg, rgb(var(--hh-primary)) 0%, rgb(var(--hh-primary-container)) 100%);
+}
+@media (min-width: 1024px) { .auth-aside { display: flex; flex-direction: column; justify-content: space-between; } }
+/* Họa tiết trống đồng mờ phía sau */
+.auth-aside::after {
+  content: ""; position: absolute; right: -7rem; bottom: -7rem; width: 22rem; height: 22rem; border-radius: 9999px;
+  border: 2px dashed rgb(var(--hh-secondary-fixed) / 0.25);
+  box-shadow: 0 0 0 2.5rem rgb(var(--hh-secondary-fixed) / 0.05), 0 0 0 5rem rgb(var(--hh-secondary-fixed) / 0.04);
+  pointer-events: none;
+}
+.auth-main { padding: 2rem 1.5rem; }
+@media (min-width: 640px) { .auth-main { padding: 2.75rem 3rem; } }

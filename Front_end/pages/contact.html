@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liên hệ & hỗ trợ | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Liên hệ bảo tàng, gửi yêu cầu hỗ trợ và xem câu hỏi thường gặp về vé điện tử" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="../css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="../css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo, thành phần giao diện khách) -->
+  <link rel="stylesheet" href="../css/components/button.css" />
+  <link rel="stylesheet" href="../css/components/public-navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/contact.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+  <section class="relative overflow-hidden">
+    <div class="absolute -top-24 right-10 w-80 h-80 rounded-full bg-secondary-fixed/30 blur-3xl pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-12 pt-10 pb-6 lg:pt-14">
+      <nav class="flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant mb-5">
+        <a class="flex items-center gap-1 hover:text-primary" href="../index.html"><span class="material-symbols-outlined text-[16px]">home</span> Trang chủ</a>
+        <span>/</span><span class="text-primary font-semibold">Liên hệ &amp; hỗ trợ</span>
+      </nav>
+      <span class="hh-eyebrow"><span class="material-symbols-outlined text-[15px]">support_agent</span> Luôn sẵn sàng hỗ trợ</span>
+      <h1 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-4">Liên hệ &amp; hỗ trợ</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mt-3 max-w-2xl">Gửi câu hỏi về vé, sự kiện hay đặt lịch đoàn. Đội ngũ chăm sóc khách hàng phản hồi trong vòng 24 giờ làm việc.</p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        <a class="hh-card hh-card--flat p-5 lg:p-5 flex gap-3 hover:border-secondary/50 transition-colors" href="tel:19008899">
+          <span class="w-11 h-11 rounded-xl bg-primary text-secondary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined">call</span></span>
+          <span><span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Hotline 24/7</span><span class="block font-title-md text-title-md text-primary">1900 8899</span></span>
+        </a>
+        <a class="hh-card hh-card--flat p-5 lg:p-5 flex gap-3 hover:border-secondary/50 transition-colors" href="mailto:hotro@baotangdisan.gov.vn">
+          <span class="w-11 h-11 rounded-xl bg-primary text-secondary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined">mail</span></span>
+          <span class="min-w-0"><span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Email</span><span class="block font-title-md text-title-md text-primary truncate">hotro@baotangdisan.gov.vn</span></span>
+        </a>
+        <div class="hh-card hh-card--flat p-5 lg:p-5 flex gap-3">
+          <span class="w-11 h-11 rounded-xl bg-primary text-secondary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined">chat</span></span>
+          <span><span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Zalo OA</span><span class="block font-title-md text-title-md text-primary">Bảo Tàng Di Sản</span></span>
+        </div>
+        <div class="hh-card hh-card--flat p-5 lg:p-5 flex gap-3">
+          <span class="w-11 h-11 rounded-xl bg-primary text-secondary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined">location_on</span></span>
+          <span><span class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Quầy hỗ trợ</span><span class="block font-title-md text-title-md text-primary">01 Tràng Tiền, Hà Nội</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-14 grid lg:grid-cols-12 gap-8">
+    <!-- Biểu mẫu -->
+    <div class="lg:col-span-7">
+      <div class="hh-card">
+        <h2 class="font-headline-sm text-headline-sm text-primary">Gửi yêu cầu hỗ trợ</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Các ô có dấu <span class="text-error">*</span> là bắt buộc.</p>
+        <form class="grid sm:grid-cols-2 gap-5 mt-6" id="contactForm" novalidate>
+          <div class="hh-field">
+            <label class="hh-label" for="full_name">Họ và tên <span class="req">*</span></label>
+            <input class="hh-input" id="full_name" name="full_name" autocomplete="name" placeholder="Nguyễn Văn An" />
+            <span class="hh-error"></span>
+          </div>
+          <div class="hh-field">
+            <label class="hh-label" for="phone">Số điện thoại</label>
+            <input class="hh-input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="0901 234 567" />
+            <span class="hh-error"></span>
+          </div>
+          <div class="hh-field">
+            <label class="hh-label" for="email">Email <span class="req">*</span></label>
+            <input class="hh-input" id="email" name="email" type="email" autocomplete="email" placeholder="ban@email.com" />
+            <span class="hh-error"></span>
+          </div>
+          <div class="hh-field">
+            <label class="hh-label" for="topic">Chủ đề <span class="req">*</span></label>
+            <select class="hh-input" id="topic" name="topic">
+              <option value="">— Chọn chủ đề —</option>
+              <option value="ticket">Vé điện tử, mã QR</option>
+              <option value="payment">Thanh toán, hóa đơn VAT</option>
+              <option value="refund">Đổi, hủy, hoàn vé</option>
+              <option value="event">Sự kiện, workshop</option>
+              <option value="group">Đặt vé đoàn, trường học</option>
+              <option value="account">Tài khoản</option>
+              <option value="feedback">Góp ý dịch vụ</option>
+              <option value="other">Khác</option>
+            </select>
+            <span class="hh-error"></span>
+          </div>
+          <div class="hh-field sm:col-span-2">
+            <label class="hh-label" for="ticket_code">Mã vé / mã đơn (nếu có)</label>
+            <input class="hh-input uppercase" id="ticket_code" name="ticket_code" placeholder="TK7A1X9QZ2" />
+          </div>
+          <div class="hh-field sm:col-span-2">
+            <label class="hh-label" for="message">Nội dung <span class="req">*</span></label>
+            <textarea class="hh-input" id="message" name="message" maxlength="1000" placeholder="Mô tả vấn đề bạn gặp phải..."></textarea>
+            <div class="flex justify-between"><span class="hh-error"></span><span class="hh-hint" id="msgCount">0/1000</span></div>
+          </div>
+          <div class="sm:col-span-2 flex flex-wrap items-center justify-between gap-4">
+            <label class="hh-check"><input type="checkbox" name="copy" checked /> Gửi bản sao vào email của tôi</label>
+            <button class="hh-btn hh-btn--primary" id="contactBtn" type="submit"><span class="material-symbols-outlined">send</span> Gửi yêu cầu</button>
+          </div>
+        </form>
+        <div class="hh-alert hh-alert--success mt-6 hidden" id="contactDone"><span class="material-symbols-outlined">task_alt</span><span>Đã nhận yêu cầu <b id="ticketNo"></b>. Chúng tôi sẽ phản hồi qua email trong vòng 24 giờ làm việc.</span></div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="lg:col-span-5">
+      <h2 class="font-headline-sm text-headline-sm text-primary mb-4">Câu hỏi thường gặp</h2>
+      <details class="hh-faq" open>
+        <summary>Tôi không nhận được email chứa vé QR?</summary>
+        <div class="hh-faq__body">Kiểm tra hộp thư rác / quảng cáo. Bạn cũng có thể xem lại vé tại trang <a class="hh-link" href="ticket-lookup.html">Tra cứu vé</a> bằng email hoặc số điện thoại đã đặt.</div>
+      </details>
+      <details class="hh-faq">
+        <summary>Có cần in vé ra giấy không?</summary>
+        <div class="hh-faq__body">Không bắt buộc. Chỉ cần mở mã QR trên điện thoại. Nếu muốn, bạn có thể in vé từ trang chi tiết vé.</div>
+      </details>
+      <details class="hh-faq">
+        <summary>Tôi muốn đổi sang ngày khác thì làm thế nào?</summary>
+        <div class="hh-faq__body">Vào <a class="hh-link" href="ticket-change.html">Đổi giờ / Hủy vé</a>, nhập mã vé và email. Đổi miễn phí khi còn hơn 24 giờ trước giờ mở cửa.</div>
+      </details>
+      <details class="hh-faq">
+        <summary>Bao lâu thì tôi nhận được tiền hoàn?</summary>
+        <div class="hh-faq__body">Hoàn về phương thức thanh toán ban đầu trong 3 - 7 ngày làm việc, hoặc chuyển khoản ngân hàng trong 1 - 3 ngày sau khi yêu cầu được chấp nhận.</div>
+      </details>
+      <details class="hh-faq">
+        <summary>Trẻ em có cần mua vé không?</summary>
+        <div class="hh-faq__body">Trẻ dưới 6 tuổi được miễn phí nhưng vẫn cần thêm vào đơn để tính số lượng khách. Trẻ 6 - 15 tuổi mua vé trẻ em.</div>
+      </details>
+      <details class="hh-faq">
+        <summary>Đoàn bao nhiêu người thì được giá đoàn?</summary>
+        <div class="hh-faq__body">Từ 15 khách trở lên. Đăng ký tại trang <a class="hh-link" href="group-booking.html">Đặt vé đoàn</a> để nhận báo giá và thuyết minh viên.</div>
+      </details>
+      <details class="hh-faq">
+        <summary>Tôi có thể xuất hóa đơn VAT không?</summary>
+        <div class="hh-faq__body">Có. Chọn “Xuất hóa đơn VAT” ở bước thanh toán và nhập mã số thuế. Hóa đơn điện tử được gửi qua email trong 24 giờ.</div>
+      </details>
+      <a class="hh-btn hh-btn--ghost hh-btn--block mt-5" href="policies.html"><span class="material-symbols-outlined">menu_book</span> Xem toàn bộ hướng dẫn &amp; chính sách</a>
+    </div>
+  </section>
+</main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/customer.service.js"></script>
+  <script src="../js/services/support.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/contact.js"></script>
+</body>
+</html>

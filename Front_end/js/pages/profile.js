@@ -54,3 +54,9 @@ SiteFooter.render();
   function downloadMockInvoice() {
     Notify.info('Hóa đơn điện tử VAT của Tổng cục Thuế với mã tra cứu #VN-HIS-89214 đang được khởi tạo.');
   }
+
+// Đăng xuất tài khoản khách
+document.getElementById("profileLogout")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  CustomerService.logout();
+});

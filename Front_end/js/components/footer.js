@@ -15,10 +15,12 @@ window.SiteFooter = (function () {
     {
       title: "Dịch vụ vé & Khách hàng",
       links: [
-        ["Tra cứu & Quản lý vé điện tử", "MY_TICKETS"],
-        ["Hướng dẫn sử dụng mã QR soát vé", null],
-        ["Chính sách đổi trả & Hoàn tiền vé", null],
-        ["Quy định tham quan bảo tàng", null],
+        ["Tra cứu & Quản lý vé điện tử", "TICKET_LOOKUP"],
+        ["Đổi giờ, hủy vé & hoàn tiền", "TICKET_CHANGE"],
+        ["Hướng dẫn sử dụng mã QR soát vé", "POLICY_QR"],
+        ["Chính sách đổi trả & Hoàn tiền vé", "POLICY_REFUND"],
+        ["Quy định tham quan bảo tàng", "POLICY_RULES"],
+        ["Liên hệ & Câu hỏi thường gặp", "CONTACT"],
         ["Cổng đăng nhập cán bộ", "LOGIN"],
       ],
     },
@@ -70,7 +72,7 @@ window.SiteFooter = (function () {
             </div>
             <div class="site-footer__bottom">
               <p>© ${new Date().getFullYear()} Cổng Vé &amp; Quản trị Bảo tàng Di sản Quốc gia. Tất cả quyền được bảo lưu.</p>
-              <div class="site-footer__legal"><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản dịch vụ</a><a href="#">Quy chế hoạt động</a></div>
+              <div class="site-footer__legal"><a href="${url("POLICY_PRIVACY")}">Chính sách bảo mật</a><a href="${url("POLICY_TERMS")}">Điều khoản dịch vụ</a><a href="${url("POLICY_RULES")}">Quy chế hoạt động</a></div>
             </div>
           </div>
         </div>`;

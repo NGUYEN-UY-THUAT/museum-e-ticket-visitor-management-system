@@ -219,7 +219,8 @@ module.exports = {
   },
   "content": { "relative": true, "files": [
     "../../Front_end/index.html",
-    "../../Front_end/pages/{museum-detail,ticket-selection,checkout,payment-result,my-tickets,ticket-detail,event-list,event-detail,survey,group-booking,profile}.html",
-    "../../Front_end/js/pages/{home,museum-detail,ticket-selection,checkout,payment-result,my-tickets,ticket-detail,event-list,event-detail,survey,group-booking,profile}.js"
+    "../../Front_end/404.html",
+    "../../Front_end/pages/{museum-detail,ticket-selection,checkout,payment-result,my-tickets,ticket-detail,event-list,event-detail,survey,group-booking,profile,account-login,account-register,forgot-password,ticket-lookup,ticket-change,policies,contact}.html",
+    "../../Front_end/js/pages/{home,museum-detail,ticket-selection,checkout,payment-result,my-tickets,ticket-detail,event-list,event-detail,survey,group-booking,profile,account-login,account-register,forgot-password,ticket-lookup,ticket-change,policies,contact,404}.js"
   ] }
 };

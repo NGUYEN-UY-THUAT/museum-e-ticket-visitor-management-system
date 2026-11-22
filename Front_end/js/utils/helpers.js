@@ -59,3 +59,31 @@ Object.assign(window.Helpers, {
     });
   }
 });
+
+/* ---------- Tiện ích biểu mẫu cho trang khách ---------- */
+Object.assign(window.Helpers, {
+  /** Lấy tham số trên URL: Helpers.param("code") */
+  param(name) {
+    return new URLSearchParams(location.search).get(name) || "";
+  },
+  /** Nút hiện/ẩn mật khẩu: <button class="hh-toggle-pass" data-toggle-pass="idInput"> */
+  bindPasswordToggles(root = document) {
+    root.querySelectorAll("[data-toggle-pass]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const input = document.getElementById(btn.dataset.togglePass);
+        const show = input.type === "password";
+        input.type = show ? "text" : "password";
+        btn.querySelector(".material-symbols-outlined").textContent = show ? "visibility_off" : "visibility";
+      })
+    );
+  },
+  /** Khóa nút khi đang gửi để tránh bấm 2 lần */
+  async withBusy(btn, fn) {
+    btn.classList.add("is-loading");
+    try {
+      return await fn();
+    } finally {
+      btn.classList.remove("is-loading");
+    }
+  },
+});

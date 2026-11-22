@@ -1,0 +1,153 @@
+/* ==========================================================================
+   heritage-ui.css — Thành phần giao diện dùng lại cho các trang khách tham quan
+   (thẻ, ô nhập, nút, nhãn trạng thái, hộp thông báo, tab, accordion).
+   Màu lấy từ css/base/design-tokens.css (biến --hh-*), cùng phong cách với các trang Stitch.
+   ========================================================================== */
+
+/* ---------- Thẻ ---------- */
+.hh-card {
+  background: rgb(var(--hh-surface-container-lowest));
+  border: 1px solid rgb(var(--hh-outline-variant) / 0.35);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 30px rgb(31 58 95 / 0.06);
+}
+@media (min-width: 1024px) { .hh-card { padding: 2rem; } }
+.hh-card--flat { box-shadow: none; }
+.hh-card--muted { background: rgb(var(--hh-surface-container-low)); border-color: transparent; box-shadow: none; }
+
+/* ---------- Nhãn nhỏ phía trên tiêu đề ---------- */
+.hh-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.25rem 0.75rem; border-radius: 9999px;
+  background: rgb(var(--hh-secondary-container) / 0.6);
+  color: rgb(var(--hh-on-secondary-container));
+  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+}
+
+/* ---------- Biểu mẫu ---------- */
+.hh-field { display: flex; flex-direction: column; gap: 0.375rem; }
+.hh-label {
+  font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: rgb(var(--hh-on-surface-variant));
+}
+.hh-label .req { color: rgb(var(--hh-error)); }
+.hh-input-wrap { position: relative; }
+.hh-input-wrap > .material-symbols-outlined {
+  position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%);
+  font-size: 20px; color: rgb(var(--hh-on-surface-variant)); pointer-events: none;
+}
+.hh-input {
+  width: 100%; padding: 0.8rem 1rem; border-radius: 0.5rem;
+  background: rgb(var(--hh-surface-container-low));
+  border: 1px solid rgb(var(--hh-outline-variant) / 0.6);
+  color: rgb(var(--hh-on-surface)); font-size: 16px; line-height: 24px;
+  transition: border-color .15s, box-shadow .15s, background-color .15s;
+}
+.hh-input-wrap > .material-symbols-outlined ~ .hh-input { padding-left: 2.75rem; }
+.hh-input::placeholder { color: rgb(var(--hh-outline)); }
+.hh-input:focus { outline: none; background: rgb(var(--hh-surface-container-lowest)); border-color: rgb(var(--hh-primary)); box-shadow: 0 0 0 3px rgb(var(--hh-primary) / 0.12); }
+.hh-input.is-invalid { border-color: rgb(var(--hh-error)); box-shadow: 0 0 0 3px rgb(var(--hh-error) / 0.1); }
+textarea.hh-input { min-height: 7.5rem; resize: vertical; }
+select.hh-input { cursor: pointer; }
+.hh-hint { font-size: 13px; line-height: 18px; color: rgb(var(--hh-on-surface-variant)); }
+.hh-error { font-size: 13px; line-height: 18px; color: rgb(var(--hh-error)); min-height: 1px; }
+.hh-toggle-pass {
+  position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+  width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;
+  color: rgb(var(--hh-on-surface-variant));
+}
+.hh-toggle-pass:hover { background: rgb(var(--hh-surface-container)); color: rgb(var(--hh-primary)); }
+.hh-check { display: flex; align-items: flex-start; gap: 0.625rem; font-size: 14px; line-height: 20px; color: rgb(var(--hh-on-surface-variant)); cursor: pointer; }
+.hh-check input { margin-top: 0.15rem; width: 1.05rem; height: 1.05rem; accent-color: rgb(var(--hh-primary)); flex-shrink: 0; }
+.hh-link { color: rgb(var(--hh-secondary)); font-weight: 600; }
+.hh-link:hover { text-decoration: underline; }
+
+/* ---------- Nút ---------- */
+.hh-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.8rem 1.4rem; border-radius: 0.75rem;
+  font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: 0.02em;
+  transition: background-color .15s, box-shadow .15s, color .15s, opacity .15s; cursor: pointer;
+}
+.hh-btn .material-symbols-outlined { font-size: 19px; }
+.hh-btn--primary { background: rgb(var(--hh-primary)); color: rgb(var(--hh-on-primary)); box-shadow: 0 4px 14px rgb(3 36 72 / 0.18); }
+.hh-btn--primary:hover { background: rgb(var(--hh-primary-container)); }
+.hh-btn--primary .material-symbols-outlined { color: rgb(var(--hh-secondary-fixed)); }
+.hh-btn--gold { background: rgb(var(--hh-secondary-fixed)); color: rgb(var(--hh-on-secondary-fixed)); }
+.hh-btn--gold:hover { background: rgb(var(--hh-secondary-fixed-dim)); }
+.hh-btn--soft { background: rgb(var(--hh-surface-container-high)); color: rgb(var(--hh-primary)); }
+.hh-btn--soft:hover { background: rgb(var(--hh-surface-container-highest)); }
+.hh-btn--ghost { color: rgb(var(--hh-primary)); border: 1px solid rgb(var(--hh-outline-variant)); background: transparent; }
+.hh-btn--ghost:hover { background: rgb(var(--hh-surface-container-low)); }
+.hh-btn--danger { background: rgb(var(--hh-error)); color: rgb(var(--hh-on-error)); }
+.hh-btn--danger:hover { background: rgb(var(--hh-on-error-container)); }
+.hh-btn--block { width: 100%; }
+.hh-btn--sm { padding: 0.5rem 0.9rem; font-size: 13px; border-radius: 0.6rem; }
+.hh-btn[disabled], .hh-btn.is-loading { opacity: 0.6; pointer-events: none; }
+
+/* ---------- Nhãn trạng thái ---------- */
+.hh-badge {
+  display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.65rem; border-radius: 9999px;
+  font-size: 12px; line-height: 16px; font-weight: 600; white-space: nowrap;
+}
+.hh-badge::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 9999px; background: currentColor; }
+.hh-badge--success { background: rgb(var(--hh-tertiary-fixed) / 0.45); color: rgb(var(--hh-on-tertiary-fixed-variant)); }
+.hh-badge--warning { background: rgb(var(--hh-secondary-fixed) / 0.7); color: rgb(var(--hh-on-secondary-fixed-variant)); }
+.hh-badge--info { background: rgb(var(--hh-primary-fixed) / 0.7); color: rgb(var(--hh-on-primary-fixed-variant)); }
+.hh-badge--danger { background: rgb(var(--hh-error-container)); color: rgb(var(--hh-on-error-container)); }
+.hh-badge--muted { background: rgb(var(--hh-surface-container-high)); color: rgb(var(--hh-on-surface-variant)); }
+
+/* ---------- Hộp thông báo trong trang ---------- */
+.hh-alert {
+  display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.9rem 1rem; border-radius: 0.75rem;
+  font-size: 14px; line-height: 20px;
+  background: rgb(var(--hh-secondary-fixed) / 0.35); color: rgb(var(--hh-on-secondary-fixed-variant));
+}
+.hh-alert .material-symbols-outlined { font-size: 20px; flex-shrink: 0; }
+.hh-alert--info { background: rgb(var(--hh-primary-fixed) / 0.45); color: rgb(var(--hh-on-primary-fixed-variant)); }
+.hh-alert--success { background: rgb(var(--hh-tertiary-fixed) / 0.35); color: rgb(var(--hh-on-tertiary-fixed-variant)); }
+.hh-alert--danger { background: rgb(var(--hh-error-container) / 0.8); color: rgb(var(--hh-on-error-container)); }
+
+/* ---------- Tab dạng viên thuốc ---------- */
+.hh-tabs { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.3rem; border-radius: 0.85rem; background: rgb(var(--hh-surface-container)); }
+.hh-tab {
+  display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 0.6rem;
+  font-size: 14px; line-height: 20px; font-weight: 600; color: rgb(var(--hh-on-surface-variant));
+}
+.hh-tab:hover { color: rgb(var(--hh-primary)); }
+.hh-tab.is-active { background: rgb(var(--hh-surface-container-lowest)); color: rgb(var(--hh-primary)); box-shadow: 0 1px 4px rgb(31 58 95 / 0.08); }
+.hh-tab .material-symbols-outlined { font-size: 18px; }
+
+/* ---------- Accordion (câu hỏi thường gặp) ---------- */
+.hh-faq { border-radius: 0.75rem; background: rgb(var(--hh-surface-container-lowest)); border: 1px solid rgb(var(--hh-outline-variant) / 0.35); }
+.hh-faq + .hh-faq { margin-top: 0.75rem; }
+.hh-faq summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem 1.25rem; font-size: 16px; line-height: 24px; font-weight: 600; color: rgb(var(--hh-primary));
+}
+.hh-faq summary::-webkit-details-marker { display: none; }
+.hh-faq summary::after { content: "expand_more"; font-family: "Material Symbols Outlined"; font-size: 22px; color: rgb(var(--hh-secondary)); transition: transform .2s; }
+.hh-faq[open] summary::after { transform: rotate(180deg); }
+.hh-faq__body { padding: 0 1.25rem 1.1rem; font-size: 15px; line-height: 24px; color: rgb(var(--hh-on-surface-variant)); }
+
+/* ---------- Bước (stepper) ---------- */
+.hh-steps { display: flex; align-items: center; gap: 0.5rem; }
+.hh-step { display: flex; align-items: center; gap: 0.5rem; font-size: 13px; font-weight: 600; color: rgb(var(--hh-outline)); }
+.hh-step__dot { width: 1.75rem; height: 1.75rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: rgb(var(--hh-surface-container-high)); font-size: 13px; }
+.hh-step.is-active { color: rgb(var(--hh-primary)); }
+.hh-step.is-active .hh-step__dot { background: rgb(var(--hh-primary)); color: rgb(var(--hh-on-primary)); }
+.hh-step.is-done .hh-step__dot { background: rgb(var(--hh-tertiary-fixed)); color: rgb(var(--hh-on-tertiary-fixed-variant)); }
+.hh-steps__line { flex: 1; height: 2px; min-width: 1.5rem; background: rgb(var(--hh-surface-container-high)); }
+
+/* ---------- Ô hiển thị mã QR ---------- */
+.hh-qr { display: inline-flex; padding: 0.75rem; border-radius: 0.75rem; background: #fff; border: 1px solid rgb(var(--hh-outline-variant) / 0.4); }
+.hh-qr img, .hh-qr canvas { width: 128px; height: 128px; }
+.hh-qr__fallback { width: 128px; height: 128px; display: flex; align-items: center; justify-content: center; text-align: center; font-family: monospace; font-size: 12px; color: rgb(var(--hh-on-surface-variant)); }
+
+/* Trạng thái rỗng */
+.hh-empty { text-align: center; padding: 2.5rem 1rem; color: rgb(var(--hh-on-surface-variant)); }
+.hh-empty .material-symbols-outlined { font-size: 44px; color: rgb(var(--hh-secondary)); }
+
+/* File này nạp sau utilities.css nên phải giữ lớp "hidden" thắng display của các thành phần hh-* */
+[class*="hh-"].hidden { display: none !important; }

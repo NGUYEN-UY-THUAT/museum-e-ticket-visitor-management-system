@@ -1,0 +1,12 @@
+/* ==========================================================================
+   404.css — Trang lỗi không tìm thấy (404.html)
+   ========================================================================== */
+.nf-code {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: clamp(5rem, 16vw, 9rem); line-height: 1; font-weight: 700; letter-spacing: -0.04em;
+  color: rgb(var(--hh-primary));
+}
+.nf-code .material-symbols-outlined {
+  font-size: clamp(4.5rem, 14vw, 8rem); color: rgb(var(--hh-secondary));
+  font-variation-settings: "FILL" 1;
+}

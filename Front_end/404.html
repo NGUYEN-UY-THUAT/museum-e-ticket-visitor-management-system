@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Không tìm thấy trang | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Trang bạn tìm không tồn tại hoặc đã được di chuyển" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="css/base/variables.css" />
+  <link rel="stylesheet" href="css/base/typography.css" />
+  <link rel="stylesheet" href="css/base/design-tokens.css" />
+  <link rel="stylesheet" href="css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo, thành phần giao diện khách) -->
+  <link rel="stylesheet" href="css/components/button.css" />
+  <link rel="stylesheet" href="css/components/public-navbar.css" />
+  <link rel="stylesheet" href="css/components/footer.css" />
+  <link rel="stylesheet" href="css/components/modal.css" />
+  <link rel="stylesheet" href="css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="css/pages/404.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+  <section class="relative overflow-hidden">
+    <div class="absolute -top-32 right-1/4 w-96 h-96 rounded-full bg-secondary-fixed/30 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 -left-24 w-80 h-80 rounded-full bg-primary-fixed/20 blur-3xl pointer-events-none"></div>
+    <div class="relative max-w-3xl mx-auto px-6 py-16 lg:py-24 text-center">
+      <p class="nf-code" aria-hidden="true">4<span class="material-symbols-outlined">account_balance</span>4</p>
+      <span class="hh-eyebrow mt-6"><span class="material-symbols-outlined text-[15px]">explore_off</span> Lạc lối trong bảo tàng</span>
+      <h1 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-4">Không tìm thấy trang bạn cần</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mt-3">Có thể đường dẫn đã thay đổi hoặc hiện vật này đang được “bảo tồn”. Hãy thử một trong các lối đi dưới đây.</p>
+      <div class="flex flex-wrap justify-center gap-3 mt-8">
+        <a class="hh-btn hh-btn--primary" data-route="HOME" href="index.html"><span class="material-symbols-outlined">home</span> Về trang chủ</a>
+        <a class="hh-btn hh-btn--soft" data-route="TICKET_LOOKUP" href="pages/ticket-lookup.html"><span class="material-symbols-outlined">search</span> Tra cứu vé</a>
+        <a class="hh-btn hh-btn--ghost" data-route="CONTACT" href="pages/contact.html"><span class="material-symbols-outlined">support_agent</span> Liên hệ hỗ trợ</a>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4 mt-12 text-left">
+        <a class="hh-card hh-card--flat p-5 lg:p-5 hover:border-secondary/50 transition-colors" data-route="MUSEUMS" href="pages/museums.html"><span class="material-symbols-outlined text-secondary">museum</span><p class="font-title-md text-title-md text-primary mt-2">Danh sách bảo tàng</p><p class="font-body-sm text-body-sm text-on-surface-variant">Khám phá hơn 120 điểm đến</p></a>
+        <a class="hh-card hh-card--flat p-5 lg:p-5 hover:border-secondary/50 transition-colors" data-route="EVENTS" href="pages/event-list.html"><span class="material-symbols-outlined text-secondary">event</span><p class="font-title-md text-title-md text-primary mt-2">Sự kiện &amp; triển lãm</p><p class="font-body-sm text-body-sm text-on-surface-variant">Lịch hoạt động tháng này</p></a>
+        <a class="hh-card hh-card--flat p-5 lg:p-5 hover:border-secondary/50 transition-colors" data-route="BOOKING" href="pages/ticket-selection.html"><span class="material-symbols-outlined text-secondary">local_activity</span><p class="font-title-md text-title-md text-primary mt-2">Đặt vé tham quan</p><p class="font-body-sm text-body-sm text-on-surface-variant">Nhận vé QR trong 1 phút</p></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="js/config/api.config.js"></script>
+  <script src="js/config/app.config.js"></script>
+  <script src="js/utils/format.js"></script>
+  <script src="js/utils/validation.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  <script src="js/services/api.service.js"></script>
+  <script src="js/services/auth.service.js"></script>
+  <script src="js/services/customer.service.js"></script>
+  <script src="js/components/notification.js"></script>
+  <script src="js/components/public-navbar.js"></script>
+  <script src="js/components/footer.js"></script>
+  <script src="js/pages/404.js"></script>
+</body>
+</html>
