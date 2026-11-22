@@ -61,5 +61,21 @@ window.TicketService = {
     await log("ok");
     return { ok: true, ticket, message: `Hợp lệ - ${ticket.quantity} khách` };
   },
+  /** Tra cứu vé không cần tài khoản: theo mã vé, email hoặc số điện thoại */
+  async lookup(keyword) {
+    const k = String(keyword || "").trim();
+    if (!k) return [];
+    if (/^TK/i.test(k)) {
+      const t = await this.findByCode(k);
+      return t ? [t] : [];
+    }
+    const field = k.includes("@") ? "email" : "phone";
+    return ApiService.get(API_CONFIG.ENDPOINTS.TICKETS, { [field]: field === "email" ? k.toLowerCase() : k.replace(/\s/g, "") });
+  },
+  /** Yêu cầu đổi giờ / hủy vé (cán bộ duyệt ở trang quản trị) */
+  createRequest(data) {
+    return ApiService.post(API_CONFIG.ENDPOINTS.TICKET_REQUESTS, { ...data, status: "pending" });
+  },
+  requests: (filter = {}) => ApiService.get(API_CONFIG.ENDPOINTS.TICKET_REQUESTS, filter),
   checkins: (filter = {}) => ApiService.get(API_CONFIG.ENDPOINTS.CHECKIN, filter),
 };

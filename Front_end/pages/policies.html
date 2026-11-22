@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hướng dẫn & chính sách | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Hướng dẫn sử dụng vé QR, quy định tham quan, chính sách đổi trả hoàn vé, điều khoản dịch vụ và chính sách bảo mật" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="../css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="../css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo, thành phần giao diện khách) -->
+  <link rel="stylesheet" href="../css/components/button.css" />
+  <link rel="stylesheet" href="../css/components/public-navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/policies.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+  <section class="bg-surface-container-low">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
+      <nav class="flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant mb-5">
+        <a class="flex items-center gap-1 hover:text-primary" href="../index.html"><span class="material-symbols-outlined text-[16px]">home</span> Trang chủ</a>
+        <span>/</span><span class="text-primary font-semibold">Hướng dẫn &amp; chính sách</span>
+      </nav>
+      <span class="hh-eyebrow"><span class="material-symbols-outlined text-[15px]">gavel</span> Trung tâm trợ giúp</span>
+      <h1 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-4">Hướng dẫn &amp; chính sách</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mt-3 max-w-2xl">Mọi thông tin bạn cần trước khi đến bảo tàng: cách dùng vé QR, quy định trong khu trưng bày và quyền lợi khi đổi, hủy vé.</p>
+      <p class="font-label-md text-label-md text-on-surface-variant mt-4">Cập nhật lần cuối: 01/11/2026</p>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-14 grid lg:grid-cols-12 gap-8">
+    <!-- Mục lục -->
+    <aside class="lg:col-span-3 min-w-0">
+      <nav class="lg:sticky lg:top-28 hh-card p-3 lg:p-3 flex lg:flex-col gap-1 overflow-x-auto" id="policyNav">
+        <a class="policy-link" href="#qr-guide"><span class="material-symbols-outlined">qr_code_2</span> Hướng dẫn dùng vé QR</a>
+        <a class="policy-link" href="#rules"><span class="material-symbols-outlined">museum</span> Quy định tham quan</a>
+        <a class="policy-link" href="#refund"><span class="material-symbols-outlined">currency_exchange</span> Đổi, hủy &amp; hoàn vé</a>
+        <a class="policy-link" href="#terms"><span class="material-symbols-outlined">description</span> Điều khoản dịch vụ</a>
+        <a class="policy-link" href="#privacy"><span class="material-symbols-outlined">shield_person</span> Chính sách bảo mật</a>
+      </nav>
+    </aside>
+
+    <div class="lg:col-span-9 space-y-8 min-w-0">
+      <!-- QR -->
+      <section class="hh-card policy-section" id="qr-guide">
+        <h2 class="policy-title"><span class="material-symbols-outlined">qr_code_2</span> Hướng dẫn sử dụng vé QR</h2>
+        <ol class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-6">
+          <li class="p-5 rounded-xl bg-surface-container-low"><span class="step-num">1</span><p class="font-title-md text-title-md text-primary mt-3">Nhận vé</p><p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sau khi thanh toán, vé QR được gửi qua email, Zalo và lưu ở “Vé của tôi”.</p></li>
+          <li class="p-5 rounded-xl bg-surface-container-low"><span class="step-num">2</span><p class="font-title-md text-title-md text-primary mt-3">Mở mã trước khi đến</p><p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Mở sẵn mã QR, tăng độ sáng màn hình lên trên 70%. Có thể in vé ra giấy A4.</p></li>
+          <li class="p-5 rounded-xl bg-surface-container-low"><span class="step-num">3</span><p class="font-title-md text-title-md text-primary mt-3">Quét tại cổng</p><p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Đưa mã cách máy quét 10 - 20 cm. Đèn xanh nghĩa là vé hợp lệ, cổng tự mở.</p></li>
+          <li class="p-5 rounded-xl bg-surface-container-low"><span class="step-num">4</span><p class="font-title-md text-title-md text-primary mt-3">Vào cùng nhóm</p><p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Một mã QR dùng cho cả nhóm theo số lượng đã mua; cả nhóm vào cùng lúc.</p></li>
+        </ol>
+        <div class="hh-alert hh-alert--info mt-6"><span class="material-symbols-outlined">info</span><span>Mỗi mã QR chỉ quét được <b>một lần</b> trong ngày tham quan đã chọn. Vé học sinh, sinh viên cần xuất trình thẻ khi được yêu cầu.</span></div>
+        <h3 class="policy-sub">Khi máy quét báo lỗi</h3>
+        <ul class="policy-list">
+          <li><b>“Vé đã được sử dụng”</b>: mã đã quét trước đó. Liên hệ quầy hỗ trợ cạnh cổng kèm email xác nhận.</li>
+          <li><b>“Vé dành cho ngày khác”</b>: kiểm tra lại ngày trên vé hoặc gửi yêu cầu <a class="hh-link" href="ticket-change.html">đổi ngày</a> trước 24 giờ.</li>
+          <li><b>“Vé chưa thanh toán”</b>: hoàn tất thanh toán hoặc mua vé trực tiếp tại quầy.</li>
+          <li><b>Không quét được</b>: nhân viên có thể nhập tay mã vé (bắt đầu bằng TK) để kiểm tra.</li>
+        </ul>
+      </section>
+
+      <!-- Quy định -->
+      <section class="hh-card policy-section" id="rules">
+        <h2 class="policy-title"><span class="material-symbols-outlined">museum</span> Quy định tham quan</h2>
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="rule-item"><span class="material-symbols-outlined">schedule</span><div><b>Giờ mở cửa</b><p>08:00 - 17:00, Thứ Ba đến Chủ Nhật. Ngừng bán vé lúc 16:30. Nghỉ Thứ Hai trừ ngày lễ.</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">checkroom</span><div><b>Trang phục</b><p>Lịch sự, kín đáo; không mặc áo sát nách, quần đùi khi vào khu thờ tự và trưng bày bảo vật.</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">do_not_touch</span><div><b>Bảo vệ hiện vật</b><p>Không chạm vào hiện vật, tủ kính, vượt rào ngăn cách. Giữ khoảng cách tối thiểu 50 cm.</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">no_flash</span><div><b>Chụp ảnh, quay phim</b><p>Được chụp ảnh cá nhân, <b>tắt đèn flash</b>. Không dùng chân máy, flycam khi chưa được cấp phép.</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">luggage</span><div><b>Hành lý</b><p>Gửi ba lô lớn, đồ ăn, nước uống miễn phí tại tủ khóa điện tử ở sảnh chính.</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">smoke_free</span><div><b>An toàn chung</b><p>Không hút thuốc, không mang vật nhọn, chất dễ cháy nổ, vật nuôi (trừ chó hỗ trợ người khuyết tật).</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">child_care</span><div><b>Trẻ em</b><p>Trẻ dưới 12 tuổi phải đi cùng người lớn. Có xe đẩy và phòng chăm sóc em bé tại tầng 1.</p></div></div>
+          <div class="rule-item"><span class="material-symbols-outlined">accessible</span><div><b>Hỗ trợ tiếp cận</b><p>Có lối đi xe lăn, thang máy và xe lăn mượn miễn phí tại quầy thông tin.</p></div></div>
+        </div>
+      </section>
+
+      <!-- Hoàn vé -->
+      <section class="hh-card policy-section" id="refund">
+        <h2 class="policy-title"><span class="material-symbols-outlined">currency_exchange</span> Chính sách đổi, hủy &amp; hoàn vé</h2>
+        <div class="overflow-x-auto mt-6">
+          <table class="policy-table">
+            <thead><tr><th>Thời điểm gửi yêu cầu (so với 08:00 ngày tham quan)</th><th>Đổi ngày / khung giờ</th><th>Hủy vé &amp; hoàn tiền</th></tr></thead>
+            <tbody>
+              <tr><td>Trước 48 giờ</td><td><span class="hh-badge hh-badge--success">Miễn phí</span></td><td><span class="hh-badge hh-badge--success">Hoàn 100%</span></td></tr>
+              <tr><td>Từ 24 đến 48 giờ</td><td><span class="hh-badge hh-badge--success">Miễn phí</span></td><td><span class="hh-badge hh-badge--warning">Hoàn 50%</span></td></tr>
+              <tr><td>Dưới 24 giờ</td><td><span class="hh-badge hh-badge--danger">Không hỗ trợ</span></td><td><span class="hh-badge hh-badge--danger">Không hoàn</span></td></tr>
+              <tr><td>Bảo tàng đóng cửa đột xuất</td><td><span class="hh-badge hh-badge--success">Miễn phí</span></td><td><span class="hh-badge hh-badge--success">Hoàn 100%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="policy-list">
+          <li>Mỗi vé được đổi ngày tối đa <b>2 lần</b>. Ngày mới phải nằm trong vòng 90 ngày kể từ ngày mua.</li>
+          <li>Tiền hoàn về phương thức thanh toán ban đầu trong 3 - 7 ngày làm việc, hoặc chuyển khoản ngân hàng trong 1 - 3 ngày làm việc.</li>
+          <li>Vé đã quét vào cổng, vé khuyến mãi “không hoàn hủy” và vé sự kiện miễn phí không áp dụng hoàn tiền.</li>
+          <li>Vé đoàn áp dụng theo hợp đồng đã ký; liên hệ bộ phận đoàn khách để được hỗ trợ.</li>
+        </ul>
+        <a class="hh-btn hh-btn--primary mt-6" href="ticket-change.html"><span class="material-symbols-outlined">edit_calendar</span> Gửi yêu cầu đổi / hủy vé</a>
+      </section>
+
+      <!-- Điều khoản -->
+      <section class="hh-card policy-section" id="terms">
+        <h2 class="policy-title"><span class="material-symbols-outlined">description</span> Điều khoản dịch vụ</h2>
+        <div class="policy-prose">
+          <h3>1. Phạm vi áp dụng</h3>
+          <p>Điều khoản áp dụng cho mọi giao dịch mua vé, đăng ký sự kiện và đặt lịch đoàn trên Cổng Vé Quốc Gia. Khi đặt vé, bạn đồng ý với các điều khoản này và quy định tham quan của từng bảo tàng.</p>
+          <h3>2. Tài khoản</h3>
+          <p>Bạn chịu trách nhiệm bảo mật mật khẩu và thông tin đăng nhập. Thông tin đăng ký phải chính xác để nhận vé và được hỗ trợ khi cần.</p>
+          <h3>3. Giá vé và thanh toán</h3>
+          <p>Giá vé niêm yết đã gồm VAT. Vé chỉ có hiệu lực sau khi thanh toán thành công. Hóa đơn điện tử được xuất theo thông tin bạn cung cấp ở bước thanh toán.</p>
+          <h3>4. Sử dụng vé</h3>
+          <p>Vé dùng cho đúng ngày, khung giờ và số lượng khách đã chọn. Nghiêm cấm sao chép, mua bán lại mã QR. Bảo tàng có quyền từ chối vé có dấu hiệu gian lận.</p>
+          <h3>5. Thay đổi dịch vụ</h3>
+          <p>Bảo tàng có thể thay đổi lịch trưng bày, sự kiện vì lý do bảo tồn hoặc bất khả kháng và sẽ thông báo sớm nhất qua email; khách được đổi hoặc hoàn vé theo mục “Đổi, hủy &amp; hoàn vé”.</p>
+        </div>
+      </section>
+
+      <!-- Bảo mật -->
+      <section class="hh-card policy-section" id="privacy">
+        <h2 class="policy-title"><span class="material-symbols-outlined">shield_person</span> Chính sách bảo mật</h2>
+        <div class="policy-prose">
+          <p>Chúng tôi xử lý dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.</p>
+          <h3>Dữ liệu thu thập</h3>
+          <p>Họ tên, email, số điện thoại, thông tin hóa đơn, lịch sử đặt vé, lượt vào cổng và câu trả lời khảo sát (có thể ẩn danh).</p>
+          <h3>Mục đích sử dụng</h3>
+          <p>Phát hành và kiểm soát vé, gửi thông báo về lịch tham quan, hỗ trợ đổi hủy vé, thống kê lượt khách và nâng cao chất lượng dịch vụ.</p>
+          <h3>Chia sẻ dữ liệu</h3>
+          <p>Chỉ chia sẻ với đối tác thanh toán (VNPAY, ngân hàng) để xử lý giao dịch và cơ quan nhà nước khi có yêu cầu hợp pháp. Không bán dữ liệu cho bên thứ ba.</p>
+          <h3>Quyền của bạn</h3>
+          <p>Bạn có thể xem, sửa thông tin trong <a class="hh-link" href="profile.html">Hồ sơ cá nhân</a>, hủy nhận email quảng bá, hoặc yêu cầu xóa tài khoản qua trang <a class="hh-link" href="contact.html">Liên hệ</a>.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/customer.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/policies.js"></script>
+</body>
+</html>

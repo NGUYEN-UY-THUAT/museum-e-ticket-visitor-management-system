@@ -39,9 +39,22 @@ window.APP_CONFIG = {
 };
 
 /* ==========================================================================
-   Cấu hình cho trang khách tham quan (index.html, pages/booking.html)
+   Cấu hình cho trang khách tham quan (index.html và các trang khách trong pages/)
    ========================================================================== */
 Object.assign(window.APP_CONFIG, {
+  CUSTOMER_TOKEN_KEY: "museum_customer_token", // phiên đăng nhập của khách (tách với cán bộ)
+  CUSTOMER_KEY: "museum_customer",
+  /** Trạng thái yêu cầu đổi / hủy / hoàn vé — khớp cột ticket_requests.status */
+  REQUEST_STATUS: {
+    pending: { label: "Đang chờ xử lý", badge: "warning" },
+    approved: { label: "Đã chấp nhận", badge: "success" },
+    rejected: { label: "Từ chối", badge: "danger" },
+  },
+  REQUEST_TYPES: { change: "Đổi ngày / khung giờ", cancel: "Hủy vé & hoàn tiền" },
+  /** Khung giờ vào cổng (dùng cho đổi giờ) */
+  TIME_SLOTS: ["08:00 - 10:00", "10:00 - 12:00", "13:30 - 15:30", "15:30 - 17:00"],
+  /** Client ID OAuth của Google (Google Cloud Console → Credentials). Để trống thì nút Google chạy giả lập. */
+  GOOGLE_CLIENT_ID: "",
   SITE_NAME: "BẢO TÀNG DI SẢN",
   SITE_TAGLINE: "Cổng Vé Quốc Gia",
   HOME_PAGE_SIZE: 6, // số thẻ bảo tàng mỗi trang ở trang chủ
@@ -61,6 +74,19 @@ Object.assign(window.APP_CONFIG, {
     GROUP_BOOKING: "pages/group-booking.html", // Đặt vé đoàn
     SURVEY: "pages/survey.html",               // Khảo sát mức độ hài lòng
     PROFILE: "pages/profile.html",             // Hồ sơ cá nhân & lịch sử đơn
+    TICKET_LOOKUP: "pages/ticket-lookup.html", // Tra cứu vé không cần tài khoản
+    TICKET_CHANGE: "pages/ticket-change.html", // Đổi giờ / hủy vé / hoàn tiền
+    ACCOUNT_LOGIN: "pages/account-login.html", // Đăng nhập khách
+    ACCOUNT_REGISTER: "pages/account-register.html", // Đăng ký tài khoản khách
+    FORGOT_PASSWORD: "pages/forgot-password.html", // Quên mật khẩu
+    POLICIES: "pages/policies.html",           // Hướng dẫn & chính sách (các mục theo #)
+    POLICY_QR: "pages/policies.html#qr-guide",
+    POLICY_RULES: "pages/policies.html#rules",
+    POLICY_REFUND: "pages/policies.html#refund",
+    POLICY_TERMS: "pages/policies.html#terms",
+    POLICY_PRIVACY: "pages/policies.html#privacy",
+    CONTACT: "pages/contact.html",             // Liên hệ & câu hỏi thường gặp
+    NOT_FOUND: "404.html",
     SERVICES: "pages/booking.html",            // Trang dịch vụ gộp cũ (đặt vé QR, tra cứu...) – còn dùng logic mock
     LOGIN: "pages/login.html",
     DASHBOARD: "pages/dashboard.html",
@@ -74,7 +100,7 @@ Object.assign(window.APP_CONFIG, {
     { key: "museums", label: "Bảo tàng", route: "MUSEUMS" },
     { key: "events", label: "Sự kiện", route: "EVENTS" },
     { key: "group", label: "Đoàn khách", route: "GROUP_BOOKING" },
-    { key: "lookup", label: "Tra cứu vé", route: "MY_TICKETS" }
+    { key: "lookup", label: "Tra cứu vé", route: "TICKET_LOOKUP" }
   ],
 
   /** Khu vực — code khớp cột museums.city_code (MySQL) */

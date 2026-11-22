@@ -30,3 +30,25 @@ window.Validation = {
     return Object.keys(errors).length === 0;
   },
 };
+
+/* ---------- Biểu mẫu trang khách (khung .hh-field / .hh-error trong heritage-ui.css) ---------- */
+Object.assign(window.Validation, {
+  password: (v) => String(v || "").length >= 6,
+  /** Hiện lỗi dưới từng ô; trả về true nếu không có lỗi */
+  showFieldErrors(form, errors) {
+    form.querySelectorAll(".hh-error").forEach((e) => (e.textContent = ""));
+    form.querySelectorAll(".hh-input.is-invalid").forEach((e) => e.classList.remove("is-invalid"));
+    let first = null;
+    for (const [field, msg] of Object.entries(errors)) {
+      const input = form.elements[field];
+      if (!input) continue;
+      const box = input.closest(".hh-field");
+      const err = box && box.querySelector(".hh-error");
+      if (err) err.textContent = msg;
+      if (input.classList) input.classList.add("is-invalid");
+      first = first || input;
+    }
+    if (first && first.focus) first.focus();
+    return Object.keys(errors).length === 0;
+  },
+});

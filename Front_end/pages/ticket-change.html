@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đổi giờ, hủy vé & hoàn tiền | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Gửi yêu cầu đổi ngày tham quan, đổi khung giờ, hủy vé và hoàn tiền vé điện tử" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="../css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="../css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo, thành phần giao diện khách) -->
+  <link rel="stylesheet" href="../css/components/button.css" />
+  <link rel="stylesheet" href="../css/components/public-navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/ticket-change.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen" data-page="lookup">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
+    <nav class="flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant mb-5">
+      <a class="flex items-center gap-1 hover:text-primary" href="../index.html"><span class="material-symbols-outlined text-[16px]">home</span> Trang chủ</a>
+      <span>/</span><a class="hover:text-primary" href="ticket-lookup.html">Tra cứu vé</a>
+      <span>/</span><span class="text-primary font-semibold">Đổi giờ / Hủy vé</span>
+    </nav>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+      <div>
+        <span class="hh-eyebrow"><span class="material-symbols-outlined text-[15px]">edit_calendar</span> Dịch vụ sau bán vé</span>
+        <h1 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-4">Đổi giờ, hủy vé &amp; hoàn tiền</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">Đổi ngày hoặc khung giờ miễn phí trước 24 giờ. Hủy vé trước 48 giờ được hoàn 100%, từ 24 đến 48 giờ hoàn 50%.</p>
+      </div>
+      <a class="hh-btn hh-btn--ghost self-start md:self-auto" href="policies.html#refund"><span class="material-symbols-outlined">policy</span> Xem chính sách đầy đủ</a>
+    </div>
+
+    <!-- Bước 1: xác minh vé -->
+    <section class="hh-card max-w-3xl" id="verifyCard">
+      <h2 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary">verified_user</span> Xác minh vé của bạn</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Để bảo vệ vé, vui lòng nhập mã vé kèm email hoặc số điện thoại đã dùng khi đặt.</p>
+      <form class="grid sm:grid-cols-2 gap-5 mt-6" id="verifyForm" novalidate>
+        <div class="hh-field">
+          <label class="hh-label" for="code">Mã vé <span class="req">*</span></label>
+          <div class="hh-input-wrap"><span class="material-symbols-outlined">confirmation_number</span><input class="hh-input uppercase" id="code" name="code" type="text" placeholder="TK7A1X9QZ2" /></div>
+          <span class="hh-error"></span>
+        </div>
+        <div class="hh-field">
+          <label class="hh-label" for="contact">Email hoặc số điện thoại <span class="req">*</span></label>
+          <div class="hh-input-wrap"><span class="material-symbols-outlined">contact_mail</span><input class="hh-input" id="contact" name="contact" type="text" placeholder="an@gmail.com" /></div>
+          <span class="hh-error"></span>
+        </div>
+        <div class="sm:col-span-2 flex flex-wrap items-center gap-3">
+          <button class="hh-btn hh-btn--primary" id="verifyBtn" type="submit"><span class="material-symbols-outlined">arrow_forward</span> Tiếp tục</button>
+          <span class="font-body-sm text-body-sm text-on-surface-variant" id="demoVerify">Chạy thử: mã <b>TK5E6F7GH8</b> + <b>an@gmail.com</b></span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Bước 2: chọn thao tác -->
+    <section class="grid lg:grid-cols-12 gap-8 hidden" id="workArea">
+      <!-- Thông tin vé -->
+      <aside class="lg:col-span-4 space-y-5">
+        <div class="rounded-xl overflow-hidden bg-primary text-on-primary shadow-[0_8px_30px_rgb(31,58,95,0.15)]">
+          <div class="p-6">
+            <p class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-fixed font-semibold">Vé đang chọn</p>
+            <p class="font-headline-sm text-headline-sm mt-1" id="tkType">—</p>
+            <p class="font-title-md text-title-md tracking-widest text-secondary-fixed mt-3" id="tkCode">—</p>
+          </div>
+          <dl class="bg-primary-container/60 px-6 py-5 grid grid-cols-2 gap-4 font-body-sm text-body-sm">
+            <div><dt class="text-on-primary-container">Ngày tham quan</dt><dd class="font-semibold" id="tkDate">—</dd></div>
+            <div><dt class="text-on-primary-container">Số khách</dt><dd class="font-semibold" id="tkQty">—</dd></div>
+            <div><dt class="text-on-primary-container">Đã thanh toán</dt><dd class="font-semibold" id="tkTotal">—</dd></div>
+            <div><dt class="text-on-primary-container">Còn lại</dt><dd class="font-semibold" id="tkLeft">—</dd></div>
+          </dl>
+        </div>
+        <div class="hh-card hh-card--muted">
+          <h3 class="font-title-md text-title-md text-primary">Yêu cầu đã gửi cho vé này</h3>
+          <ul class="mt-3 space-y-3" id="requestList"><li class="font-body-sm text-body-sm text-on-surface-variant">Chưa có yêu cầu nào.</li></ul>
+        </div>
+        <button class="hh-btn hh-btn--ghost hh-btn--block" id="otherTicketBtn" type="button"><span class="material-symbols-outlined">swap_horiz</span> Chọn vé khác</button>
+      </aside>
+
+      <!-- Biểu mẫu -->
+      <div class="lg:col-span-8">
+        <div class="hh-card">
+          <div class="hh-tabs" role="tablist">
+            <button class="hh-tab is-active" type="button" data-tab="change"><span class="material-symbols-outlined">event_repeat</span> Đổi ngày / khung giờ</button>
+            <button class="hh-tab" type="button" data-tab="cancel"><span class="material-symbols-outlined">cancel</span> Hủy vé &amp; hoàn tiền</button>
+          </div>
+          <div class="hh-alert mt-6 hidden" id="ruleAlert"><span class="material-symbols-outlined">schedule</span><span id="ruleText"></span></div>
+
+          <!-- Đổi ngày / giờ -->
+          <form class="mt-6 space-y-6" id="changeForm" novalidate>
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div class="hh-field">
+                <label class="hh-label" for="new_date">Ngày tham quan mới <span class="req">*</span></label>
+                <input class="hh-input" id="new_date" name="new_date" type="date" />
+                <span class="hh-error"></span>
+              </div>
+              <div class="hh-field">
+                <span class="hh-label">Phí đổi</span>
+                <p class="hh-input bg-tertiary-fixed/30 border-transparent font-semibold text-on-tertiary-fixed-variant">Miễn phí</p>
+              </div>
+            </div>
+            <div class="hh-field">
+              <span class="hh-label">Khung giờ vào cổng <span class="req">*</span></span>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="slotList"></div>
+              <input name="new_slot" type="hidden" />
+              <span class="hh-error"></span>
+            </div>
+            <div class="hh-field">
+              <label class="hh-label" for="change_note">Ghi chú</label>
+              <textarea class="hh-input" id="change_note" name="note" placeholder="Ví dụ: đổi sang buổi chiều vì lịch công tác"></textarea>
+            </div>
+            <button class="hh-btn hh-btn--primary" id="changeBtn" type="submit"><span class="material-symbols-outlined">event_available</span> Gửi yêu cầu đổi giờ</button>
+          </form>
+
+          <!-- Hủy vé -->
+          <form class="mt-6 space-y-6 hidden" id="cancelForm" novalidate>
+            <div class="hh-field">
+              <label class="hh-label" for="reason">Lý do hủy <span class="req">*</span></label>
+              <select class="hh-input" id="reason" name="reason">
+                <option value="">— Chọn lý do —</option>
+                <option>Thay đổi kế hoạch cá nhân</option>
+                <option>Thời tiết / sức khỏe không đảm bảo</option>
+                <option>Đặt nhầm ngày hoặc loại vé</option>
+                <option>Bảo tàng thay đổi lịch hoạt động</option>
+                <option>Lý do khác</option>
+              </select>
+              <span class="hh-error"></span>
+            </div>
+            <div class="hh-field">
+              <span class="hh-label">Hình thức hoàn tiền <span class="req">*</span></span>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <label class="hh-check p-4 rounded-xl bg-surface-container-low border border-outline-variant/40"><input type="radio" name="refund_method" value="original" checked /> <span><b class="text-on-surface">Về phương thức đã thanh toán</b><br />VNPAY / thẻ / ví: 3 - 7 ngày làm việc</span></label>
+                <label class="hh-check p-4 rounded-xl bg-surface-container-low border border-outline-variant/40"><input type="radio" name="refund_method" value="bank" /> <span><b class="text-on-surface">Chuyển khoản ngân hàng</b><br />1 - 3 ngày làm việc</span></label>
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-3 gap-5 hidden" id="bankFields">
+              <div class="hh-field"><label class="hh-label" for="bank_name">Ngân hàng</label><input class="hh-input" id="bank_name" name="bank_name" placeholder="Vietcombank" /><span class="hh-error"></span></div>
+              <div class="hh-field"><label class="hh-label" for="bank_account">Số tài khoản</label><input class="hh-input" id="bank_account" name="bank_account" inputmode="numeric" /><span class="hh-error"></span></div>
+              <div class="hh-field"><label class="hh-label" for="bank_holder">Chủ tài khoản</label><input class="hh-input uppercase" id="bank_holder" name="bank_holder" placeholder="NGUYEN VAN AN" /><span class="hh-error"></span></div>
+            </div>
+            <div class="rounded-xl border border-dashed border-secondary/40 bg-secondary-fixed/15 p-5 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Số tiền dự kiến hoàn</p>
+                <p class="font-body-sm text-body-sm text-on-surface-variant" id="refundRate">—</p>
+              </div>
+              <p class="font-headline-md text-headline-md text-primary font-bold" id="refundAmount">0 ₫</p>
+            </div>
+            <div class="hh-field">
+              <label class="hh-check"><input type="checkbox" name="confirm" /> Tôi hiểu vé sẽ không còn hiệu lực sau khi yêu cầu hủy được chấp nhận.</label>
+              <span class="hh-error"></span>
+            </div>
+            <button class="hh-btn hh-btn--danger" id="cancelBtn" type="submit"><span class="material-symbols-outlined">cancel</span> Gửi yêu cầu hủy vé</button>
+          </form>
+
+          <!-- Thành công -->
+          <div class="mt-8 text-center hidden" id="successBox">
+            <span class="w-16 h-16 mx-auto rounded-full bg-tertiary-fixed/50 text-on-tertiary-fixed-variant flex items-center justify-center"><span class="material-symbols-outlined icon-filled text-[34px]">task_alt</span></span>
+            <h2 class="font-headline-sm text-headline-sm text-primary mt-4">Đã gửi yêu cầu <span id="reqCode"></span></h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-lg mx-auto">Cán bộ bảo tàng sẽ xử lý trong vòng 24 giờ làm việc và gửi kết quả qua email, Zalo. Vé hiện tại vẫn giữ nguyên cho tới khi yêu cầu được chấp nhận.</p>
+            <div class="flex flex-wrap justify-center gap-3 mt-6">
+              <a class="hh-btn hh-btn--primary" href="ticket-lookup.html"><span class="material-symbols-outlined">search</span> Về trang tra cứu vé</a>
+              <button class="hh-btn hh-btn--soft" id="newRequestBtn" type="button"><span class="material-symbols-outlined">add</span> Gửi yêu cầu khác</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/customer.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/ticket-change.js"></script>
+</body>
+</html>

@@ -26,6 +26,7 @@
         { id: 2, code: "TK8B2Y0RW3", customer_name: "Trần Thị Bình", email: "binh@gmail.com", phone: "0912345678", ticket_type_id: 2, quantity: 1, visit_date: d(0), total: 25000, status: "used", created_at: d(-2), used_at: d(0) + "T09:15:00" },
         { id: 3, code: "TK9C3Z1SV4", customer_name: "Lê Hoàng Cường", email: "cuong@gmail.com", phone: "0987654321", ticket_type_id: 1, quantity: 3, visit_date: d(2), total: 150000, status: "pending", created_at: d(0) },
         { id: 4, code: "TK0D4A2TU5", customer_name: "Phạm Minh Dũng", email: "dung@gmail.com", phone: "0934567890", ticket_type_id: 3, quantity: 1, visit_date: d(-3), total: 0, status: "expired", created_at: d(-5) },
+        { id: 5, code: "TK5E6F7GH8", customer_name: "Nguyễn Văn An", email: "an@gmail.com", phone: "0901234567", ticket_type_id: 2, quantity: 2, visit_date: d(5), total: 50000, status: "paid", created_at: d(-1) },
       ],
       checkins: [{ id: 1, ticket_code: "TK8B2Y0RW3", gate: "Cổng A", staff: "staff", checked_at: d(0) + "T09:15:00", result: "ok" }],
       events: [
@@ -42,6 +43,10 @@
         { id: 1, ticket_code: "TK8B2Y0RW3", full_name: "Trần Thị Bình", overall: 5, exhibits: 5, staff: 4, facilities: 4, comment: "Hiện vật rất đẹp, nhân viên nhiệt tình.", created_at: d(0) },
         { id: 2, ticket_code: "", full_name: "Ẩn danh", overall: 3, exhibits: 4, staff: 3, facilities: 2, comment: "Thiếu chỗ ngồi nghỉ.", created_at: d(-2) },
       ],
+      // Tài khoản khách (mock lưu mật khẩu thô; backend thật phải băm bằng bcrypt)
+      customers: [{ id: 1, full_name: "Nguyễn Văn An", email: "an@gmail.com", phone: "0901234567", password: "123456", created_at: d(-30) }],
+      "ticket-requests": [],
+      "contact-messages": [],
       settings: { museum_name: "Bảo tàng Lịch sử", address: "2 Nguyễn Bỉnh Khiêm, Q.1, TP.HCM", hotline: "028 3829 8146", open_time: "08:00", close_time: "17:00", closed_day: "Thứ Hai", daily_capacity: 1500 },
     };
   }
@@ -49,7 +54,19 @@
   const MockDB = {
     load() {
       try {
-        return JSON.parse(localStorage.getItem(MOCK_KEY)) || this.reset();
+        const db = JSON.parse(localStorage.getItem(MOCK_KEY));
+        if (!db) return this.reset();
+        // Bổ sung bảng mới (khi dữ liệu mẫu cũ trong trình duyệt chưa có)
+        const fresh = seed();
+        let changed = false;
+        for (const k in fresh) {
+          if (!(k in db)) {
+            db[k] = fresh[k];
+            changed = true;
+          }
+        }
+        if (changed) this.save(db);
+        return db;
       } catch {
         return this.reset();
       }

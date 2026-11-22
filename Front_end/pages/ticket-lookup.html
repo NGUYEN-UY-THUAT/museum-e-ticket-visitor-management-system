@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tra cứu vé | Bảo Tàng Di Sản - Cổng Vé Quốc Gia</title>
+  <meta name="description" content="Tra cứu vé điện tử QR bằng mã vé, email hoặc số điện thoại, không cần đăng nhập" />
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base: biến & chữ dùng chung, token màu Heritage, lớp tiện ích đã biên dịch sẵn (không cần Tailwind CDN) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout -->
+  <link rel="stylesheet" href="../css/layouts/public-layout.css" />
+  <link rel="stylesheet" href="../css/layouts/visitor-layout.css" />
+  <!-- Components (thanh điều hướng, chân trang, nút, thông báo, thành phần giao diện khách) -->
+  <link rel="stylesheet" href="../css/components/button.css" />
+  <link rel="stylesheet" href="../css/components/public-navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/ticket-lookup.css" />
+</head>
+
+<body class="theme-heritage bg-surface font-body-md text-body-md text-on-surface min-h-screen" data-page="lookup">
+  <!-- Thanh điều hướng: js/components/public-navbar.js -->
+  <header id="publicNavbar"></header>
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+  <!-- Tiêu đề + ô tra cứu -->
+  <section class="relative overflow-hidden">
+    <div class="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-secondary-fixed/30 blur-3xl pointer-events-none"></div>
+    <div class="absolute top-10 -left-24 w-72 h-72 rounded-full bg-primary-fixed/20 blur-3xl pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-12 pt-10 pb-8 lg:pt-14">
+      <nav class="flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant mb-5">
+        <a class="flex items-center gap-1 hover:text-primary" href="../index.html"><span class="material-symbols-outlined text-[16px]">home</span> Trang chủ</a>
+        <span>/</span><span class="text-primary font-semibold">Tra cứu vé</span>
+      </nav>
+      <span class="hh-eyebrow"><span class="material-symbols-outlined text-[15px]">qr_code_scanner</span> Không cần đăng nhập</span>
+      <h1 class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight mt-4 max-w-3xl">Tra cứu vé điện tử</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mt-3 max-w-2xl">Nhập mã vé (in trên email xác nhận, bắt đầu bằng <b>TK</b>) hoặc email / số điện thoại đã dùng khi đặt vé để xem lại mã QR.</p>
+
+      <form class="mt-8 bg-surface-container-lowest rounded-xl p-4 lg:p-5 shadow-[0_8px_30px_rgb(31,58,95,0.08)] flex flex-col md:flex-row gap-3" id="lookupForm" novalidate>
+        <div class="hh-field flex-1">
+          <label class="sr-only" for="keyword">Mã vé, email hoặc số điện thoại</label>
+          <div class="hh-input-wrap">
+            <span class="material-symbols-outlined">confirmation_number</span>
+            <input class="hh-input" id="keyword" name="keyword" type="text" placeholder="vd: TK7A1X9QZ2 · an@gmail.com · 0901234567" autocomplete="off" />
+          </div>
+          <span class="hh-error"></span>
+        </div>
+        <button class="hh-btn hh-btn--primary md:self-start md:min-w-[180px]" id="lookupBtn" type="submit"><span class="material-symbols-outlined">search</span> Tra cứu</button>
+      </form>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-3" id="demoCodes">Chạy thử với mã: <button class="hh-link" type="button" data-demo="TK7A1X9QZ2">TK7A1X9QZ2</button> · <button class="hh-link" type="button" data-demo="TK5E6F7GH8">TK5E6F7GH8</button> · <button class="hh-link" type="button" data-demo="an@gmail.com">an@gmail.com</button></p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-12 pb-16 grid lg:grid-cols-12 gap-8">
+    <!-- Kết quả -->
+    <div class="lg:col-span-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-headline-sm text-headline-sm text-primary" id="resultTitle">Kết quả tra cứu</h2>
+        <span class="font-label-md text-label-md text-on-surface-variant" id="resultCount"></span>
+      </div>
+      <div class="space-y-4" id="results">
+        <div class="hh-card hh-empty">
+          <span class="material-symbols-outlined">manage_search</span>
+          <p class="font-title-md text-title-md text-primary mt-2">Nhập thông tin để tra cứu vé</p>
+          <p class="font-body-sm text-body-sm mt-1">Kết quả sẽ hiện ở đây kèm mã QR để quét tại cổng.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cột hỗ trợ -->
+    <aside class="lg:col-span-4 space-y-5">
+      <div class="hh-card">
+        <h3 class="font-title-md text-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary">account_circle</span> Có tài khoản?</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Đăng nhập để xem toàn bộ vé, lịch sử đơn hàng và nhận nhắc lịch tham quan.</p>
+        <a class="hh-btn hh-btn--soft hh-btn--block mt-4" href="account-login.html"><span class="material-symbols-outlined">login</span> Đăng nhập</a>
+      </div>
+      <div class="hh-card hh-card--muted">
+        <h3 class="font-title-md text-title-md text-primary flex items-center gap-2"><span class="material-symbols-outlined text-secondary">help</span> Không tìm thấy vé?</h3>
+        <ul class="mt-3 space-y-2.5 font-body-sm text-body-sm text-on-surface-variant">
+          <li class="flex gap-2"><span class="material-symbols-outlined text-[18px] text-secondary">check</span> Kiểm tra lại hộp thư rác để tìm email xác nhận.</li>
+          <li class="flex gap-2"><span class="material-symbols-outlined text-[18px] text-secondary">check</span> Số điện thoại nhập liền, không có dấu cách.</li>
+          <li class="flex gap-2"><span class="material-symbols-outlined text-[18px] text-secondary">check</span> Vé mua tại quầy dùng mã in trên vé giấy.</li>
+        </ul>
+        <a class="hh-btn hh-btn--ghost hh-btn--block mt-5" href="contact.html"><span class="material-symbols-outlined">support_agent</span> Liên hệ hỗ trợ</a>
+      </div>
+      <a class="flex items-center gap-3 p-4 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-colors" href="policies.html#qr-guide">
+        <span class="w-10 h-10 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center"><span class="material-symbols-outlined text-secondary-fixed">qr_code_2</span></span>
+        <span class="flex-1"><span class="block font-title-md text-title-md">Hướng dẫn dùng mã QR</span><span class="block font-body-sm text-body-sm text-on-primary-container">Cách quét vé tại cổng soát vé</span></span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </aside>
+  </section>
+</main>
+
+  <!-- Chân trang: js/components/footer.js -->
+  <footer id="siteFooter"></footer>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/customer.service.js"></script>
+  <script src="../js/services/ticket.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/public-navbar.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/ticket-lookup.js"></script>
+</body>
+</html>

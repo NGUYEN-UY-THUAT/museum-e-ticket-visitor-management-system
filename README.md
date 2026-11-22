@@ -37,6 +37,7 @@ Phần mềm web quản lý khách tham quan, vé điện tử và sự kiện c
 ```
 Front_end/
 ├── index.html                 Trang chủ khách tham quan
+├── 404.html                   Trang lỗi không tìm thấy
 ├── README.md                  Ghi chú frontend và danh sách API backend cần có
 ├── pages/
 │   │  ── Khách tham quan ──
@@ -52,6 +53,11 @@ Front_end/
 │   ├── group-booking.html     Đặt vé đoàn, theo dõi hồ sơ đoàn
 │   ├── survey.html            Khảo sát mức độ hài lòng
 │   ├── profile.html           Hồ sơ cá nhân, lịch sử đơn vé
+│   ├── account-login.html     Đăng nhập khách · account-register.html (đăng ký) · forgot-password.html (quên mật khẩu)
+│   ├── ticket-lookup.html     Tra cứu vé không cần đăng nhập
+│   ├── ticket-change.html     Đổi giờ, hủy vé & hoàn tiền
+│   ├── policies.html          Hướng dẫn QR, quy định tham quan, chính sách hoàn vé, điều khoản, bảo mật
+│   ├── contact.html           Liên hệ & câu hỏi thường gặp
 │   ├── booking.html           Trang dịch vụ gộp cũ (còn logic mock tạo vé QR)
 │   │  ── Cán bộ / quản trị ──
 │   ├── login.html             Đăng nhập cán bộ
@@ -91,7 +97,7 @@ Các file JS dùng biến toàn cục (ví dụ `window.TicketService`) thay vì
 
 ## Cơ sở dữ liệu MySQL (tổng quan)
 
-Các bảng chính: `users`, `museums`, `ticket_types`, `tickets`, `checkins`, `events`, `event_registrations`, `visitor_groups`, `surveys`, `settings`.
+Các bảng chính: `users`, `customers`, `museums`, `ticket_types`, `tickets`, `checkins`, `events`, `event_registrations`, `visitor_groups`, `surveys`, `ticket_requests`, `contact_messages`, `settings`.
 
 Bảng đoàn khách đặt tên `visitor_groups` vì `GROUPS` là từ khóa dành riêng trong MySQL 8. Tên trường JSON ở frontend trùng với tên cột dự kiến trong MySQL (ví dụ `tickets.code, customer_name, ticket_type_id, quantity, visit_date, total, status`).
 

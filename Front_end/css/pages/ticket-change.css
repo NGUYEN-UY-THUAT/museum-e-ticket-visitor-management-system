@@ -1,0 +1,9 @@
+/* ==========================================================================
+   ticket-change.css — Đổi giờ, hủy vé & hoàn tiền (pages/ticket-change.html)
+   ========================================================================== */
+/* Khung giờ đang chọn */
+.slot-btn.is-selected {
+  background: rgb(var(--hh-primary));
+  border-color: rgb(var(--hh-primary));
+  color: rgb(var(--hh-on-primary));
+}

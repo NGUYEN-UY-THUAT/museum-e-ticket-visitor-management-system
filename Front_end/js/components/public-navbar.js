@@ -14,26 +14,43 @@ window.PublicNavbar = (function () {
   /** Menu tài khoản: khách chưa đăng nhập thấy lối tắt; cán bộ đã đăng nhập thấy nút vào trang quản trị */
   function userMenu() {
     const staff = AuthService.isLoggedIn() ? AuthService.user() : null;
+    const customer = !staff && window.CustomerService && CustomerService.isLoggedIn() ? CustomerService.current() : null;
     const item = (icon, label, href, extra = "") => `<a class="user-menu__item${extra}" href="${href}"><span class="icon icon--18">${icon}</span><span>${label}</span></a>`;
-    const items = staff
-      ? item("dashboard", "Trang quản trị", url("DASHBOARD")) + item("qr_code_scanner", "Soát vé / Check-in", url("CHECKIN"))
-      : item("confirmation_number", "Vé của tôi", url("MY_TICKETS")) + item("receipt_long", "Lịch sử đơn hàng", url("PROFILE", { tab: "orders" })) +
-        item("manage_accounts", "Hồ sơ cá nhân", url("PROFILE")) + item("rate_review", "Khảo sát ý kiến", url("SURVEY"));
-    const footer = staff
-      ? `<button class="user-menu__item user-menu__item--danger" id="publicLogoutBtn" type="button" style="width:100%"><span class="icon icon--18">logout</span><span>Đăng xuất</span></button>`
-      : item("badge", "Cán bộ đăng nhập", url("LOGIN"));
+    const logoutBtn = `<button class="user-menu__item user-menu__item--danger" id="publicLogoutBtn" type="button" style="width:100%"><span class="icon icon--18">logout</span><span>Đăng xuất</span></button>`;
+    let items, footer;
+    if (staff) {
+      // Cán bộ đang đăng nhập: lối tắt vào trang quản trị
+      items = item("dashboard", "Trang quản trị", url("DASHBOARD")) + item("qr_code_scanner", "Soát vé / Check-in", url("CHECKIN"));
+      footer = logoutBtn;
+    } else if (customer) {
+      // Khách đã đăng nhập
+      items =
+        item("confirmation_number", "Vé của tôi", url("MY_TICKETS")) + item("receipt_long", "Lịch sử đơn hàng", url("PROFILE", { tab: "orders" })) +
+        item("manage_accounts", "Hồ sơ cá nhân", url("PROFILE")) + item("edit_calendar", "Đổi giờ / Hủy vé", url("TICKET_CHANGE")) +
+        item("rate_review", "Khảo sát ý kiến", url("SURVEY"));
+      footer = logoutBtn;
+    } else {
+      // Khách chưa đăng nhập
+      items =
+        item("login", "Đăng nhập", url("ACCOUNT_LOGIN")) + item("person_add", "Tạo tài khoản", url("ACCOUNT_REGISTER")) +
+        item("search", "Tra cứu vé", url("TICKET_LOOKUP")) + item("support_agent", "Liên hệ hỗ trợ", url("CONTACT"));
+      footer = item("badge", "Cán bộ đăng nhập", url("LOGIN"));
+    }
+    const who = staff || customer;
+    const headTitle = staff ? "Cán bộ đang đăng nhập" : customer ? "Đang đăng nhập" : "Khách tham quan";
+    const headSub = staff ? esc(staff.username) : customer ? esc(customer.email) : "Chưa đăng nhập";
 
     return `
       <div class="user-menu" id="userMenu">
         <button class="user-menu__toggle" id="userMenuBtn" type="button" aria-haspopup="true" aria-expanded="false">
           <span class="user-menu__avatar"><span class="icon icon--18">person</span></span>
-          <span class="user-menu__label">${staff ? esc(staff.full_name) : "Tài khoản"}</span>
+          <span class="user-menu__label">${who ? esc(who.full_name) : "Tài khoản"}</span>
           <span class="icon icon--18 user-menu__caret">expand_more</span>
         </button>
         <div class="user-menu__dropdown" role="menu">
           <div class="user-menu__header">
-            <p class="text-label-sm text-muted">${staff ? "Đang đăng nhập" : "Khách tham quan"}</p>
-            <p class="user-menu__email truncate">${staff ? esc(staff.username) : "Chưa đăng nhập"}</p>
+            <p class="text-label-sm text-muted">${headTitle}</p>
+            <p class="user-menu__email truncate">${headSub}</p>
           </div>
           ${items}
           <div class="user-menu__divider"></div>
@@ -53,7 +70,7 @@ window.PublicNavbar = (function () {
     root.querySelector("#topbarBurger").addEventListener("click", () => bar.classList.toggle("is-mobile-open"));
     root.querySelectorAll(".topbar__mobile a").forEach(a => a.addEventListener("click", () => bar.classList.remove("is-mobile-open")));
     const logout = root.querySelector("#publicLogoutBtn");
-    if (logout) logout.addEventListener("click", () => AuthService.logout());
+    if (logout) logout.addEventListener("click", () => (AuthService.isLoggedIn() ? AuthService.logout() : CustomerService.logout()));
   }
 
   return {
