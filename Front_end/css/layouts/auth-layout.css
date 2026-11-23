@@ -1,2 +1,0 @@
-.auth-layout{min-height:100vh;display:grid;place-items:center;padding:var(--space-4);background:linear-gradient(135deg,#f3e9df,#e3f1f1)}
-.auth-card{width:100%;max-width:400px;background:var(--color-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:var(--space-6)}

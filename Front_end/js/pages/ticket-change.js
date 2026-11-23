@@ -12,7 +12,6 @@ SiteFooter.render();
   let ticket = null;
   let tab = "change";
 
-  if (!API_CONFIG.USE_MOCK) $("demoVerify").remove();
 
   const hoursLeft = (t) => (new Date(t.visit_date + "T" + String(OPEN_HOUR).padStart(2, "0") + ":00") - new Date()) / 36e5;
   const refundRate = (h) => (h >= 48 ? 1 : h >= 24 ? 0.5 : 0);

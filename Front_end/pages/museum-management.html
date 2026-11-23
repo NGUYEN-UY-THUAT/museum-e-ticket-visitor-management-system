@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Quản lý bảo tàng | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/museum-management.css" />
+</head>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <!-- Tiêu đề -->
+        <section class="adm-head adm-head--hero">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">assured_workload</span> Danh mục điểm tham quan</span>
+            <h1 class="adm-title">Quản lý bảo tàng</h1>
+            <p class="adm-desc">Danh sách bảo tàng và di tích bán vé trên cổng. Thông tin sửa ở đây hiển thị ngay trên trang khách.</p>
+          </div>
+          <div class="adm-actions">
+            <button class="hh-btn hh-btn--gold" id="addBtn" type="button"><span class="material-symbols-outlined">add_circle</span> Thêm bảo tàng</button>
+          </div>
+        </section>
+
+        <!-- Số liệu -->
+        <section class="adm-stats" id="stats"></section>
+
+        <!-- Lọc -->
+        <section class="adm-filters">
+          <div class="hh-input-wrap"><span class="material-symbols-outlined">search</span><input class="hh-input" id="keyword" type="search" placeholder="Tìm theo tên, địa chỉ" /></div>
+          <select class="hh-input" id="cityFilter" aria-label="Khu vực"></select>
+          <select class="hh-input" id="typeFilter" aria-label="Thể loại"></select>
+          <select class="hh-input" id="statusFilter" aria-label="Trạng thái"><option value="">Mọi trạng thái</option><option value="open">Đang mở cửa</option><option value="closed">Tạm đóng cửa</option></select>
+        </section>
+
+        <div class="adm-split">
+          <section class="adm-card">
+            <div class="adm-card__head"><h2 class="adm-card__title">Danh mục bảo tàng <span class="hh-badge hh-badge--muted" id="countBadge"></span></h2></div>
+            <div class="adm-table-wrap">
+              <table class="adm-table">
+                <thead><tr><th>Mã</th><th>Bảo tàng & địa điểm</th><th>Giờ mở cửa</th><th class="num">Giá từ</th><th>Trạng thái</th></tr></thead>
+                <tbody id="rows"></tbody>
+              </table>
+            </div>
+            <div class="adm-pager" id="pager"></div>
+          </section>
+
+          <aside class="adm-panel adm-panel--sticky" id="detail">
+            <div class="adm-empty-panel"><span class="material-symbols-outlined">museum</span>Chọn một bảo tàng để xem nhanh thông tin.</div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="../js/config/api.config.js"></script>
+  <script src="../js/config/app.config.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/validation.js"></script>
+  <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
+  <script src="../js/services/mock/museum.mock.js"></script>
+  <script src="../js/services/api.service.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/museum.service.js"></script>
+  <script src="../js/components/notification.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
+  <script src="../js/pages/museum-management.js"></script>
+</body>
+</html>

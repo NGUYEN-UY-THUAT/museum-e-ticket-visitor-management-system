@@ -1,0 +1,3 @@
+/* orders.css — Đơn hàng & Hoàn tiền. Bố cục chung ở css/layouts/admin-layout.css */
+#tabs [data-count] { font-weight: 500; opacity: 0.75; }
+#detail .adm-stat__value { font-size: 24px; line-height: 30px; }

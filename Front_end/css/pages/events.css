@@ -1,6 +1,19 @@
-.event-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.event-card{display:flex;flex-direction:column;gap:8px}
-.event-card__top{display:flex;justify-content:space-between;align-items:center}
-.progress{height:6px;background:var(--color-bg);border-radius:99px;overflow:hidden}
-.progress>div{height:100%;background:var(--color-accent)}
-#eventTabs .is-active{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+/* events.css — Sự kiện (quản trị). Bố cục chung ở css/layouts/admin-layout.css */
+.ev-search { flex: 0 1 20rem; }
+.ev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+.ev-card { display: flex; flex-direction: column; gap: 0.75rem; }
+.ev-card__date { display: flex; gap: 0.9rem; align-items: center; }
+.ev-card__cal { flex: none; width: 3.5rem; text-align: center; border-radius: 0.6rem; overflow: hidden; border: 1px solid rgb(var(--hh-outline-variant) / 0.6); }
+.ev-card__cal span { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; padding: 0.15rem 0; background: rgb(var(--hh-primary)); color: rgb(var(--hh-secondary-fixed)); }
+.ev-card__cal b { display: block; font-size: 22px; line-height: 32px; color: rgb(var(--hh-primary)); }
+.ev-card__title { font-size: 17px; line-height: 24px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.ev-card__desc { font-size: 13.5px; line-height: 20px; color: rgb(var(--hh-on-surface-variant)); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ev-card__meta { display: flex; flex-direction: column; gap: 0.3rem; font-size: 13px; color: rgb(var(--hh-on-surface-variant)); }
+.ev-card__meta span { display: inline-flex; gap: 0.4rem; align-items: center; }
+.ev-card__meta .material-symbols-outlined { font-size: 17px; color: rgb(var(--hh-secondary)); }
+.ev-bar { height: 0.45rem; border-radius: 99px; background: rgb(var(--hh-surface-container-high)); overflow: hidden; }
+.ev-bar > div { height: 100%; border-radius: inherit; background: rgb(var(--hh-tertiary)); }
+.ev-bar.is-full > div { background: rgb(var(--hh-error)); }
+.ev-bar.is-busy > div { background: rgb(var(--hh-secondary)); }
+.ev-card__foot { margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgb(var(--hh-outline-variant) / 0.4); display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ev-empty { grid-column: 1 / -1; }

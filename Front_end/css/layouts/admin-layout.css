@@ -1,0 +1,169 @@
+/* ==========================================================================
+   admin-layout.css — Khung trang quản trị giao diện Heritage
+   (menu trái cố định + thanh trên + vùng nội dung) và các khối dùng chung:
+   tiêu đề trang, thẻ số liệu, bảng, bảng chi tiết bên phải, thanh lọc.
+   Dùng với js/components/admin-shell.js. Màu lấy từ css/base/design-tokens.css.
+   ========================================================================== */
+.adm-body { background: rgb(var(--hh-surface)); color: rgb(var(--hh-on-surface)); font-family: "Be Vietnam Pro", system-ui, sans-serif; font-size: 15px; line-height: 22px; }
+.adm-shell { display: flex; min-height: 100vh; }
+/* nền xanh kéo dài hết chiều cao trang phía sau menu trái (menu dính trên cùng khi cuộn) */
+@media (min-width: 1024px) { .adm-shell { background: linear-gradient(to right, rgb(var(--hh-primary)) 264px, transparent 264px); } }
+.adm-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.adm-content { padding: 1.5rem 1rem 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+@media (min-width: 768px) { .adm-content { padding: 2rem 2rem 3rem; } }
+
+/* ---------- Menu trái ---------- */
+.adm-sidebar {
+  width: 264px; flex-shrink: 0; height: 100vh; position: sticky; top: 0;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: rgb(var(--hh-primary)); color: rgb(var(--hh-surface-container-high));
+}
+.adm-brand { display: flex; align-items: center; gap: 0.75rem; padding: 1.25rem 1.25rem 1rem; }
+.adm-brand__logo { width: 2.5rem; height: 2.5rem; border-radius: 0.6rem; display: flex; align-items: center; justify-content: center; background: rgb(var(--hh-secondary-fixed)); color: rgb(var(--hh-primary)); flex-shrink: 0; }
+.adm-brand__name { display: block; font-weight: 700; font-size: 15px; line-height: 20px; color: #fff; letter-spacing: 0.01em; }
+.adm-brand__sub { display: block; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(var(--hh-secondary-fixed)); }
+.adm-nav { flex: 1; min-height: 0; overflow-y: auto; padding: 0.25rem 0.75rem 0.5rem; scrollbar-width: thin; scrollbar-color: rgb(255 255 255 / 0.2) transparent; }
+.adm-nav__section { margin: 0.85rem 0.75rem 0.3rem; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(var(--hh-on-primary-container)); }
+.adm-nav__link { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: 0.6rem; font-size: 14px; line-height: 20px; color: rgb(var(--hh-surface-container-high)); transition: background-color .15s, color .15s; }
+.adm-nav__link .material-symbols-outlined { font-size: 20px; color: rgb(var(--hh-on-primary-container)); }
+.adm-nav__link:hover { background: rgb(255 255 255 / 0.07); color: #fff; }
+.adm-nav__link.is-active { background: rgb(255 255 255 / 0.12); color: #fff; font-weight: 600; }
+.adm-nav__link.is-active .material-symbols-outlined { color: rgb(var(--hh-secondary-fixed)); font-variation-settings: "FILL" 1; }
+.adm-user { flex-shrink: 0; margin: 0.5rem 0.75rem 0.75rem; padding: 0.75rem; border-radius: 0.75rem; display: flex; align-items: center; gap: 0.75rem; background: rgb(255 255 255 / 0.07); }
+.adm-user__text { flex: 1; min-width: 0; }
+.adm-user__name { display: block; font-weight: 600; color: #fff; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-user__role { display: block; font-size: 12px; color: rgb(var(--hh-secondary-fixed)); }
+.adm-user__logout { width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: rgb(var(--hh-surface-container-high)); }
+.adm-user__logout:hover { background: rgb(255 255 255 / 0.1); color: #fff; }
+
+/* Màn hình nhỏ: menu trượt từ trái */
+.adm-burger { display: none; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; align-items: center; justify-content: center; color: rgb(var(--hh-primary)); }
+.adm-backdrop { display: none; }
+@media (max-width: 1023px) {
+  .adm-sidebar { position: fixed; left: 0; top: 0; z-index: 60; transform: translateX(-100%); transition: transform .2s; }
+  .adm-menu-open .adm-sidebar { transform: none; box-shadow: 0 0 40px rgb(0 0 0 / 0.3); }
+  .adm-menu-open .adm-backdrop { display: block; position: fixed; inset: 0; z-index: 55; background: rgb(0 0 0 / 0.35); }
+  .adm-burger { display: inline-flex; }
+}
+
+/* ---------- Thanh trên ---------- */
+.adm-topbar {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 0.75rem;
+  height: 3.75rem; padding: 0 1rem; background: rgb(var(--hh-surface-container-lowest) / 0.92); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgb(var(--hh-outline-variant) / 0.4);
+}
+@media (min-width: 768px) { .adm-topbar { padding: 0 2rem; } }
+.adm-crumb { display: flex; align-items: center; gap: 0.25rem; font-size: 13px; font-weight: 600; color: rgb(var(--hh-on-surface-variant)); min-width: 0; }
+.adm-crumb a:hover { color: rgb(var(--hh-primary)); }
+.adm-crumb .material-symbols-outlined { font-size: 18px; }
+.adm-crumb > span:last-child { color: rgb(var(--hh-primary)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-topbar__site { margin-left: auto; }
+@media (max-width: 639px) { .adm-topbar__site span:last-child { display: none; } }
+
+/* ---------- Tiêu đề trang ---------- */
+.adm-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 1.5rem; }
+.adm-head--hero {
+  margin: -1.5rem -1rem 0; padding: 2rem 1rem 2.25rem; color: #fff;
+  background: radial-gradient(circle at 90% 0%, rgb(var(--hh-secondary-fixed) / 0.18), transparent 40%), rgb(var(--hh-primary));
+}
+@media (min-width: 768px) { .adm-head--hero { margin: -2rem -2rem 0; padding: 2.25rem 2rem 2.5rem; } }
+.adm-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(var(--hh-secondary)); }
+.adm-eyebrow .material-symbols-outlined { font-size: 16px; }
+.adm-head--hero .adm-eyebrow { color: rgb(var(--hh-secondary-fixed)); }
+.adm-title { margin-top: 0.35rem; font-size: 26px; line-height: 34px; font-weight: 700; letter-spacing: -0.01em; color: rgb(var(--hh-primary)); }
+@media (min-width: 768px) { .adm-title { font-size: 32px; line-height: 40px; } }
+.adm-head--hero .adm-title { color: #fff; }
+.adm-desc { margin-top: 0.4rem; max-width: 42rem; font-size: 15px; line-height: 22px; color: rgb(var(--hh-on-surface-variant)); }
+.adm-head--hero .adm-desc { color: rgb(var(--hh-surface-container-high)); }
+.adm-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.adm-head--hero .hh-btn--ghost { color: #fff; border-color: rgb(255 255 255 / 0.3); }
+.adm-head--hero .hh-btn--ghost:hover { background: rgb(255 255 255 / 0.08); }
+
+/* ---------- Thẻ số liệu ---------- */
+.adm-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.adm-stat { background: rgb(var(--hh-surface-container-lowest)); border: 1px solid rgb(var(--hh-outline-variant) / 0.35); border-radius: 0.75rem; padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.adm-stat__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; font-size: 13px; font-weight: 600; color: rgb(var(--hh-on-surface-variant)); }
+.adm-stat__icon { width: 2.25rem; height: 2.25rem; border-radius: 0.6rem; display: flex; align-items: center; justify-content: center; background: rgb(var(--hh-surface-container)); color: rgb(var(--hh-primary)); flex-shrink: 0; }
+.adm-stat__icon .material-symbols-outlined { font-size: 20px; }
+.adm-stat__value { font-size: 28px; line-height: 34px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.adm-stat__value small { font-size: 14px; font-weight: 500; color: rgb(var(--hh-on-surface-variant)); margin-left: 0.25rem; }
+.adm-stat__note { font-size: 13px; line-height: 18px; color: rgb(var(--hh-on-surface-variant)); }
+.adm-stat--warn { border-color: rgb(var(--hh-secondary-fixed-dim)); background: rgb(var(--hh-secondary-fixed) / 0.18); }
+.adm-stat--warn .adm-stat__icon { background: rgb(var(--hh-secondary-fixed)); color: rgb(var(--hh-on-secondary-fixed)); }
+.adm-stat--ok .adm-stat__icon { background: rgb(var(--hh-tertiary-fixed) / 0.6); color: rgb(var(--hh-on-tertiary-fixed-variant)); }
+
+/* ---------- Bố cục: nội dung chính + bảng chi tiết bên phải ---------- */
+.adm-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 1200px) { .adm-split { grid-template-columns: minmax(0, 1fr) 320px; } }
+@media (min-width: 1500px) { .adm-split { grid-template-columns: minmax(0, 1fr) 360px; } }
+.adm-panel { background: rgb(var(--hh-surface-container-lowest)); border: 1px solid rgb(var(--hh-outline-variant) / 0.35); border-radius: 0.75rem; padding: 1.25rem; box-shadow: 0 8px 30px rgb(31 58 95 / 0.05); }
+@media (min-width: 1200px) { .adm-panel--sticky { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; } }
+.adm-panel__title { font-size: 18px; line-height: 26px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.adm-panel__sub { font-size: 13px; line-height: 18px; color: rgb(var(--hh-on-surface-variant)); }
+.adm-panel__section { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid rgb(var(--hh-outline-variant) / 0.35); }
+.adm-panel__label { font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(var(--hh-on-surface-variant)); margin-bottom: 0.5rem; }
+.adm-dl { display: grid; grid-template-columns: auto 1fr; gap: 0.45rem 1rem; font-size: 14px; line-height: 20px; }
+.adm-dl dt { color: rgb(var(--hh-on-surface-variant)); }
+.adm-dl dd { text-align: right; font-weight: 600; color: rgb(var(--hh-on-surface)); word-break: break-word; }
+.adm-empty-panel { text-align: center; padding: 2rem 0.5rem; color: rgb(var(--hh-on-surface-variant)); font-size: 14px; }
+.adm-empty-panel .material-symbols-outlined { font-size: 40px; color: rgb(var(--hh-secondary)); display: block; margin-bottom: 0.5rem; }
+
+/* ---------- Thanh lọc ---------- */
+.adm-filters { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; padding: 0.75rem; border-radius: 0.75rem; background: rgb(var(--hh-surface-container-lowest)); border: 1px solid rgb(var(--hh-outline-variant) / 0.35); }
+.adm-filters .hh-input { padding-top: 0.55rem; padding-bottom: 0.55rem; font-size: 14px; }
+.adm-filters .hh-input-wrap { flex: 1 1 220px; }
+.adm-filters select.hh-input { width: auto; flex: 0 1 auto; min-width: 150px; }
+
+/* ---------- Bảng ---------- */
+.adm-card { background: rgb(var(--hh-surface-container-lowest)); border: 1px solid rgb(var(--hh-outline-variant) / 0.35); border-radius: 0.75rem; overflow: hidden; }
+.adm-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 1rem 1.25rem; border-bottom: 1px solid rgb(var(--hh-outline-variant) / 0.35); }
+.adm-card__title { font-size: 17px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.adm-table-wrap { overflow-x: auto; }
+.adm-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+.adm-table th { text-align: left; padding: 0.7rem 1rem; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(var(--hh-on-surface-variant)); background: rgb(var(--hh-surface-container-low)); white-space: nowrap; }
+.adm-table td { padding: 0.8rem 1rem; border-top: 1px solid rgb(var(--hh-outline-variant) / 0.3); vertical-align: middle; }
+.adm-table tbody tr[data-id] { cursor: pointer; transition: background-color .12s; }
+.adm-table tbody tr[data-id]:hover { background: rgb(var(--hh-surface-container-low) / 0.7); }
+.adm-table tbody tr.is-selected { background: rgb(var(--hh-secondary-fixed) / 0.22); }
+.adm-table .num { text-align: right; white-space: nowrap; }
+.adm-table .nowrap { white-space: nowrap; }
+.adm-table .muted { color: rgb(var(--hh-on-surface-variant)); font-size: 13px; }
+.adm-table .strong { font-weight: 600; color: rgb(var(--hh-primary)); }
+.adm-table .empty { text-align: center; padding: 2.5rem 1rem; color: rgb(var(--hh-on-surface-variant)); }
+.adm-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; padding: 0.15rem 0.45rem; border-radius: 0.35rem; background: rgb(var(--hh-surface-container)); color: rgb(var(--hh-primary)); white-space: nowrap; }
+.adm-person { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.adm-person__name { display: block; font-weight: 600; color: rgb(var(--hh-on-surface)); }
+.adm-person__sub { display: block; font-size: 13px; color: rgb(var(--hh-on-surface-variant)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-avatar { width: 2.25rem; height: 2.25rem; border-radius: 9999px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: rgb(var(--hh-primary-fixed) / 0.8); color: rgb(var(--hh-on-primary-fixed-variant)); }
+.adm-avatar--gold { background: rgb(var(--hh-secondary-fixed)); color: rgb(var(--hh-on-secondary-fixed)); }
+.adm-thumb { width: 3.25rem; height: 2.5rem; border-radius: 0.4rem; object-fit: cover; flex-shrink: 0; background: rgb(var(--hh-surface-container-high)); }
+.adm-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.9rem 1.25rem; border-top: 1px solid rgb(var(--hh-outline-variant) / 0.35); font-size: 13px; color: rgb(var(--hh-on-surface-variant)); }
+.adm-pager__btns { display: flex; gap: 0.35rem; }
+.adm-pager__btns button { min-width: 2.1rem; height: 2.1rem; padding: 0 0.5rem; border-radius: 0.5rem; font-weight: 600; color: rgb(var(--hh-primary)); background: rgb(var(--hh-surface-container-low)); }
+.adm-pager__btns button.is-active { background: rgb(var(--hh-primary)); color: #fff; }
+.adm-pager__btns button[disabled] { opacity: 0.4; pointer-events: none; }
+
+.adm-body .hh-btn { white-space: nowrap; }
+
+/* ---------- Công tắc bật/tắt ---------- */
+.adm-switch { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; cursor: pointer; }
+.adm-switch__text { font-size: 14px; line-height: 20px; font-weight: 600; color: rgb(var(--hh-on-surface)); }
+.adm-switch__text small { display: block; font-weight: 400; font-size: 13px; line-height: 18px; color: rgb(var(--hh-on-surface-variant)); }
+.adm-switch input { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 2.6rem; height: 1.5rem; border-radius: 9999px; background: rgb(var(--hh-outline-variant)); position: relative; cursor: pointer; transition: background-color .15s; margin-top: 0.1rem; }
+.adm-switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 1.125rem; height: 1.125rem; border-radius: 9999px; background: #fff; transition: transform .15s; box-shadow: 0 1px 2px rgb(0 0 0 / 0.2); }
+.adm-switch input:checked { background: rgb(var(--hh-primary)); }
+.adm-switch input:checked::after { transform: translateX(1.1rem); }
+.adm-switch input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Lưới 2 cột cho biểu mẫu trong hộp thoại */
+.adm-form { display: grid; grid-template-columns: 1fr; gap: 0.9rem; }
+@media (min-width: 560px) { .adm-form { grid-template-columns: 1fr 1fr; } .adm-form .span-2 { grid-column: span 2; } }
+.adm-days { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.adm-days label { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.35rem 0.6rem; border-radius: 0.5rem; background: rgb(var(--hh-surface-container-low)); font-size: 13px; cursor: pointer; }
+.adm-days input { accent-color: rgb(var(--hh-primary)); }
+
+/* Hộp thoại (Modal) dùng trong khu vực quản trị */
+.adm-body .modal__dialog { max-width: 640px; border-radius: 0.9rem; background: rgb(var(--hh-surface-container-lowest)); }
+.adm-body .modal__header h3 { font-size: 18px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.adm-body .modal__header, .adm-body .modal__footer { border-color: rgb(var(--hh-outline-variant) / 0.4); }
+.adm-body .notification--info { background: rgb(var(--hh-primary)); }

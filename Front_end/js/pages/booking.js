@@ -20,7 +20,7 @@
   // Thông tin bảo tàng
   try {
     const s = await ApiService.get(API_CONFIG.ENDPOINTS.SETTINGS);
-    document.title = s.museum_name + " | Đặt vé & dịch vụ";
+    document.title = (s.museum_name || APP_CONFIG.SITE_NAME) + " | Đặt vé & dịch vụ";
     $("#openInfo").textContent = `Mở cửa ${s.open_time} - ${s.close_time} hằng ngày, nghỉ ${s.closed_day}`;
   } catch {}
 

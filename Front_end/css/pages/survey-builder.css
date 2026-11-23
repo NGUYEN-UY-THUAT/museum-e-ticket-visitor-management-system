@@ -1,0 +1,39 @@
+/* survey-builder.css — Soạn khảo sát. Bố cục chung ở css/layouts/admin-layout.css */
+.sb-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 900px) { .sb-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } .sb-preview-wrap { grid-column: span 2; } }
+@media (min-width: 1400px) { .sb-layout { grid-template-columns: 320px minmax(0, 1fr) 340px; } .sb-preview-wrap { grid-column: auto; position: sticky; top: 5rem; } }
+.sb-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.sb-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 0.6rem; border: 1px solid rgb(var(--hh-outline-variant) / 0.5); background: rgb(var(--hh-surface-container-low)); }
+.sb-item.is-active { background: rgb(var(--hh-primary)); border-color: rgb(var(--hh-primary)); color: #fff; }
+.sb-item.is-off { opacity: 0.6; }
+.sb-item__no { width: 1.6rem; height: 1.6rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: rgb(var(--hh-surface-container-lowest)); color: rgb(var(--hh-primary)); flex-shrink: 0; }
+.sb-item.is-active .sb-item__no { background: rgb(var(--hh-secondary-fixed)); }
+.sb-item__main { flex: 1; min-width: 0; text-align: left; }
+.sb-item__title { display: block; font-size: 13.5px; font-weight: 600; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-item__meta { display: flex; align-items: center; gap: 0.25rem; font-size: 12px; opacity: 0.75; }
+.sb-item__meta .material-symbols-outlined { font-size: 14px; }
+.sb-item__move { display: flex; flex-direction: column; }
+.sb-item__move button { line-height: 0; border-radius: 0.3rem; }
+.sb-item__move button:hover { background: rgb(0 0 0 / 0.06); }
+.sb-item__move button[disabled] { opacity: 0.25; pointer-events: none; }
+.sb-item__move .material-symbols-outlined { font-size: 18px; }
+.sb-type { width: 2.75rem; height: 2.75rem; border-radius: 0.6rem; display: flex; align-items: center; justify-content: center; background: rgb(var(--hh-primary)); color: rgb(var(--hh-secondary-fixed)); flex-shrink: 0; }
+.sb-scale { display: grid; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: 0.5rem; }
+.sb-scale label span { display: block; font-size: 12px; font-weight: 700; color: rgb(var(--hh-secondary)); margin-bottom: 0.2rem; }
+.sb-scale .hh-input { padding: 0.5rem 0.6rem; font-size: 13px; }
+.sb-disabled { opacity: 0.45; pointer-events: none; }
+.sb-preview { padding: 1.25rem; border-radius: 1.25rem; background: rgb(var(--hh-surface-container-lowest)); border: 8px solid rgb(var(--hh-surface-container-high)); box-shadow: 0 12px 40px rgb(31 58 95 / 0.12); max-width: 380px; }
+.sb-preview__brand { display: flex; align-items: center; gap: 0.4rem; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; color: rgb(var(--hh-primary)); padding-bottom: 0.75rem; border-bottom: 1px solid rgb(var(--hh-outline-variant) / 0.4); }
+.sb-preview__brand .material-symbols-outlined { font-size: 18px; color: rgb(var(--hh-secondary)); }
+.sb-preview__title { margin-top: 0.75rem; font-size: 13px; font-weight: 600; color: rgb(var(--hh-secondary)); }
+.sb-preview__intro { margin-top: 0.4rem; font-size: 13px; line-height: 19px; color: rgb(var(--hh-on-surface-variant)); }
+.sb-preview__step { margin-top: 1rem; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(var(--hh-secondary)); }
+.sb-preview__q { margin-top: 0.3rem; font-size: 17px; line-height: 24px; font-weight: 700; color: rgb(var(--hh-primary)); }
+.sb-preview__q .req { color: rgb(var(--hh-error)); }
+.sb-preview__hint { margin-top: 0.35rem; font-size: 13px; line-height: 18px; color: rgb(var(--hh-on-surface-variant)); }
+.sb-preview__hidden { margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; font-size: 13px; color: rgb(var(--hh-on-surface-variant)); }
+.sb-stars { margin-top: 1rem; display: flex; justify-content: center; gap: 0.35rem; padding: 0.75rem; border-radius: 0.75rem; background: rgb(var(--hh-surface-container-low)); }
+.sb-stars .material-symbols-outlined { font-size: 34px; color: rgb(var(--hh-outline-variant)); }
+.sb-stars .is-on .material-symbols-outlined { color: rgb(var(--hh-secondary-fixed-dim)); font-variation-settings: "FILL" 1; }
+.sb-star-label { margin-top: 0.5rem; text-align: center; font-size: 13px; font-weight: 600; color: rgb(var(--hh-on-surface-variant)); }
+.sb-preview textarea { margin-top: 1rem; }

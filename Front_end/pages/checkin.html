@@ -1,60 +1,103 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kiểm soát lượt vào | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/checkin.css">
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Soát vé tại cổng | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/checkin.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><div><h1>Kiểm soát lượt vào</h1><p class="text-muted">Quét mã QR trên vé hoặc nhập mã vé</p></div>
-          <select class="form-control" id="gateSelect" style="width:auto"><option>Cổng A</option><option>Cổng B</option><option>Cổng đoàn</option></select></div>
-        <div class="grid-2">
-          <section class="card">
-            <div id="reader" class="scanner"></div>
-            <div class="toolbar" style="margin-top:12px"><button class="btn btn--primary" id="startScan">Bật camera</button><button class="btn btn--outline" id="stopScan" disabled>Tắt camera</button></div>
-            <form id="manualForm" class="manual-form"><input class="form-control" name="code" placeholder="Nhập mã vé, ví dụ TK7A1X9QZ2"><button class="btn btn--primary">Kiểm tra</button></form>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <section class="adm-head adm-head--hero">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">qr_code_scanner</span> Kiểm soát lượt vào</span>
+            <h1 class="adm-title">Soát vé tại cổng</h1>
+            <p class="adm-desc">Quét mã QR trên vé điện tử hoặc nhập mã vé. Hệ thống kiểm tra trạng thái thanh toán, ngày tham quan và ghi nhận lượt vào.</p>
+          </div>
+          <div class="adm-actions">
+            <div class="hh-field ci-gate"><label class="hh-label" for="gate">Cổng đang trực</label><select class="hh-input" id="gate"></select></div>
+          </div>
+        </section>
+
+        <section class="adm-stats" id="stats"></section>
+
+        <div class="ci-layout">
+          <section class="adm-panel">
+            <div class="flex items-center justify-between gap-2"><h2 class="adm-panel__title">Quét mã vé</h2><span class="hh-badge hh-badge--muted" id="camState">Camera tắt</span></div>
+            <div class="ec-reader" id="reader"><div class="ec-reader__idle"><span class="material-symbols-outlined">qr_code_2</span><p>Bật camera rồi đưa mã QR trên vé điện tử vào khung hình</p></div></div>
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <button class="hh-btn hh-btn--primary" id="camOn" type="button"><span class="material-symbols-outlined">videocam</span> Bật camera</button>
+              <button class="hh-btn hh-btn--soft" id="camOff" type="button" disabled><span class="material-symbols-outlined">videocam_off</span> Tắt camera</button>
+            </div>
+            <form class="adm-panel__section" id="manualForm" novalidate>
+              <label class="hh-label" for="code">Không quét được? Nhập mã vé</label>
+              <div class="flex gap-2 mt-2"><input class="hh-input uppercase ec-code" id="code" name="code" placeholder="vd: TK..." autocomplete="off" /><button class="hh-btn hh-btn--primary" type="submit"><span class="material-symbols-outlined">check</span> Kiểm tra</button></div>
+            </form>
           </section>
-          <section class="card"><h3>Kết quả</h3><div id="result" class="checkin-result is-idle">Chưa quét vé nào</div>
-            <div class="stat-grid" style="margin-top:16px"><div class="stat-card"><div class="stat-card__label">Lượt vào hôm nay</div><div class="stat-card__value" id="todayCount">0</div></div><div class="stat-card"><div class="stat-card__label">Từ chối</div><div class="stat-card__value" id="rejectCount">0</div></div></div>
+
+          <section class="flex flex-col gap-4 min-w-0">
+            <div id="result" class="ci-result ci-result--idle">
+              <span class="material-symbols-outlined">confirmation_number</span>
+              <div><p class="ci-result__title">Sẵn sàng soát vé</p><p>Kết quả kiểm tra sẽ hiện ở đây.</p></div>
+            </div>
+            <div class="adm-card">
+              <div class="adm-card__head">
+                <h2 class="adm-card__title">Lượt soát vé hôm nay</h2>
+                <select class="hh-input ci-filter" id="resultFilter" aria-label="Kết quả"><option value="">Tất cả kết quả</option></select>
+              </div>
+              <div class="adm-table-wrap">
+                <table class="adm-table">
+                  <thead><tr><th>Thời gian</th><th>Mã vé</th><th>Cổng</th><th>Cán bộ</th><th>Kết quả</th></tr></thead>
+                  <tbody id="rows"></tbody>
+                </table>
+              </div>
+              <div class="adm-pager" id="pager"></div>
+            </div>
           </section>
         </div>
-        <section class="card"><div class="card__header"><h3>Nhật ký lượt vào</h3></div>
-          <div class="table-wrap"><table class="table"><thead><tr><th>Thời gian</th><th>Mã vé</th><th>Cổng</th><th>Nhân viên</th><th>Kết quả</th></tr></thead><tbody id="logBody"></tbody></table></div></section>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/services/ticket.service.js"></script>
-  <script src="../js/services/event.service.js"></script>
-  <script src="../js/services/visitor.service.js"></script>
-  <script src="../js/services/survey.service.js"></script>
-  <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/checkin.js"></script>
 </body>
 </html>

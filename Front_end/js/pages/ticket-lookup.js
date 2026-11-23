@@ -9,7 +9,6 @@ SiteFooter.render();
   const esc = Format.escape;
   let types = [];
 
-  if (!API_CONFIG.USE_MOCK) $("demoCodes").remove();
 
   /** Che bớt thông tin cá nhân khi tra cứu không đăng nhập */
   const maskName = (n) => String(n || "").split(" ").map((w, i, a) => (i === a.length - 1 ? w : w[0] + ".")).join(" ");
@@ -82,13 +81,6 @@ SiteFooter.render();
     history.replaceState(null, "", "?q=" + encodeURIComponent(keyword));
     Helpers.withBusy($("lookupBtn"), () => search(keyword).catch((err) => Notify.error(err.message)));
   });
-
-  document.querySelectorAll("[data-demo]").forEach((b) =>
-    b.addEventListener("click", () => {
-      form.keyword.value = b.dataset.demo;
-      form.requestSubmit();
-    })
-  );
 
   // Mở sẵn kết quả khi có ?q= hoặc ?code= trên URL
   TicketService.types().then((t) => {

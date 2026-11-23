@@ -1,4 +1,24 @@
-.stars{color:#e0a100;letter-spacing:2px}
-.survey-item{padding:14px 0;border-bottom:1px solid var(--color-border);display:flex;flex-direction:column;gap:4px}
-.survey-item:last-child{border-bottom:none}
-.survey-item__head{display:flex;justify-content:space-between}
+/* surveys.css — Kết quả khảo sát. Bố cục chung ở css/layouts/admin-layout.css */
+.sv-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 1100px) { .sv-layout { grid-template-columns: 360px minmax(0, 1fr); } }
+.sv-criteria { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.sv-crit__top { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 13.5px; margin-bottom: 0.35rem; }
+.sv-crit__top b { color: rgb(var(--hh-primary)); }
+.sv-bar { height: 0.5rem; border-radius: 99px; background: rgb(var(--hh-surface-container-high)); overflow: hidden; }
+.sv-bar > div { height: 100%; border-radius: inherit; background: rgb(var(--hh-secondary)); }
+.sv-dist { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.75rem; }
+.sv-dist__row { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) 2rem; gap: 0.6rem; align-items: center; font-size: 13px; }
+.sv-dist__row .sv-bar > div { background: rgb(var(--hh-primary)); }
+.sv-dist__row span:last-child { text-align: right; color: rgb(var(--hh-on-surface-variant)); }
+.sv-filter { width: auto; padding-top: 0.45rem; padding-bottom: 0.45rem; font-size: 14px; }
+.sv-switch { padding: 0.35rem 0.75rem; }
+.sv-list { display: flex; flex-direction: column; }
+.sv-item { padding: 1rem 1.25rem; border-bottom: 1px solid rgb(var(--hh-outline-variant) / 0.35); display: flex; flex-direction: column; gap: 0.45rem; }
+.sv-item__head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; }
+.sv-item__name { font-weight: 600; color: rgb(var(--hh-primary)); }
+.sv-stars { color: rgb(var(--hh-secondary)); letter-spacing: 1px; font-size: 15px; }
+.sv-stars i { color: rgb(var(--hh-outline-variant)); font-style: normal; }
+.sv-item__comment { font-size: 14px; line-height: 21px; }
+.sv-item__scores { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.sv-chip { font-size: 12px; padding: 0.15rem 0.55rem; border-radius: 99px; background: rgb(var(--hh-surface-container-low)); color: rgb(var(--hh-on-surface-variant)); }
+.sv-item--low { border-left: 3px solid rgb(var(--hh-error)); }

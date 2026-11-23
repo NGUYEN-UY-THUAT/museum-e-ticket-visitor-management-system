@@ -11,18 +11,14 @@ window.PublicNavbar = (function () {
     ).join("");
   }
 
-  /** Menu tài khoản: khách chưa đăng nhập thấy lối tắt; cán bộ đã đăng nhập thấy nút vào trang quản trị */
+  /** Menu tài khoản của khách (giao diện khách không có lối vào trang quản trị;
+      cán bộ đăng nhập ở account-login.html sẽ được chuyển thẳng sang trang quản trị) */
   function userMenu() {
-    const staff = AuthService.isLoggedIn() ? AuthService.user() : null;
-    const customer = !staff && window.CustomerService && CustomerService.isLoggedIn() ? CustomerService.current() : null;
+    const customer = window.CustomerService && CustomerService.isLoggedIn() ? CustomerService.current() : null;
     const item = (icon, label, href, extra = "") => `<a class="user-menu__item${extra}" href="${href}"><span class="icon icon--18">${icon}</span><span>${label}</span></a>`;
     const logoutBtn = `<button class="user-menu__item user-menu__item--danger" id="publicLogoutBtn" type="button" style="width:100%"><span class="icon icon--18">logout</span><span>Đăng xuất</span></button>`;
     let items, footer;
-    if (staff) {
-      // Cán bộ đang đăng nhập: lối tắt vào trang quản trị
-      items = item("dashboard", "Trang quản trị", url("DASHBOARD")) + item("qr_code_scanner", "Soát vé / Check-in", url("CHECKIN"));
-      footer = logoutBtn;
-    } else if (customer) {
+    if (customer) {
       // Khách đã đăng nhập
       items =
         item("confirmation_number", "Vé của tôi", url("MY_TICKETS")) + item("receipt_long", "Lịch sử đơn hàng", url("PROFILE", { tab: "orders" })) +
@@ -33,12 +29,12 @@ window.PublicNavbar = (function () {
       // Khách chưa đăng nhập
       items =
         item("login", "Đăng nhập", url("ACCOUNT_LOGIN")) + item("person_add", "Tạo tài khoản", url("ACCOUNT_REGISTER")) +
-        item("search", "Tra cứu vé", url("TICKET_LOOKUP")) + item("support_agent", "Liên hệ hỗ trợ", url("CONTACT"));
-      footer = item("badge", "Cán bộ đăng nhập", url("LOGIN"));
+        item("search", "Tra cứu vé", url("TICKET_LOOKUP"));
+      footer = item("support_agent", "Liên hệ hỗ trợ", url("CONTACT"));
     }
-    const who = staff || customer;
-    const headTitle = staff ? "Cán bộ đang đăng nhập" : customer ? "Đang đăng nhập" : "Khách tham quan";
-    const headSub = staff ? esc(staff.username) : customer ? esc(customer.email) : "Chưa đăng nhập";
+    const who = customer;
+    const headTitle = customer ? "Đang đăng nhập" : "Khách tham quan";
+    const headSub = customer ? esc(customer.email) : "Chưa đăng nhập";
 
     return `
       <div class="user-menu" id="userMenu">
@@ -70,7 +66,7 @@ window.PublicNavbar = (function () {
     root.querySelector("#topbarBurger").addEventListener("click", () => bar.classList.toggle("is-mobile-open"));
     root.querySelectorAll(".topbar__mobile a").forEach(a => a.addEventListener("click", () => bar.classList.remove("is-mobile-open")));
     const logout = root.querySelector("#publicLogoutBtn");
-    if (logout) logout.addEventListener("click", () => (AuthService.isLoggedIn() ? AuthService.logout() : CustomerService.logout()));
+    if (logout) logout.addEventListener("click", () => CustomerService.logout());
   }
 
   return {

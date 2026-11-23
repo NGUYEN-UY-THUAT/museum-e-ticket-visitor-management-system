@@ -1,62 +1,108 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cài đặt | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/settings.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Cài đặt | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/settings.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><h1>Cài đặt</h1></div>
-        <div class="grid-2">
-          <section class="card"><h3 style="margin-bottom:16px">Thông tin bảo tàng</h3>
-            <form id="settingsForm">
-              <div class="form-group"><label>Tên bảo tàng</label><input class="form-control" name="museum_name"></div>
-              <div class="form-group"><label>Địa chỉ</label><input class="form-control" name="address"></div>
-              <div class="form-row"><div class="form-group"><label>Hotline</label><input class="form-control" name="hotline"></div><div class="form-group"><label>Sức chứa/ngày</label><input class="form-control" type="number" name="daily_capacity"></div></div>
-              <div class="form-row"><div class="form-group"><label>Giờ mở cửa</label><input class="form-control" type="time" name="open_time"></div><div class="form-group"><label>Giờ đóng cửa</label><input class="form-control" type="time" name="close_time"></div></div>
-              <div class="form-group"><label>Ngày nghỉ</label><input class="form-control" name="closed_day"></div>
-              <button class="btn btn--primary">Lưu thay đổi</button>
-            </form></section>
-          <section class="card"><h3 style="margin-bottom:16px">Kết nối & dữ liệu</h3>
-            <p>Chế độ dữ liệu: <b id="modeText"></b></p>
-            <p class="text-muted text-small" style="margin:8px 0 16px">Đổi <code>USE_MOCK</code> trong <code>js/config/api.config.js</code> thành <code>false</code> để gọi API backend (MySQL) tại <code id="baseUrl"></code>.</p>
-            <button class="btn btn--danger" id="resetBtn">Khôi phục dữ liệu mẫu</button>
-          </section>
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <section class="adm-head">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">settings</span> Hệ thống</span>
+            <h1 class="adm-title">Cài đặt hệ thống</h1>
+            <p class="adm-desc">Thông tin liên hệ hiển thị cho khách, giờ đón khách mặc định và sức chứa. Giờ mở cửa và sức chứa riêng của từng bảo tàng chỉnh ở trang Quản lý bảo tàng.</p>
+          </div>
+        </section>
+
+        <div class="st-layout">
+          <form class="adm-panel" id="settingsForm" novalidate>
+            <h2 class="adm-panel__title">Thông tin cổng vé</h2>
+            <div class="adm-form mt-4">
+              <div class="hh-field span-2"><label class="hh-label" for="s_name">Tên hiển thị <span class="req">*</span></label><input class="hh-input" id="s_name" name="museum_name" maxlength="120" /><span class="hh-error"></span></div>
+              <div class="hh-field span-2"><label class="hh-label" for="s_addr">Địa chỉ</label><input class="hh-input" id="s_addr" name="address" maxlength="200" /><span class="hh-error"></span></div>
+              <div class="hh-field"><label class="hh-label" for="s_hotline">Hotline <span class="req">*</span></label><input class="hh-input" id="s_hotline" name="hotline" maxlength="20" /><span class="hh-error"></span></div>
+              <div class="hh-field"><label class="hh-label" for="s_email">Email hỗ trợ</label><input class="hh-input" id="s_email" name="email" type="email" /><span class="hh-error"></span></div>
+            </div>
+            <div class="adm-panel__section">
+              <h2 class="adm-panel__title">Giờ đón khách & sức chứa mặc định</h2>
+              <div class="adm-form mt-4">
+                <div class="hh-field"><label class="hh-label" for="s_open">Mở cửa <span class="req">*</span></label><input class="hh-input" id="s_open" name="open_time" type="time" /><span class="hh-error"></span></div>
+                <div class="hh-field"><label class="hh-label" for="s_close">Đóng cửa <span class="req">*</span></label><input class="hh-input" id="s_close" name="close_time" type="time" /><span class="hh-error"></span></div>
+                <div class="hh-field"><label class="hh-label" for="s_closed">Ngày nghỉ hằng tuần</label><select class="hh-input" id="s_closed" name="closed_day"><option>Không nghỉ</option><option>Thứ Hai</option><option>Thứ Ba</option><option>Thứ Tư</option><option>Thứ Năm</option><option>Thứ Sáu</option><option>Thứ Bảy</option><option>Chủ Nhật</option></select></div>
+                <div class="hh-field"><label class="hh-label" for="s_slot">Sức chứa mỗi khung giờ <span class="req">*</span></label><input class="hh-input" id="s_slot" name="slot_capacity" type="number" min="1" /><span class="hh-error"></span><span class="hh-hint">Áp dụng cho bảo tàng chưa đặt sức chứa riêng</span></div>
+              </div>
+              <div class="st-slots"><span class="hh-label">Khung giờ tham quan</span><div id="slots" class="flex flex-wrap gap-2 mt-2"></div></div>
+            </div>
+            <div class="adm-panel__section flex justify-end gap-2">
+              <button class="hh-btn hh-btn--ghost" id="undoBtn" type="button">Hoàn tác</button>
+              <button class="hh-btn hh-btn--primary" type="submit"><span class="material-symbols-outlined">save</span> Lưu cài đặt</button>
+            </div>
+          </form>
+
+          <div class="flex flex-col gap-6">
+            <section class="adm-panel">
+              <h2 class="adm-panel__title">Chính sách hủy vé</h2>
+              <p class="muted text-[13.5px] mt-1">Áp dụng khi khách gửi yêu cầu hủy trên trang Đổi giờ / Hủy vé. Cán bộ duyệt ở trang Đơn hàng & Hoàn tiền.</p>
+              <ul class="st-policy">
+                <li><span>Trước giờ tham quan từ 48 giờ</span><b>Hoàn 100%</b></li>
+                <li><span>Từ 24 đến dưới 48 giờ</span><b>Hoàn 50%</b></li>
+                <li><span>Dưới 24 giờ</span><b>Không hoàn</b></li>
+                <li><span>Đổi ngày / khung giờ</span><b>Miễn phí, 1 lần</b></li>
+              </ul>
+            </section>
+            <section class="adm-panel">
+              <h2 class="adm-panel__title">Nguồn dữ liệu</h2>
+              <dl class="adm-dl mt-3"><dt>Chế độ</dt><dd id="modeText"></dd><dt>Địa chỉ API</dt><dd><span class="adm-code" id="baseUrl"></span></dd></dl>
+              <div class="adm-panel__section" id="resetBox">
+                <p class="text-[13.5px] muted">Xóa dữ liệu đã nhập trên trình duyệt này và khôi phục dữ liệu mẫu ban đầu. Chỉ có ở chế độ dữ liệu mẫu.</p>
+                <button class="hh-btn hh-btn--soft hh-btn--block mt-3" id="resetBtn" type="button"><span class="material-symbols-outlined">restart_alt</span> Khôi phục dữ liệu mẫu</button>
+              </div>
+            </section>
+          </div>
         </div>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
-  <script src="../js/services/ticket.service.js"></script>
-  <script src="../js/services/event.service.js"></script>
-  <script src="../js/services/visitor.service.js"></script>
-  <script src="../js/services/survey.service.js"></script>
-  <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/settings.js"></script>
 </body>
 </html>

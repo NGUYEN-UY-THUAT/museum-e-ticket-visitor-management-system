@@ -18,9 +18,11 @@ Phần mềm web quản lý khách tham quan, vé điện tử và sự kiện c
 
 ## Vai trò người dùng
 
-- **Khách tham quan**: xem bảo tàng, đặt vé, đăng ký sự kiện, đăng ký đoàn, làm khảo sát, tra cứu vé. Không cần đăng nhập.
-- **Cán bộ vận hành**: đăng nhập để bán vé, soát vé tại cổng, quản lý sự kiện, đoàn khách và khảo sát.
-- **Quản trị viên**: có toàn bộ quyền của cán bộ, thêm thống kê và cài đặt thông tin bảo tàng.
+- **Khách tham quan**: xem bảo tàng, đặt vé, đăng ký sự kiện, đăng ký đoàn, làm khảo sát, tra cứu vé. Có thể tạo tài khoản (hoặc đăng nhập Google) để xem lại vé.
+- **Cán bộ vận hành** (`staff`): bán vé tại quầy, soát vé tại cổng, xử lý đơn và yêu cầu đổi / hủy, quản lý khung giờ, sự kiện, đoàn khách, xem khảo sát.
+- **Quản trị viên** (`admin`): toàn bộ quyền của cán bộ, thêm thống kê, loại vé & giá, quản lý bảo tàng, soạn khảo sát, quản lý cán bộ và cài đặt.
+
+Khách và cán bộ đăng nhập ở cùng một trang; chỉ tài khoản cán bộ mới được chuyển sang giao diện quản trị.
 
 ## Công nghệ sử dụng
 
@@ -53,22 +55,28 @@ Front_end/
 │   ├── group-booking.html     Đặt vé đoàn, theo dõi hồ sơ đoàn
 │   ├── survey.html            Khảo sát mức độ hài lòng
 │   ├── profile.html           Hồ sơ cá nhân, lịch sử đơn vé
-│   ├── account-login.html     Đăng nhập khách · account-register.html (đăng ký) · forgot-password.html (quên mật khẩu)
+│   ├── account-login.html     Đăng nhập chung khách & cán bộ · account-register.html (đăng ký) · forgot-password.html (quên mật khẩu)
 │   ├── ticket-lookup.html     Tra cứu vé không cần đăng nhập
 │   ├── ticket-change.html     Đổi giờ, hủy vé & hoàn tiền
 │   ├── policies.html          Hướng dẫn QR, quy định tham quan, chính sách hoàn vé, điều khoản, bảo mật
 │   ├── contact.html           Liên hệ & câu hỏi thường gặp
 │   ├── booking.html           Trang dịch vụ gộp cũ (còn logic mock tạo vé QR)
 │   │  ── Cán bộ / quản trị ──
-│   ├── login.html             Đăng nhập cán bộ
-│   ├── dashboard.html         Bảng điều khiển
-│   ├── tickets.html           Vé điện tử: bán vé tại quầy, phát hành QR, loại vé và giá
-│   ├── checkin.html           Kiểm soát lượt vào: quét QR hoặc nhập mã, nhật ký vào cổng
-│   ├── events.html            Sự kiện và danh sách đăng ký
-│   ├── visitors.html          Đoàn khách: tiếp nhận, duyệt lịch
-│   ├── surveys.html           Kết quả khảo sát mức độ hài lòng
+│   ├── dashboard.html         Bảng điều khiển: khách hôm nay, việc cần xử lý
 │   ├── statistics.html        Thống kê, biểu đồ, xuất CSV (quản trị viên)
-│   └── settings.html          Cài đặt thông tin bảo tàng (quản trị viên)
+│   ├── orders.html            Đơn hàng & hoàn tiền: duyệt yêu cầu đổi giờ / hủy vé
+│   ├── tickets.html           Vé điện tử: tra cứu, mã QR, bán vé tại quầy
+│   ├── ticket-types.html      Loại vé & giá (quản trị viên)
+│   ├── checkin.html           Soát vé tại cổng: quét QR hoặc nhập mã, nhật ký vào cổng
+│   ├── visitors.html          Đoàn khách: duyệt đăng ký, ghi nhận đoàn đến
+│   ├── museum-management.html Quản lý bảo tàng (quản trị viên)
+│   ├── time-slots.html        Khung giờ & sức chứa theo ngày
+│   ├── events.html            Sự kiện & triển lãm
+│   ├── event-checkin.html     Điểm danh khách tham dự sự kiện
+│   ├── surveys.html           Kết quả khảo sát mức độ hài lòng
+│   ├── survey-builder.html    Soạn bộ câu hỏi khảo sát (quản trị viên)
+│   ├── staff.html             Cán bộ & phân quyền (quản trị viên)
+│   └── settings.html          Cài đặt hệ thống (quản trị viên)
 ├── assets/
 │   ├── images/
 │   ├── icons/
@@ -76,18 +84,19 @@ Front_end/
 ├── css/
 │   ├── base/                  reset.css, variables.css, typography.css,
 │   │                          design-tokens.css (bộ màu trang khách), utilities.css (lớp tiện ích biên dịch sẵn)
-│   ├── components/            button, card, chip, modal, navbar, sidebar, public-navbar,
-│   │                          footer, museum-card, pagination
-│   ├── layouts/               main-layout.css (cán bộ), auth-layout.css (đăng nhập),
+│   ├── components/            button, card, chip, modal, public-navbar, footer, museum-card,
+│   │                          pagination, heritage-ui (thành phần dùng chung khách & quản trị)
+│   ├── layouts/               admin-layout.css (trang quản trị), visitor-auth-layout.css (đăng nhập),
 │   │                          public-layout.css + visitor-layout.css (khách)
 │   └── pages/                 mỗi trang một file CSS cùng tên (home.css cho index.html)
 └── js/
     ├── config/                api.config.js (địa chỉ API, endpoint, USE_MOCK), app.config.js (menu, ROUTES, trạng thái)
-    ├── services/              api, auth, museum, ticket, event, visitor, survey, statistics
+    ├── services/              api, auth, customer, museum, ticket, order, timeslot, staff, event, visitor,
+    │                          survey, statistics, support
     │   └── mock/              museum.mock.js (dữ liệu mẫu)
-    ├── components/            navbar, sidebar, public-navbar, footer, modal, notification,
-    │                          museum-card, pagination
-    ├── utils/                 format.js, validation.js, helpers.js
+    ├── components/            admin-shell (khung trang quản trị), public-navbar, footer, modal, notification,
+    │                          museum-card, pagination, google-login
+    ├── utils/                 format.js, validation.js, helpers.js, admin-ui.js
     └── pages/                 mỗi trang một file JS cùng tên (home.js cho index.html)
 
 tools/tailwind/                Cấu hình sinh lại Front_end/css/base/utilities.css khi thêm lớp tiện ích mới
@@ -111,7 +120,7 @@ CREATE DATABASE museum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 1. Mở `Front_end/index.html` bằng trình duyệt, hoặc tốt hơn là chạy thư mục bằng **Live Server** của VS Code (camera quét QR cần chạy trên `localhost` hoặc HTTPS).
 2. Trang cho khách: bắt đầu từ `index.html` (đặt vé, sự kiện, đoàn khách, vé của tôi... đều đi được từ thanh menu).
-3. Trang cho cán bộ: `pages/login.html`. Tài khoản thử: `admin / admin123` (quản trị viên), `staff / staff123` (soát vé).
+3. Cán bộ đăng nhập ở cùng trang `pages/account-login.html` bằng tên đăng nhập và được chuyển sang trang quản trị. Tài khoản chạy thử được ghi riêng, không để trong giao diện hay README.
 
 Mặc định `USE_MOCK: true` trong `js/config/api.config.js`, mọi dữ liệu được lưu trong `localStorage`. Khi backend sẵn sàng, đổi thành `false` và sửa `BASE_URL` thành địa chỉ API. Danh sách endpoint backend cần cung cấp nằm trong `Front_end/README.md`.
 

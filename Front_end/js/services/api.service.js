@@ -2,6 +2,7 @@
    để chạy giao diện mà chưa cần backend; tắt USE_MOCK để gọi REST API thật (backend + MySQL). */
 (function () {
   const MOCK_KEY = "museum_mock_db";
+  const SEED_VERSION = 2; // tăng khi thêm dữ liệu mẫu mới
   const today = new Date();
   const d = (n) => {
     const x = new Date(today);
@@ -12,8 +13,12 @@
   function seed() {
     return {
       users: [
-        { id: 1, username: "admin", password: "admin123", full_name: "Quản trị viên", role: "admin" },
-        { id: 2, username: "staff", password: "staff123", full_name: "Nhân viên soát vé", role: "staff" },
+        { id: 1, username: "admin", password: "admin123", full_name: "Lê An", email: "an.le@baotangdisan.vn", phone: "0903111222", role: "admin", status: "active", last_login: d(0) + "T07:45:00", created_at: d(-400) },
+        { id: 2, username: "staff", password: "staff123", full_name: "Trần Đức Hải", email: "hai.tran@baotangdisan.vn", phone: "0903222333", role: "staff", status: "active", last_login: d(0) + "T07:58:00", created_at: d(-300) },
+        { id: 3, username: "mai.nguyen", password: "staff123", full_name: "Nguyễn Thị Mai", email: "mai.nguyen@baotangdisan.vn", phone: "0903333444", role: "admin", status: "active", last_login: d(-1) + "T16:20:00", created_at: d(-200) },
+        { id: 4, username: "thao.pham", password: "staff123", full_name: "Phạm Thu Thảo", email: "thao.pham@baotangdisan.vn", phone: "0903444555", role: "staff", status: "active", last_login: d(-1) + "T08:05:00", created_at: d(-150) },
+        { id: 5, username: "khoa.do", password: "staff123", full_name: "Đỗ Anh Khoa", email: "khoa.do@baotangdisan.vn", phone: "0903555666", role: "staff", status: "active", last_login: d(-3) + "T13:10:00", created_at: d(-90) },
+        { id: 6, username: "linh.vu", password: "staff123", full_name: "Vũ Tuấn Linh", email: "linh.vu@baotangdisan.vn", phone: "0903666777", role: "staff", status: "locked", last_login: d(-40) + "T09:00:00", created_at: d(-120) },
       ],
       "ticket-types": [
         { id: 1, name: "Người lớn", price: 50000, description: "Từ 16 tuổi trở lên", active: 1 },
@@ -27,6 +32,10 @@
         { id: 3, code: "TK9C3Z1SV4", customer_name: "Lê Hoàng Cường", email: "cuong@gmail.com", phone: "0987654321", ticket_type_id: 1, quantity: 3, visit_date: d(2), total: 150000, status: "pending", created_at: d(0) },
         { id: 4, code: "TK0D4A2TU5", customer_name: "Phạm Minh Dũng", email: "dung@gmail.com", phone: "0934567890", ticket_type_id: 3, quantity: 1, visit_date: d(-3), total: 0, status: "expired", created_at: d(-5) },
         { id: 5, code: "TK5E6F7GH8", customer_name: "Nguyễn Văn An", email: "an@gmail.com", phone: "0901234567", ticket_type_id: 2, quantity: 2, visit_date: d(5), total: 50000, status: "paid", created_at: d(-1) },
+        { id: 6, code: "TK6H7J8KL9", customer_name: "Đoàn Thu Hà", email: "thuha.doan@gmail.com", phone: "0912443882", ticket_type_id: 1, quantity: 4, visit_date: d(4), time_slot: "13:30 - 15:30", total: 200000, status: "paid", created_at: d(-2) + "T10:14:00" },
+        { id: 7, code: "TK7M8N9PQ1", customer_name: "Lê Hoàng Nam", email: "nam.le@gmail.com", phone: "0938991002", ticket_type_id: 2, quantity: 3, visit_date: d(2), time_slot: "08:00 - 10:00", total: 75000, status: "paid", created_at: d(-3) + "T09:40:00" },
+        { id: 8, code: "TK8R9S1TU2", customer_name: "Vũ Đức Minh", email: "minh.vu@gmail.com", phone: "0971554219", ticket_type_id: 1, quantity: 2, visit_date: d(6), time_slot: "10:00 - 12:00", total: 100000, status: "paid", created_at: d(0) + "T08:20:00" },
+        { id: 9, code: "TK9V1W2XY3", customer_name: "Trần Thị Hà", email: "ha.tran@gmail.com", phone: "0904776331", ticket_type_id: 1, quantity: 1, visit_date: d(1), time_slot: "15:30 - 17:00", total: 50000, status: "pending", created_at: d(0) + "T11:20:00" },
       ],
       checkins: [{ id: 1, ticket_code: "TK8B2Y0RW3", gate: "Cổng A", staff: "staff", checked_at: d(0) + "T09:15:00", result: "ok" }],
       events: [
@@ -34,7 +43,15 @@
         { id: 2, title: "Tọa đàm: Di sản văn hóa số", description: "Chia sẻ về số hóa hiện vật bảo tàng.", location: "Hội trường", start_time: d(7) + "T14:00", end_time: d(7) + "T16:30", capacity: 60, registered: 15, status: "upcoming" },
         { id: 3, title: "Workshop vẽ tranh Đông Hồ", description: "Trải nghiệm in tranh dân gian.", location: "Sân trong", start_time: d(-4) + "T08:30", end_time: d(-4) + "T11:30", capacity: 30, registered: 30, status: "finished" },
       ],
-      "event-registrations": [{ id: 1, event_id: 1, full_name: "Nguyễn Văn An", email: "an@gmail.com", phone: "0901234567", attendees: 2, code: "EV1K2L3M", created_at: d(-1), checked_in: 0 }],
+      "event-registrations": [
+        { id: 1, event_id: 1, full_name: "Nguyễn Văn An", email: "an@gmail.com", phone: "0901234567", attendees: 2, code: "EV1K2L3M", created_at: d(-1), checked_in: 0 },
+        { id: 2, event_id: 1, full_name: "Trần Hà", email: "ha.tran@gmail.com", phone: "0904776331", attendees: 1, code: "EV2N4P6Q", created_at: d(-2), checked_in: 1, checked_in_at: d(-0) + "T08:48:00" },
+        { id: 3, event_id: 1, full_name: "Lê Minh", email: "minh.le@gmail.com", phone: "0911223344", attendees: 3, code: "EV3R5S7T", created_at: d(-2), checked_in: 0 },
+        { id: 4, event_id: 1, full_name: "Mai Lan", email: "lan.mai@gmail.com", phone: "0922334455", attendees: 2, code: "EV4U6V8W", created_at: d(-3), checked_in: 1, checked_in_at: d(0) + "T08:41:00" },
+        { id: 5, event_id: 1, full_name: "Hoàng Vy", email: "vy.hoang@gmail.com", phone: "0933445566", attendees: 1, code: "EV5X7Y9Z", created_at: d(-3), checked_in: 0 },
+        { id: 6, event_id: 1, full_name: "Đỗ Quang", email: "quang.do@gmail.com", phone: "0944556677", attendees: 2, code: "EV6A8B1C", created_at: d(-4), checked_in: 1, checked_in_at: d(0) + "T08:35:00" },
+        { id: 7, event_id: 2, full_name: "Phan Thanh Tâm", email: "tam.phan@gmail.com", phone: "0955667788", attendees: 1, code: "EV7D9E2F", created_at: d(-1), checked_in: 0 },
+      ],
       groups: [
         { id: 1, group_name: "Trường THPT Chu Văn An", leader_name: "Cô Hoa", phone: "0909111222", email: "hoa@cva.edu.vn", size: 40, visit_date: d(5), guide_required: 1, note: "Cần thuyết minh tiếng Việt", status: "approved" },
         { id: 2, group_name: "Đoàn du lịch Sài Gòn Tourist", leader_name: "Anh Tuấn", phone: "0909333444", email: "tuan@sgt.vn", size: 25, visit_date: d(1), guide_required: 1, note: "Khách nước ngoài, cần thuyết minh tiếng Anh", status: "pending" },
@@ -45,9 +62,15 @@
       ],
       // Tài khoản khách (mock lưu mật khẩu thô; backend thật phải băm bằng bcrypt)
       customers: [{ id: 1, full_name: "Nguyễn Văn An", email: "an@gmail.com", phone: "0901234567", password: "123456", created_at: d(-30) }],
-      "ticket-requests": [],
+      "ticket-requests": [
+        { id: 1, ticket_id: 6, ticket_code: "TK6H7J8KL9", customer_name: "Đoàn Thu Hà", type: "cancel", reason: "Gia đình có việc đột xuất", refund_method: "bank", bank_name: "MB Bank", bank_account: "982019948211", bank_holder: "DOAN THU HA", refund_rate: 1, refund_amount: 200000, status: "pending", created_at: d(-1) + "T10:14:00" },
+        { id: 2, ticket_id: 7, ticket_code: "TK7M8N9PQ1", customer_name: "Lê Hoàng Nam", type: "change", new_visit_date: d(9), new_time_slot: "13:30 - 15:30", note: "Trùng lịch học, xin đổi sang buổi chiều", fee: 0, status: "pending", created_at: d(0) + "T07:30:00" },
+      ],
       "contact-messages": [],
-      settings: { museum_name: "Bảo tàng Lịch sử", address: "2 Nguyễn Bỉnh Khiêm, Q.1, TP.HCM", hotline: "028 3829 8146", open_time: "08:00", close_time: "17:00", closed_day: "Thứ Hai", daily_capacity: 1500 },
+      museums: [], // khu vực quản trị: tự lấy từ MUSEUM_MOCK_DATA ở lần đầu (MuseumService)
+      "time-slots": [], // điều chỉnh sức chứa / tạm khóa theo ngày + khung giờ
+      "survey-config": {},
+      settings: { museum_name: "Cổng Vé Bảo tàng Di sản Quốc gia", address: "01 Tràng Tiền, Quận Hoàn Kiếm, TP. Hà Nội", hotline: "1900 8899", email: "hotro@baotangdisan.gov.vn", slot_capacity: 60, open_time: "08:00", close_time: "17:00", closed_day: "Thứ Hai", daily_capacity: 1500 },
     };
   }
 
@@ -65,6 +88,20 @@
             changed = true;
           }
         }
+        // Khi dữ liệu mẫu có phiên bản mới: thêm bản ghi mẫu còn thiếu và trường mới (không xóa dữ liệu đã sửa)
+        if ((db.__seed_version || 1) < SEED_VERSION) {
+          for (const k in fresh) {
+            if (Array.isArray(fresh[k]) && Array.isArray(db[k])) {
+              for (const item of fresh[k]) {
+                const i = db[k].findIndex((x) => x.id === item.id);
+                if (i < 0) db[k].push(item);
+                else db[k][i] = { ...item, ...db[k][i] };
+              }
+            }
+          }
+          db.__seed_version = SEED_VERSION;
+          changed = true;
+        }
         if (changed) this.save(db);
         return db;
       } catch {
@@ -77,7 +114,7 @@
       } catch {}
     },
     reset() {
-      const db = seed();
+      const db = { ...seed(), __seed_version: SEED_VERSION };
       this.save(db);
       return db;
     },

@@ -1,131 +1,145 @@
-(async function () {
-  if (!initLayout("tickets", "Vé điện tử")) return;
+/* tickets.js — Vé điện tử (pages/tickets.html): danh sách vé, mã QR, thu tiền, hủy vé, bán vé tại quầy */
+(function () {
+  if (!AdminShell.init("tickets")) return;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => Format.escape(s);
   const S = APP_CONFIG.TICKET_STATUS;
-  const $ = Helpers.$;
-  let tickets = [],
-    types = [];
-  $("#statusFilter").innerHTML += Object.entries(S)
-    .map(([k, v]) => `<option value="${k}">${v.label}</option>`)
-    .join("");
+  const PAGE_SIZE = 10;
+  let tickets = [];
+  let types = [];
+  let page = 1;
+  const typeName = (id) => types.find((t) => t.id === Number(id))?.name || "—";
 
-  async function load() {
-    [tickets, types] = await Promise.all([TicketService.list(), TicketService.types()]);
-    render();
+  $("statusFilter").insertAdjacentHTML("beforeend", Object.entries(S).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join(""));
+  if (!AuthService.isAdmin()) $("typesLink").remove();
+
+  function renderStats() {
+    const today = Format.isoDate();
+    const todayList = tickets.filter((t) => t.visit_date === today);
+    const sold = tickets.filter((t) => ["paid", "used"].includes(t.status));
+    $("stats").innerHTML =
+      AdminUI.stat("Vé tham quan hôm nay", "today", todayList.length, `${todayList.filter((t) => t.status === "used").length} vé đã vào cổng`) +
+      AdminUI.stat("Vé đã bán", "confirmation_number", sold.length, `${Format.number(sold.reduce((s, t) => s + Number(t.quantity), 0))} lượt khách`, "adm-stat--ok") +
+      AdminUI.stat("Chờ thanh toán", "hourglass_top", tickets.filter((t) => t.status === "pending").length, "Thu tiền tại quầy hoặc chờ khách thanh toán") +
+      AdminUI.stat("Đã hủy / hết hạn", "event_busy", tickets.filter((t) => ["cancelled", "expired"].includes(t.status)).length, "");
   }
-  const typeName = (id) => types.find((t) => t.id === id)?.name || "-";
+
+  function filtered() {
+    const q = Helpers.normalizeText($("keyword").value), st = $("statusFilter").value, dt = $("dateFilter").value;
+    return tickets.filter((t) => (!st || t.status === st) && (!dt || t.visit_date === dt) && (!q || Helpers.normalizeText(`${t.code} ${t.customer_name} ${t.phone} ${t.email}`).includes(q)));
+  }
+
   function render() {
-    const q = $("#searchInput").value.trim().toLowerCase(),
-      st = $("#statusFilter").value,
-      dt = $("#dateFilter").value;
-    const rows = tickets.filter((t) => (!st || t.status === st) && (!dt || t.visit_date === dt) && (!q || [t.code, t.customer_name, t.phone, t.email].some((x) => String(x).toLowerCase().includes(q))));
-    Helpers.renderTable(
-      $("#ticketBody"),
-      rows,
-      (t) => `<tr>
-      <td><b>${t.code}</b></td><td>${Format.escape(t.customer_name)}<div class="text-small text-muted">${t.phone}</div></td>
-      <td>${typeName(t.ticket_type_id)}</td><td>${t.quantity}</td><td>${Format.date(t.visit_date)}</td>
-      <td>${Format.currency(t.total)}</td><td>${Format.badge(S, t.status)}</td>
-      <td><div class="toolbar" style="flex-wrap:nowrap"><button class="btn btn--outline btn--sm" data-qr="${t.id}">QR</button>
-      ${t.status === "pending" ? `<button class="btn btn--success btn--sm" data-pay="${t.id}">Thu tiền</button>` : ""}
-      ${["paid", "pending"].includes(t.status) ? `<button class="btn btn--outline btn--sm" data-cancel="${t.id}">Hủy</button>` : ""}</div></td></tr>`,
-      8,
-    );
+    renderStats();
+    const list = filtered();
+    const pg = AdminUI.paginate(list, page, PAGE_SIZE);
+    page = pg.page;
+    $("rows").innerHTML = pg.items.length
+      ? pg.items.map((t) => `<tr>
+          <td><span class="adm-code">${esc(t.code)}</span></td>
+          <td><span class="adm-person__name">${esc(t.customer_name)}</span><span class="adm-person__sub">${esc(t.phone)}</span></td>
+          <td class="nowrap">${esc(typeName(t.ticket_type_id))} × ${t.quantity}</td>
+          <td class="nowrap">${Format.date(t.visit_date)}${t.time_slot ? `<div class="muted">${esc(t.time_slot)}</div>` : ""}</td>
+          <td class="num strong">${Format.currency(t.total)}</td>
+          <td>${AdminUI.badge(S, t.status)}</td>
+          <td class="num"><div class="tk-actions">
+            <button class="hh-btn hh-btn--soft hh-btn--sm" type="button" data-qr="${t.id}" title="Xem / in mã QR"><span class="material-symbols-outlined">qr_code_2</span></button>
+            ${t.status === "pending" ? `<button class="hh-btn hh-btn--primary hh-btn--sm" type="button" data-pay="${t.id}">Thu tiền</button>` : ""}
+            ${["paid", "pending"].includes(t.status) ? `<button class="hh-btn hh-btn--ghost hh-btn--sm" type="button" data-cancel="${t.id}">Hủy</button>` : ""}
+          </div></td></tr>`).join("")
+      : `<tr><td colspan="7" class="empty">Không có vé phù hợp</td></tr>`;
+    AdminUI.pager($("pager"), { ...pg, total: list.length, unit: "vé" }, (p) => ((page = p), render()));
   }
 
   function showTicket(t) {
     Modal.open({
-      title: "Vé điện tử",
-      body: `<div class="eticket"><div class="eticket__qr" id="qrBox"></div><div class="eticket__code">${t.code}</div>
-        <p><b>${Format.escape(t.customer_name)}</b></p><p>${typeName(t.ticket_type_id)} × ${t.quantity}</p>
-        <p>Ngày tham quan: <b>${Format.date(t.visit_date)}</b></p><p>${Format.currency(t.total)} · ${Format.badge(S, t.status)}</p></div>`,
-      footer: `<button class="btn btn--outline" data-close>Đóng</button><button class="btn btn--primary" onclick="window.print()">In vé</button>`,
-      onOpen: () => Helpers.renderQR(document.getElementById("qrBox"), t.code),
+      title: "Vé điện tử " + t.code,
+      body: `<div class="tk-ticket"><div class="hh-qr"><div id="qrBox"></div></div>
+        <p class="tk-ticket__code">${esc(t.code)}</p>
+        <dl class="adm-dl mt-4"><dt>Khách hàng</dt><dd>${esc(t.customer_name)}</dd><dt>Loại vé</dt><dd>${esc(typeName(t.ticket_type_id))} × ${t.quantity}</dd>
+          <dt>Ngày tham quan</dt><dd>${Format.date(t.visit_date)}${t.time_slot ? ", " + esc(t.time_slot) : ""}</dd><dt>Thành tiền</dt><dd>${Format.currency(t.total)}</dd><dt>Trạng thái</dt><dd>${AdminUI.badge(S, t.status)}</dd></dl></div>`,
+      footer: `<button class="hh-btn hh-btn--ghost" data-close type="button">Đóng</button><button class="hh-btn hh-btn--primary" type="button" onclick="window.print()"><span class="material-symbols-outlined">print</span> In vé</button>`,
+      onOpen: () => {
+        const box = document.getElementById("qrBox");
+        if (window.QRCode) new QRCode(box, { text: t.code, width: 160, height: 160 });
+        else box.innerHTML = `<div class="hh-qr__fallback">${esc(t.code)}</div>`;
+      },
     });
   }
 
   function openSell() {
-    const opts = types
-      .filter((t) => Number(t.active))
-      .map((t) => `<option value="${t.id}">${t.name} - ${Format.currency(t.price)}</option>`)
-      .join("");
+    const opts = types.filter((t) => Number(t.active)).map((t) => `<option value="${t.id}">${esc(t.name)} – ${Format.currency(t.price)}</option>`).join("");
     const root = Modal.open({
       title: "Bán vé tại quầy",
-      body: `<form id="sellForm" novalidate>
-        <div class="form-group"><label>Họ tên khách</label><input class="form-control" name="customer_name"></div>
-        <div class="form-row"><div class="form-group"><label>Số điện thoại</label><input class="form-control" name="phone"></div><div class="form-group"><label>Email</label><input class="form-control" name="email"></div></div>
-        <div class="form-row"><div class="form-group"><label>Loại vé</label><select class="form-control" name="ticket_type_id">${opts}</select></div><div class="form-group"><label>Số lượng</label><input class="form-control" type="number" min="1" name="quantity" value="1"></div></div>
-        <div class="form-group"><label>Ngày tham quan</label><input class="form-control" type="date" name="visit_date" value="${Format.isoDate()}"></div>
-        <p>Thành tiền: <b id="totalText"></b></p></form>`,
-      footer: `<button class="btn btn--outline" data-close>Hủy</button><button class="btn btn--primary" id="sellBtn">Phát hành vé</button>`,
+      body: `<form class="adm-form" id="sellForm" novalidate>
+        <div class="hh-field span-2"><label class="hh-label" for="s_name">Họ tên khách <span class="req">*</span></label><input class="hh-input" id="s_name" name="customer_name" /><span class="hh-error"></span></div>
+        <div class="hh-field"><label class="hh-label" for="s_phone">Số điện thoại <span class="req">*</span></label><input class="hh-input" id="s_phone" name="phone" type="tel" /><span class="hh-error"></span></div>
+        <div class="hh-field"><label class="hh-label" for="s_email">Email (nhận vé)</label><input class="hh-input" id="s_email" name="email" type="email" /><span class="hh-error"></span></div>
+        <div class="hh-field"><label class="hh-label" for="s_type">Loại vé</label><select class="hh-input" id="s_type" name="ticket_type_id">${opts}</select></div>
+        <div class="hh-field"><label class="hh-label" for="s_qty">Số lượng <span class="req">*</span></label><input class="hh-input" id="s_qty" name="quantity" type="number" min="1" max="50" value="1" /><span class="hh-error"></span></div>
+        <div class="hh-field"><label class="hh-label" for="s_date">Ngày tham quan</label><input class="hh-input" id="s_date" name="visit_date" type="date" value="${Format.isoDate()}" min="${Format.isoDate()}" /><span class="hh-error"></span></div>
+        <div class="hh-field"><label class="hh-label" for="s_slot">Khung giờ</label><select class="hh-input" id="s_slot" name="time_slot">${APP_CONFIG.TIME_SLOTS.map((s) => `<option>${s}</option>`).join("")}</select></div>
+        <p class="span-2 tk-total">Thành tiền: <b id="totalText"></b></p>
+      </form>`,
+      footer: `<button class="hh-btn hh-btn--ghost" data-close type="button">Hủy</button><button class="hh-btn hh-btn--primary" id="sellOk" type="button"><span class="material-symbols-outlined">qr_code_2</span> Thu tiền & phát hành vé</button>`,
     });
     const form = root.querySelector("#sellForm");
     const calc = () => {
       const t = types.find((x) => String(x.id) === form.ticket_type_id.value);
-      root.querySelector("#totalText").textContent = Format.currency((t?.price || 0) * (form.quantity.value || 0));
+      root.querySelector("#totalText").textContent = Format.currency((t?.price || 0) * (Number(form.quantity.value) || 0));
     };
     form.addEventListener("input", calc);
     calc();
-    root.querySelector("#sellBtn").onclick = async () => {
-      const data = Helpers.formData(form);
-      const ok = Validation.showErrors(
-        form,
-        Validation.validate(data, {
-          customer_name: [[Validation.required, "Nhập họ tên"]],
-          phone: [[Validation.phone, "SĐT không hợp lệ"]],
-          quantity: [[Validation.positive, "Số lượng phải lớn hơn 0"]],
-          visit_date: [[Validation.notPast, "Ngày không được ở quá khứ"]],
-        }),
-      );
-      if (!ok) return;
-      try {
-        const t = await TicketService.book(data);
-        Notify.success("Đã phát hành vé " + t.code);
-        await load();
-        showTicket(t);
-      } catch (e) {
-        Notify.error(e.message);
-      }
-    };
-  }
-
-  function openTypes() {
-    const root = Modal.open({
-      title: "Loại vé & giá",
-      body: `<table class="table"><thead><tr><th>Tên</th><th>Giá (₫)</th><th>Bán</th></tr></thead><tbody>${types.map((t) => `<tr data-id="${t.id}"><td><input class="form-control" name="name" value="${Format.escape(t.name)}"></td><td><input class="form-control" type="number" name="price" value="${t.price}"></td><td><input type="checkbox" name="active" ${Number(t.active) ? "checked" : ""}></td></tr>`).join("")}</tbody></table>`,
-      footer: `<button class="btn btn--outline" data-close>Đóng</button><button class="btn btn--primary" id="saveTypes">Lưu</button>`,
+    root.querySelector("#sellOk").addEventListener("click", async (e) => {
+      const d = AdminUI.formValues(form);
+      const errors = Validation.validate(d, {
+        customer_name: [[Validation.required, "Vui lòng nhập họ tên"]],
+        phone: [[Validation.phone, "Số điện thoại không hợp lệ"]],
+        email: [[(v) => !v || Validation.email(v), "Email không hợp lệ"]],
+        quantity: [[(v) => Number.isInteger(Number(v)) && Number(v) >= 1 && Number(v) <= 50, "Từ 1 đến 50 vé"]],
+        visit_date: [[Validation.notPast, "Không bán vé cho ngày đã qua"]],
+      });
+      if (!Validation.showFieldErrors(form, errors)) return;
+      await Helpers.withBusy(e.currentTarget, async () => {
+        try {
+          const t = await TicketService.book(d);
+          if (d.time_slot) await TicketService.update(t.id, { time_slot: d.time_slot, sold_by: AuthService.user()?.username, channel: "counter" });
+          Notify.success("Đã phát hành vé " + t.code);
+          await load();
+          showTicket({ ...t, time_slot: d.time_slot });
+        } catch (err) {
+          Notify.error(err.message);
+        }
+      });
     });
-    root.querySelector("#saveTypes").onclick = async () => {
-      for (const tr of root.querySelectorAll("tr[data-id]")) {
-        await TicketService.saveType({ id: Number(tr.dataset.id), name: tr.querySelector("[name=name]").value, price: Number(tr.querySelector("[name=price]").value), active: tr.querySelector("[name=active]").checked ? 1 : 0 });
-      }
-      Notify.success("Đã lưu loại vé");
-      Modal.close();
-      load();
-    };
   }
 
-  $("#ticketBody").addEventListener("click", async (e) => {
+  $("rows").addEventListener("click", async (e) => {
     const b = e.target.closest("button");
     if (!b) return;
-    const find = (id) => tickets.find((t) => String(t.id) === id);
-    if (b.dataset.qr) showTicket(find(b.dataset.qr));
+    const t = tickets.find((x) => String(x.id) === (b.dataset.qr || b.dataset.pay || b.dataset.cancel));
+    if (b.dataset.qr) showTicket(t);
     if (b.dataset.pay) {
-      await TicketService.markPaid(b.dataset.pay);
-      Notify.success("Đã thu tiền");
+      await TicketService.markPaid(t.id);
+      Notify.success("Đã thu tiền vé " + t.code);
       load();
     }
-    if (b.dataset.cancel && (await Modal.confirm("Hủy vé này?"))) {
-      await TicketService.cancel(b.dataset.cancel);
-      Notify.info("Đã hủy vé");
+    if (b.dataset.cancel && (await Modal.confirm(`Hủy vé ${t.code}? Nếu khách đã thanh toán, hãy xử lý hoàn tiền ở trang Đơn hàng & Hoàn tiền.`, "Hủy vé"))) {
+      await TicketService.cancel(t.id);
+      Notify.info("Đã hủy vé " + t.code);
       load();
     }
   });
-  $("#searchInput").addEventListener("input", Helpers.debounce(render));
-  $("#statusFilter").addEventListener("change", render);
-  $("#dateFilter").addEventListener("change", render);
-  $("#newTicketBtn").onclick = openSell;
-  $("#typesBtn").onclick = openTypes;
-  if (!AuthService.isAdmin()) $("#typesBtn").remove();
-  await load();
-  if (Helpers.query("new")) openSell();
+  $("keyword").addEventListener("input", Helpers.debounce(() => ((page = 1), render()), 200));
+  $("statusFilter").addEventListener("change", () => ((page = 1), render()));
+  $("dateFilter").addEventListener("change", () => ((page = 1), render()));
+  $("todayBtn").addEventListener("click", () => (($("dateFilter").value = Format.isoDate()), (page = 1), render()));
+  $("sellBtn").addEventListener("click", openSell);
+
+  async function load() {
+    [tickets, types] = await Promise.all([TicketService.list(), TicketService.types()]);
+    tickets.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+    render();
+  }
+  load().then(() => Helpers.param("new") && openSell()).catch((err) => Notify.error(err.message));
 })();

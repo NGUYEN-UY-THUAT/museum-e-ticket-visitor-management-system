@@ -1,56 +1,86 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vé điện tử | Bảo tàng Số</title>
-  <link rel="stylesheet" href="../css/base/reset.css">
-  <link rel="stylesheet" href="../css/base/variables.css">
-  <link rel="stylesheet" href="../css/base/typography.css">
-  <link rel="stylesheet" href="../css/components/navbar.css">
-  <link rel="stylesheet" href="../css/components/sidebar.css">
-  <link rel="stylesheet" href="../css/components/button.css">
-  <link rel="stylesheet" href="../css/components/modal.css">
-  <link rel="stylesheet" href="../css/components/card.css">
-  <link rel="stylesheet" href="../css/layouts/main-layout.css">
-  <link rel="stylesheet" href="../css/pages/tickets.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Vé điện tử | Quản trị Bảo Tàng Di Sản</title>
+
+  <!-- Font chữ & bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+
+  <!-- Base -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/design-tokens.css" />
+  <link rel="stylesheet" href="../css/base/utilities.css" />
+  <!-- Layout: khung quản trị (menu trái + thanh trên) -->
+  <link rel="stylesheet" href="../css/layouts/admin-layout.css" />
+  <!-- Components -->
+  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/heritage-ui.css" />
+  <!-- Page -->
+  <link rel="stylesheet" href="../css/pages/tickets.css" />
 </head>
-<body>
-  <div class="layout">
-    <aside id="sidebar"></aside>
-    <div class="layout__main">
-      <header id="navbar"></header>
-      <main class="layout__content">
-        <div class="page-header"><div><h1>Vé điện tử</h1><p class="text-muted">Đặt vé, phát hành vé QR và quản lý loại vé</p></div>
-          <div class="toolbar"><button class="btn btn--outline" id="typesBtn">Loại vé & giá</button><button class="btn btn--primary" id="newTicketBtn">+ Bán vé tại quầy</button></div></div>
-        <section class="card">
-          <div class="card__header filters">
-            <input class="form-control" id="searchInput" placeholder="Tìm mã vé, tên, SĐT...">
-            <select class="form-control" id="statusFilter"><option value="">Tất cả trạng thái</option></select>
-            <input class="form-control" type="date" id="dateFilter">
+
+<body class="theme-heritage adm-body">
+  <div class="adm-shell">
+    <!-- Menu trái: js/components/admin-shell.js (danh sách mục ở APP_CONFIG.ADMIN_MENU) -->
+    <aside class="adm-sidebar" id="adminSidebar"></aside>
+    <div class="adm-main">
+      <header class="adm-topbar" id="adminTopbar"></header>
+      <main class="adm-content">
+        <section class="adm-head">
+          <div>
+            <span class="adm-eyebrow"><span class="material-symbols-outlined">confirmation_number</span> Bán vé & phát hành</span>
+            <h1 class="adm-title">Vé điện tử</h1>
+            <p class="adm-desc">Tra cứu vé đã phát hành, in lại mã QR, thu tiền vé chờ thanh toán và bán vé trực tiếp tại quầy.</p>
           </div>
-          <div class="table-wrap"><table class="table"><thead><tr><th>Mã vé</th><th>Khách hàng</th><th>Loại vé</th><th>SL</th><th>Ngày tham quan</th><th>Thành tiền</th><th>Trạng thái</th><th></th></tr></thead><tbody id="ticketBody"></tbody></table></div>
+          <div class="adm-actions">
+            <a class="hh-btn hh-btn--ghost" href="ticket-types.html" id="typesLink"><span class="material-symbols-outlined">sell</span> Loại vé & giá</a>
+            <button class="hh-btn hh-btn--primary" id="sellBtn" type="button"><span class="material-symbols-outlined">point_of_sale</span> Bán vé tại quầy</button>
+          </div>
+        </section>
+
+        <section class="adm-stats" id="stats"></section>
+
+        <section class="adm-filters">
+          <div class="hh-input-wrap"><span class="material-symbols-outlined">search</span><input class="hh-input" id="keyword" type="search" placeholder="Tìm mã vé, tên, số điện thoại, email" /></div>
+          <select class="hh-input" id="statusFilter" aria-label="Trạng thái"><option value="">Mọi trạng thái</option></select>
+          <input class="hh-input tk-date" id="dateFilter" type="date" aria-label="Ngày tham quan" />
+          <button class="hh-btn hh-btn--soft hh-btn--sm" id="todayBtn" type="button">Hôm nay</button>
+        </section>
+
+        <section class="adm-card">
+          <div class="adm-table-wrap">
+            <table class="adm-table">
+              <thead><tr><th>Mã vé</th><th>Khách hàng</th><th>Vé</th><th>Ngày tham quan</th><th class="num">Thành tiền</th><th>Trạng thái</th><th class="num">Thao tác</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+          <div class="adm-pager" id="pager"></div>
         </section>
       </main>
     </div>
   </div>
+
+  <!-- ===================== SCRIPTS (thứ tự: config → utils → services → components → pages) ===================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="../js/config/api.config.js"></script>
   <script src="../js/config/app.config.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/validation.js"></script>
   <script src="../js/utils/helpers.js"></script>
+  <script src="../js/utils/admin-ui.js"></script>
   <script src="../js/services/api.service.js"></script>
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/services/ticket.service.js"></script>
-  <script src="../js/services/event.service.js"></script>
-  <script src="../js/services/visitor.service.js"></script>
-  <script src="../js/services/survey.service.js"></script>
-  <script src="../js/services/statistics.service.js"></script>
   <script src="../js/components/notification.js"></script>
   <script src="../js/components/modal.js"></script>
-  <script src="../js/components/sidebar.js"></script>
-  <script src="../js/components/navbar.js"></script>
+  <script src="../js/components/admin-shell.js"></script>
   <script src="../js/pages/tickets.js"></script>
 </body>
 </html>
